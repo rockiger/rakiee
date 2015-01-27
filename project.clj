@@ -3,7 +3,8 @@
   :url "http://example.com/FIXME"
 
   :dependencies [[org.clojure/clojure "1.6.0"]
-                 [org.clojure/clojurescript "0.0-2725"]]
+                 [org.clojure/clojurescript "0.0-2725"]
+                 [reagent "0.4.3"]]
 
   :node-dependencies [[source-map-support "0.2.8"]]
 
@@ -23,12 +24,14 @@
                 :output-dir "out"
                 :optimizations :none
                 :cache-analysis true
+                :preamble ["reagent/react.js"]
                 :source-map true}}
-             {:id "release"
-              :source-paths ["src"]
-              :compiler {
-                :main rakiee.core
-                :output-to "out-adv/rakiee.min.js"
-                :output-dir "out-adv"
-                :optimizations :advanced
-                :pretty-print false}}]})
+;;              {:id "release"
+;;               :source-paths ["src"]
+;;               :compiler {
+;;                 :main rakiee.core
+;;                 :output-to "out-adv/rakiee.min.js"
+;;                 :output-dir "out-adv"
+;;                 :optimizations :advanced
+;;                 :pretty-print false}}
+             ]})
