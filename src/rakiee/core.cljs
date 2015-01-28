@@ -6,7 +6,21 @@
 ;; TODO Browser repl in node-webkit (repl/connect "http://localhost:9000/repl")
 (enable-console-print!)
 
-(println "Hello world!")
+;; TODO unit test for reagent
+;; TODO figwhell for node-webkit
+
+;; =================
+;; Constants:
+
+(def TODO "TODO")
+(def DONE "DONE")
+(def DOING "DOING")
+(def ALL "ALL")
+
+;; =================
+;; Data definitions:
+
+;; World State is ... (give WS a better name)
 
 (def app-state
   (r/atom
@@ -16,8 +30,15 @@
      {:todo "DOING" :headline "Karo und Diana das Briefing für das Designn schicken"}
      {:todo "DOING" :headline "Licht reklamieren, Kontoauszug raussuchen"}
      {:todo "DOING" :headline "Bräter 4 Stunden toasten"}
-     {:todo "DOING" :headline "Ich teile nicht! schreiben"}
-     {:todo "DOING" :headline "Verzeichnis-rakiee von Grund auf aufbauen, ohne leinigen templates"}]}))
+     {:todo "TODE" :headline "Ich teile nicht! schreiben"}
+     {:todo "DONE" :headline "Verzeichnis-rakiee von Grund auf aufbauen, ohne leinigen templates"}]}))
+
+
+
+
+;; =================
+;; Functions:
+
 
 (defn task [t]
   [:tr
@@ -29,9 +50,11 @@
    (for [t (:tasks @app-state)]
      [task t])])
 
-(defn start []
+(defn big-bang []
   (r/render-component
     [task-list]
     (.getElementById js/document "root")))
 
-(start)
+(big-bang)
+
+
