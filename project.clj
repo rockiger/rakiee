@@ -9,29 +9,28 @@
   :node-dependencies [[source-map-support "0.2.8"]]
 
   :plugins [[lein-cljsbuild "1.0.4"]
-            [lein-npm "0.4.0"]]
+            [lein-npm "0.4.0"]
+            [com.cemerick/clojurescript.test "0.3.3"]]
 
   :source-paths ["src" "target/classes"]
 
-  :clean-targets ["out/rakiee" "rakiee.js" "rakiee.min.js"]
+  :clean-targets ["out" "out-adv"]
 
   :cljsbuild {
     :builds [{:id "dev"
-              :source-paths ["src"]
-              :compiler {
-                :main rakiee.core
-                :output-to "out/rakiee.js"
-                :output-dir "out"
-                :optimizations :none
-                :cache-analysis true
-                :preamble ["reagent/react.js"]
-                :source-map true}}
-;;              {:id "release"
-;;               :source-paths ["src"]
-;;               :compiler {
-;;                 :main rakiee.core
-;;                 :output-to "out-adv/rakiee.min.js"
-;;                 :output-dir "out-adv"
-;;                 :optimizations :advanced
-;;                 :pretty-print false}}
-             ]})
+    :source-paths ["src"]
+    :compiler {
+      :main rakiee.core
+      :output-to "out/rakiee.js"
+      :output-dir "out"
+      :optimizations :none
+      :cache-analysis true
+      :source-map true}}
+      {:id "release"
+      :source-paths ["src"]
+      :compiler {
+        :main rakiee-sample.core
+        :output-to "out-adv/rakiee.min.js"
+        :output-dir "out-adv"
+        :optimizations :advanced
+        :pretty-print false}}]})

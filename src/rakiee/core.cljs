@@ -3,7 +3,6 @@
             [clojure.string :as string]
             [reagent.core :as r]))
 
-;; TODO Browser repl in node-webkit (repl/connect "http://localhost:9000/repl")
 (enable-console-print!)
 
 ;; TODO unit test for reagent
@@ -33,9 +32,6 @@
      {:todo "TODE" :headline "Ich teile nicht! schreiben"}
      {:todo "DONE" :headline "Verzeichnis-rakiee von Grund auf aufbauen, ohne leinigen templates"}]}))
 
-
-
-
 ;; =================
 ;; Functions:
 
@@ -56,5 +52,3 @@
     (.getElementById js/document "root")))
 
 (big-bang)
-
-
