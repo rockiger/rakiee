@@ -9,10 +9,9 @@
   :node-dependencies [[source-map-support "0.2.8"]]
 
   :plugins [[lein-cljsbuild "1.0.4"]
-            [lein-npm "0.4.0"]
-            [com.cemerick/clojurescript.test "0.3.3"]]
+            [lein-npm "0.4.0"]]
 
-  :source-paths ["src" "target/classes"]
+  :source-paths ["src"]
 
   :clean-targets ["out" "out-adv"]
 

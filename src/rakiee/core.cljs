@@ -1,7 +1,8 @@
 (ns rakiee.core
   (:require [clojure.browser.repl :as repl]
             [clojure.string :as string]
-            [reagent.core :as r]))
+            [reagent.core :as r]
+            [rakiee.constants :as c]))
 
 (enable-console-print!)
 
