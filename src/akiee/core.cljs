@@ -1,8 +1,8 @@
-(ns rakiee.core
+(ns akiee.core
   (:require [clojure.browser.repl :as repl]
             [clojure.string :as string]
             [reagent.core :as r]
-            [rakiee.constants :as c]))
+            [akiee.constants :as c]))
 
 (enable-console-print!)
 
@@ -31,7 +31,7 @@
      {:todo "DOING" :headline "Licht reklamieren, Kontoauszug raussuchen"}
      {:todo "DOING" :headline "Bräter 4 Stunden toasten"}
      {:todo "TODE" :headline "Ich teile nicht! schreiben"}
-     {:todo "DONE" :headline "Verzeichnis-rakiee von Grund auf aufbauen, ohne leinigen templates"}]}))
+     {:todo "DONE" :headline "Verzeichnis-akiee von Grund auf aufbauen, mit leinigen templates"}]}))
 
 ;; =================
 ;; Functions:

@@ -1,4 +1,4 @@
-(defproject rakiee "0.1.0-SNAPSHOT"
+(defproject akiee "0.1.0-SNAPSHOT"
   :description "FIXME: write this!"
   :url "http://example.com/FIXME"
 
@@ -19,8 +19,8 @@
     :builds [{:id "dev"
     :source-paths ["src"]
     :compiler {
-      :main rakiee.core
-      :output-to "out/rakiee.js"
+      :main akiee.core
+      :output-to "out/akiee.js"
       :output-dir "out"
       :optimizations :none
       :cache-analysis true
@@ -28,8 +28,8 @@
       {:id "release"
       :source-paths ["src"]
       :compiler {
-        :main rakiee-sample.core
-        :output-to "out-adv/rakiee.min.js"
+        :main akiee-sample.core
+        :output-to "out-adv/akiee.min.js"
         :output-dir "out-adv"
         :optimizations :advanced
         :pretty-print false}}]})

@@ -1,4 +1,4 @@
-# rakiee
+# akiee
 
 FIXME: Write a one-line description of your library/project.
 
@@ -32,10 +32,10 @@ To get source map support in the Node REPL:
 Clean project specific out:
 
     lein clean
-     
+
 Optimized builds:
 
-    lein cljsbuild once release     
+    lein cljsbuild once release
 
 For more info on Cljs compilation, read [Waitin'](http://swannodette.github.io/2014/12/22/waitin/).
 

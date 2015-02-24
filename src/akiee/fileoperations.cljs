@@ -1,4 +1,4 @@
-(ns rakiee.fileoperations
+(ns akiee.fileoperations
   (:require [cljs.test :refer-macros [is deftest]]))
 (enable-console-print!)
 
