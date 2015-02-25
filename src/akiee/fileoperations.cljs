@@ -25,4 +25,4 @@
   []
   true)
 
-(is (= (string? (task-file-path))))
+(is (string? (task-file-path)))
