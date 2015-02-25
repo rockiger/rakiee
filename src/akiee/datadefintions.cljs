@@ -71,7 +71,7 @@
     (... r)
     (... r)))
 
-;; ListOf(Node) is on of
+;; ListOf(Node) is on of:
 ;; - []
 ;; - (conj ListOfNode Node)
 ;; interp. a list of Nodes
@@ -85,6 +85,21 @@
         :else (... (first lon)
                    (fn-for-los (rest lon)))))
 
-;; TODO Rank
+
+;; Rank is one of:
+;; - Integer [1, ...]
+;; - nil
+;; interp. as the ranking of a task
+;; should be an int > 0
+
+(def RANK-1 10)
+(def RANK-2 nil)
+
+#_
+(defn fn-for-rank [rank]
+  (if (= rank 0)
+    (... rank)
+    (... rank)))
+
 
 ;; TODO Take pencil and create WS
