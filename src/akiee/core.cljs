@@ -31,7 +31,7 @@
      {:todo "DOING" :headline "Licht reklamieren, Kontoauszug raussuchen"}
      {:todo "DOING" :headline "Bräter 4 Stunden toasten"}
      {:todo "TODE" :headline "Ich teile nicht! schreiben"}
-     {:todo "DONE" :headline "Verzeichnis-akiee von Grund auf aufbauen, mit leinigen templates"}]}))
+     {:todo "DONE" :headline "Verzeichnis-akiee von Grund auf euida, mit leinigen templates"}]}))
 
 ;; =================
 ;; Functions:

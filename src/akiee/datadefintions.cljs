@@ -1,4 +1,9 @@
 (ns akiee.datadefinitions)
+
+;; helper function for templates
+(defn ... [& args]
+  true)
+
 ;; =================
 ;; Data definitions:
 
@@ -65,3 +70,21 @@
   (if (nil? r)
     (... r)
     (... r)))
+
+;; ListOf(Node) is on of
+;; - []
+;; - (conj ListOfNode Node)
+;; interp. a list of Nodes
+
+(def LON-1 '())
+(def LON-2 (cons '() "a"))
+
+#_
+(defn fn-for-los [lon]
+  (cond ((empty? lon) true)
+        :else (... (first lon)
+                   (fn-for-los (rest lon)))))
+
+;; TODO Rank
+
+;; TODO Take pencil and create WS
