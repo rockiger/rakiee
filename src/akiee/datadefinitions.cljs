@@ -1,4 +1,5 @@
-(ns akiee.datadefinitions)
+(ns akiee.datadefinitions
+  (:require [akiee.fileoperations :as fo]))
 
 ;; helper function for templates
 (defn ddd [& args]
@@ -170,8 +171,7 @@ SocialImpactWLAN
 (def GS1 (global-state. false false false LS-3 LON-2))
 (def GS2 (global-state. false false false LS-3 (cons N1 LON-2)))
 
-(println GS2)
-
+#_
 (defn fn-for-game [gs]
   (ddd (fn-for-switchstate (:editor? gs))
        (fn-for-switchstate (:search? gs))

@@ -2,7 +2,8 @@
   (:require [clojure.browser.repl :as repl]
             [clojure.string :as string]
             [reagent.core :as r]
-            [akiee.constants :as c]))
+            [akiee.constants :as c]
+            [akiee.datadefinitions :as dd]))
 
 (enable-console-print!)
 

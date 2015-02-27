@@ -1,11 +1,19 @@
 (ns akiee.fileoperations
-  (:require [cljs.test :refer-macros [is deftest]]))
+  (:require [cljs.test :refer-macros [is deftest]]
+            [cljs.nodejs :as nj]))
 (enable-console-print!)
 
 
 ;; Node modules
 (def fs (js/require "fs"))
-(def path (js/require "path"))
+(def path (nj/require "path"))
+(def process nj/process)
+(def __dirname (js* "global.__dirname"))
+
+(println "Current Working direktory")
+(println (.cwd process))
+(println "Directory of file")
+(println __dirname)
 
 
 ;; All file operations for Akiee
