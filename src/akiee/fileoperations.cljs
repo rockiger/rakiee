@@ -1,36 +1,63 @@
 (ns akiee.fileoperations
   (:require [cljs.test :refer-macros [is deftest]]
             [cljs.nodejs :as nj]))
-(enable-console-print!)
-
 
 ;; Node modules
 (def fs (js/require "fs"))
 (def path (nj/require "path"))
-(def process nj/process)
-(def __dirname (js* "global.__dirname"))
+(def process (nj/require "process"))
+(def org (nj/require "./lib/markdown-org-mode-parser"))
 
-(println "Current Working direktory")
-(println (.cwd process))
-(println "Directory of file")
-(println __dirname)
-
+(enable-console-print!)
 
 ;; All file operations for Akiee
 
 ;; =================
 ;; Constants:
 
+(def dirname ".akiee")
+(def filename "testflow.md")
 
 ;; =================
 ;; Functions:
 
-;; nil -> String
+(defn user-home
+  "nil -> String
+  produce the home directory of the user according to plattform"
+  []
+  (if (= (.-platform process) "win32")
+    (aget (.-env process) "USERPROFILE")
+    (aget (.-env process) "HOME")))
+
+(is (string? (user-home)))
+(is (= (user-home "/home/macco")))
+
+
+(defn create-task-list-file
+  "String -> String
+  consumes the home directory of the user and return the file path of task list,
+  if file is not present, it get's created"
+  [h]
+  (let [dir-path (.join path h dirname "/")
+        file-path (.join path dir-path filename)]
+    (if (.existsSync fs dir-path)
+      (if (.existsSync fs file-path)
+        file-path
+        (do
+          (.writeFileSync fs file-path "")
+          file-path))
+      (do
+        (.mkdirSync fs dir-path)
+        (.writeFileSync fs file-path)
+        file-path))))
+
+(is (= (create-task-list-file "/home/macco") (str "/home/macco/" dirname "/" filename)))
+
 
 (defn task-file-path
   "nil -> String
   produce the path of the task file"
   []
-  true)
+  (create-task-list-file (user-home)))
 
 (is (string? (task-file-path)))
