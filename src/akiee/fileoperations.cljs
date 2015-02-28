@@ -72,4 +72,6 @@
 
 (is (= (load-file "") false))
 (is (= (load-file "eurniate") false))
-(is (= (load-file "/home/macco/.akiee/test-load-file.md") "# Inbox\n## TODO Test\n"))
+(is (= (load-file "/home/macco/Listings/rakiee/test-load-file.md") "# Inbox\n## TODO Test\n"))
+
+(println (load-file (task-file-path (create-task-list-file (user-home)))))
