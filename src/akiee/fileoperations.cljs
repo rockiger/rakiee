@@ -61,3 +61,15 @@
   (create-task-list-file (user-home)))
 
 (is (string? (task-file-path)))
+
+(defn load-file
+  "String -> String
+  consumes the path p for a file and returns the content of the file"
+  [p]
+  (if (.existsSync fs p)
+    (str (.readFileSync fs p "utf8"))
+    false))
+
+(is (= (load-file "") false))
+(is (= (load-file "eurniate") false))
+(is (= (load-file "/home/macco/.akiee/test-load-file.md") "# Inbox\n## TODO Test\n"))
