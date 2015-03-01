@@ -17,6 +17,7 @@
 
 (def dirname ".akiee")
 (def filename "testflow.md")
+(def testfile "/home/macco/Listings/rakiee/test-load-file.md")
 
 ;; =================
 ;; Functions:
@@ -30,7 +31,7 @@
     (aget (.-env process) "HOME")))
 
 (is (string? (user-home)))
-(is (= (user-home "/home/macco")))
+(is (= (user-home) "/home/macco"))
 
 
 (defn create-task-list-file
@@ -68,8 +69,8 @@
   [p]
   (if (.existsSync fs p)
     (str (.readFileSync fs p "utf8"))
-    false))
+    ""))
 
-(is (= (load-file "") false))
-(is (= (load-file "eurniate") false))
-(is (= (load-file "/home/macco/Listings/rakiee/test-load-file.md") "# Inbox\n## TODO Test\n"))
+(is (= (load-file "") ""))
+(is (= (load-file "eurniate") ""))
+(is (= (load-file testfile) "# Inbox\n## TODO Test\n"))

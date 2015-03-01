@@ -3,7 +3,7 @@
             [clojure.string :as string]
             [reagent.core :as r]
             [akiee.constants :as c]
-            [akiee.datadefinitions :as dd]))
+            [akiee.app-db :refer [app-state]]))
 
 (enable-console-print!)
 
@@ -23,6 +23,7 @@
 
 ;; World State is ... (give WS a better name)
 
+#_
 (def app-state
   (r/atom
    {:tasks

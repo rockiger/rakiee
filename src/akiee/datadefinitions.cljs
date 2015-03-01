@@ -1,5 +1,4 @@
-(ns akiee.datadefinitions
-  (:require [akiee.fileoperations :as fo]))
+(ns akiee.datadefinitions)
 
 ;; helper function for templates
 (defn ddd [& args]
@@ -81,8 +80,8 @@
 ;; - (conj ListOfNode Node)
 ;; interp. a list of Nodes
 
-(def LON-1 '())
-(def LON-2 (cons N1 '()))
+(def LON-1 [])
+(def LON-2 (conj [] N1))
 
 #_
 (defn fn-for-lon [lon]
@@ -119,7 +118,6 @@
 (def LS-2 "ALL")
 (def LS-3 "DOING")
 
-SocialImpactWLAN
 #_
 (defn fn-for-liskstate [ls]
   (cond
@@ -169,7 +167,7 @@ SocialImpactWLAN
 ;; - ListOfNode
 
 (def GS1 (global-state. false false false LS-3 LON-2))
-(def GS2 (global-state. false false false LS-3 (cons N1 LON-2)))
+(def GS2 (global-state. false false false LS-3 (conj LON-2 N1)))
 
 #_
 (defn fn-for-game [gs]
