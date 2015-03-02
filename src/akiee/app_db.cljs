@@ -115,12 +115,27 @@
 (def app-state  (rc/atom (load-app-state FP)))
 (def test-state (rc/atom (load-app-state fo/testfile)))
 
-(println @app-state)
+;(println @app-state)
+
+(defn tasks-helper
+  "GlobalState -> lon
+  consumes an GlobalState gs and  returns the tasks, according to the current ListState"
+  [gs]
+    (let [filter-tasks (fn [x] (if (= (:level x) 2) true false ))]
+      (vec (filter filter-tasks (:lon @gs)))))
+
+;; Test fails becaus of :body one seems to have an "\n"
+#_(is (node=? (nth (tasks-helper test-state) 0) {:key "orgode_33.##" :level 2  :headline "Test"
+                                              :body ""  :tag nil :tags {} :todo "TODO"
+                                              :priority nil :scheduled nil :deadline nil
+                                              :properties {} :drawer {} :rank nil :style nil}))
+
 
 (defn tasks
-  "nil -> lon"
+  "-> lon
+  shows the tasks of the app-stat, according to the current ListState"
   []
-    (:lon @app-state))
+  (tasks-helper app-state))
 
 ;; old app-state :
 #_
