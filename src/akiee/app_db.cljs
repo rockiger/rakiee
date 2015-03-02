@@ -68,7 +68,8 @@
    :rank (aget jn "rank")
    :style nil})
 
-; TODO create useful test
+(is (node=? (jsnode->node dd/jsN1) dd/N1))
+(is (= (:key (jsnode->node dd/jsN1)) (:key dd/N1)))
 
 (defn array->vec
   "JsArray Vector -> Vector
@@ -101,23 +102,25 @@
   [p]
   (global-state. false false false DOING (nodes p)))
 
-;; TODO write tests
+(is (= (:lon (load-app-state fo/testfile) [{:key "orgode_33.##" :level 1 :headline "Inbox"
+                                            :body "" :tag nil :tags {}  :todo "DOING"
+                                            :priority nil :scheduled nil :deadline nil
+                                            :properties {} :drawer {} :rank nil  :style nil}
+                                           {:key "orgode_33.##" :level 2  :headline "Test"
+                                            :body ""  :tag nil :tags {} :todo "TODO"
+                                            :priority nil :scheduled nil :deadline nil
+                                            :properties {} :drawer {} :rank nil :style nil}])))
 
 
-(def app-state (rc/atom (load-app-state fo/testfile)))
+(def app-state  (rc/atom (load-app-state FP)))
+(def test-state (rc/atom (load-app-state fo/testfile)))
 
 (println @app-state)
 
 (defn tasks
   "nil -> lon"
   []
-    [{:todo "DOING" :headline "Remove Ace-dependency from enterTask.js"}
-     {:todo "DOING" :headline "AuxMoney Test starten"}
-     {:todo "DOING" :headline "Karo und Diana das Briefing für das Designn schicken"}
-     {:todo "DOING" :headline "Licht reklamieren, Kontoauszug raussuchen"}
-     {:todo "DOING" :headline "Bräter 4 Stunden toasten"}
-     {:todo "TODE" :headline "Ich teile nicht! schreiben"}
-     {:todo "DONE" :headline "Verzeichnis-akiee von Grund auf euida, mit leinigen templates"}])
+    (:lon @app-state))
 
 ;; old app-state :
 #_
