@@ -121,8 +121,12 @@
   "GlobalState -> lon
   consumes an GlobalState gs and  returns the tasks, according to the current ListState"
   [gs]
-    (let [filter-tasks (fn [x] (if (= (:level x) 2) true false ))]
-      (vec (filter filter-tasks (:lon @gs)))))
+    (let [filter-tasks (fn [x] (if (= (:level x) 2) true false ))
+          filter-state (fn [x] (cond
+                                (= (:ls @gs) ALL) true
+                                (= (:ls @gs) (:todo x)) true
+                                :else false))]
+      (vec (filter filter-state (filter filter-tasks (:lon @gs))))))
 
 ;; Test fails becaus of :body one seems to have an "\n"
 #_(is (node=? (nth (tasks-helper test-state) 0) {:key "orgode_33.##" :level 2  :headline "Test"
@@ -136,7 +140,7 @@
   shows the tasks of the app-stat, according to the current ListState"
   []
   (tasks-helper app-state))
-
+(println (tasks))
 ;; old app-state :
 #_
 {:tasks
