@@ -1,6 +1,6 @@
 (ns akiee.app-db
   (:require [akiee.fileoperations :as fo]
-            [akiee.datadefinitions :refer [global-state]]
+            [akiee.datadefinitions :as dd :refer [global-state]]
             [akiee.constants :refer [TODO DOING DONE ALL]]
             [cljs.test :refer-macros [is deftest]]
             [cljs.nodejs :as nj]
@@ -24,6 +24,29 @@
 
 ;; =================
 ;; Functions:
+
+(defn node=?
+  "Node Node -> Boolean
+  Compares 2 Nodes n1 n2, the :key of the nodes is ignored,
+  because it's random"
+  [n1 n2]
+  (and
+   (= (:level n1)      (:level n2))
+   (= (:headline n1)   (:headline n2))
+   (= (:body n1)       (:body n2))
+   (= (:tag n1)        (:tag n2))
+   (= (:tags n1)       (:tags n2))
+   (= (:todo n1)       (:todo n2))
+   (= (:priority n1)   (:priority n2))
+   (= (:scheduled n1)  (:scheduled n2))
+   (= (:deadline n1)   (:deadline n2))
+   (= (:properties n1) (:properties n2))
+   (= (:drawer n1)     (:drawer n2))
+   (= (:rank n1)       (:rank n2))
+   (= (:style n1)      (:style n2))))
+
+(is (= (node=? dd/N1 dd/N1a) true))
+(is (= (node=? dd/N1 dd/N2)  false))
 
 (defn jsnode->node
   "JsNode -> Node
@@ -84,6 +107,17 @@
 (def app-state (rc/atom (load-app-state fo/testfile)))
 
 (println @app-state)
+
+(defn tasks
+  "nil -> lon"
+  []
+    [{:todo "DOING" :headline "Remove Ace-dependency from enterTask.js"}
+     {:todo "DOING" :headline "AuxMoney Test starten"}
+     {:todo "DOING" :headline "Karo und Diana das Briefing für das Designn schicken"}
+     {:todo "DOING" :headline "Licht reklamieren, Kontoauszug raussuchen"}
+     {:todo "DOING" :headline "Bräter 4 Stunden toasten"}
+     {:todo "TODE" :headline "Ich teile nicht! schreiben"}
+     {:todo "DONE" :headline "Verzeichnis-akiee von Grund auf euida, mit leinigen templates"}])
 
 ;; old app-state :
 #_

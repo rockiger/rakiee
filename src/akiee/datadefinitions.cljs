@@ -55,6 +55,36 @@
          :rank nil
          :style nil})
 
+(def N1a {:key "orgode_45.##"
+         :level 2
+         :headline "As a user I want to change the state of a task with a simple action."
+         :body ""
+         :tag nil
+         :tags {}
+         :todo "DOING"
+         :priority nil
+         :scheduled nil
+         :deadline nil
+         :properties {}
+         :drawer {}
+         :rank nil
+         :style nil})
+
+(def N2 {:key "orgode_83.##"
+         :level 1
+         :headline "As a user I want to change the state of a task with a simple action."
+         :body ""
+         :tag nil
+         :tags {}
+         :todo nil
+         :priority nil
+         :scheduled nil
+         :deadline nil
+         :properties {}
+         :drawer {}
+         :rank nil
+         :style nil})
+
 #_
 (defn fn-for-node [n]
   (ddd (:todo n)

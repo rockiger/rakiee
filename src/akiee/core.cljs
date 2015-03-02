@@ -3,7 +3,7 @@
             [clojure.string :as string]
             [reagent.core :as r]
             [akiee.constants :as c]
-            [akiee.app-db :refer [app-state]]))
+            [akiee.app-db :refer [app-state tasks]]))
 
 (enable-console-print!)
 
@@ -38,7 +38,6 @@
 ;; =================
 ;; Functions:
 
-
 (defn task [t]
   [:tr
    [:td (:todo t)]
@@ -46,7 +45,7 @@
 
 (defn task-list []
   [:table
-   (for [t (:tasks @app-state)]
+   (for [t (tasks)]
      [task t])])
 
 (defn big-bang []
