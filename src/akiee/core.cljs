@@ -52,24 +52,25 @@
   produces the component for the button."
   [in id t]
   (let [icon-name (str "fa-" in)]
-  [:button.btn.btn-default.navbar-btn.navbar-right.btn-square {:id id :title t}
+  [:button.btn.btn-default.navbar-btn.btn-square {:id id :title t}
    [:span.fa {:class icon-name}]]))
 
 (defn toolbar
   "-> Component
   The toolbar for changing the state of the Akiee"
   []
-  [:nav#toolbar.navbar.navbar-default.navbor-fixde-top {:role "navigation"}
+  [:nav#toolbar.navbar.navbar-default.navbar-fixed-top {:role "navigation"}
    [:div.container-fluid
-    [:div.navbar-header
+    [:div.navbar-flex
      [:div#taskbuttons.btn-group
       [list-state-button "Todo" "show-todo" "Ctrl+1"]
       [list-state-button "Doing" "show-doing" "Ctrl+2 / Ctrl+Space"]
       [list-state-button "Done" "show-done" "Ctrl+3"]]
      [list-state-button "Board" "show-all" "Ctrl+4"]
-     [switch-button "plus" "show-enter-task" "Ctrl+Enter"]
+     [:div.spacer]
+     [switch-button "file-text-o" "show-editor" "Ctrl+E / Ctrl+Space"]
      [switch-button "search" "show-searchbox" "Ctrl+F"]
-     [switch-button "list-alt" "show-editor" "Ctrl+E / Ctrl+Space"]]]])
+     [switch-button "plus" "show-enter-task" "Ctrl+Enter"]]]])
 
 (defn task [t]
   [:tr

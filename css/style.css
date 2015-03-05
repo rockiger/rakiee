@@ -8,3 +8,7 @@ body {
   padding-top: 52px;
   margin: 0;
 }
+
+.spacer {
+  flex: 1;
+}
