@@ -1,0 +1,10 @@
+body {
+  height: 100vh;
+  overflow-y: hidden;
+  background-color: #fff;
+  color: #54595a;
+  font-size: 16px;
+  font-family: 'Source Sans Pro', Cantarell, Ubuntu, 'Helvetica Neue', Helvetica, Calibri, Verdana, Arial, sans-serif;
+  padding-top: 52px;
+  margin: 0;
+}
