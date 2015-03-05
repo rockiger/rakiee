@@ -38,6 +38,39 @@
 ;; =================
 ;; Functions:
 
+;TODO
+(defn list-state-button
+  "String String String -> Component
+  Consumes the text tx, the id and the title t of the button;
+  produces the component for the button."
+  [tx id t]
+  [:button.btn.btn-default.navbar-btn.btn-state {:type "button" :id id :title t} tx])
+
+(defn switch-button
+  "String String String -> Component
+  Consumes the icon name in, the id and title t of the button;
+  produces the component for the button."
+  [in id t]
+  (let [icon-name (str "fa-" in)]
+  [:button.btn.btn-default.navbar-btn.navbar-right.btn-square {:id id :title t}
+   [:span.fa {:class icon-name}]]))
+
+(defn toolbar
+  "-> Component
+  The toolbar for changing the state of the Akiee"
+  []
+  [:nav#toolbar.navbar.navbar-default.navbor-fixde-top {:role "navigation"}
+   [:div.container-fluid
+    [:div.navbar-header
+     [:div#taskbuttons.btn-group
+      [list-state-button "Todo" "show-todo" "Ctrl+1"]
+      [list-state-button "Doing" "show-doing" "Ctrl+2 / Ctrl+Space"]
+      [list-state-button "Done" "show-done" "Ctrl+3"]]
+     [list-state-button "Board" "show-all" "Ctrl+4"]
+     [switch-button "plus" "show-enter-task" "Ctrl+Enter"]
+     [switch-button "search" "show-searchbox" "Ctrl+F"]
+     [switch-button "list-alt" "show-editor" "Ctrl+E / Ctrl+Space"]]]])
+
 (defn task [t]
   [:tr
    [:td (:todo t)]
@@ -48,9 +81,18 @@
    (for [t (tasks)]
      [task t])])
 
+
+(defn app
+  " -> Component
+  Produces the base comment"
+  []
+  [:div#app
+   [toolbar]
+   [task-list]])
+
 (defn big-bang []
   (r/render-component
-    [task-list]
+    [app]
     (.getElementById js/document "root")))
 
 (big-bang)
