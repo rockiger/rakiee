@@ -22,5 +22,5 @@
              :background-color bc
              :overflow-y "hidden"
              :height "100vh"}]
-     [:.navbar-flex {:display "flex"}}]
+     [:.navbar-flex {:display "flex"}]
      [:.spacer {:flex 1}])

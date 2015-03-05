@@ -9,6 +9,10 @@ body {
   margin: 0;
 }
 
+.navbar-flex {
+  display: flex;
+}
+
 .spacer {
   flex: 1;
 }
