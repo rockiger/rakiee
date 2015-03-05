@@ -164,7 +164,7 @@
 (def LS-3 "DOING")
 
 #_
-(defn fn-for-liskstate [ls]
+(defn fn-for-liststate [ls]
   (cond
    (= ls TODO)  (ddd)
    (= ls DOING) (ddd)
