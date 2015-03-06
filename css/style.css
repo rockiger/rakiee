@@ -9,8 +9,13 @@ body {
   margin: 0;
 }
 
-.navbar-flex {
+.navbar-flex, #enter-task, #search-form, #editor {
   display: flex;
+}
+
+#editor textarea {
+  height: 100%;
+  width: 100%;
 }
 
 .spacer {

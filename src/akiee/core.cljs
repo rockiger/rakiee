@@ -53,7 +53,7 @@
   [in id t]
   (let [icon-name (str "fa-" in)]
   [:button.btn.btn-default.navbar-btn.btn-square {:id id :title t}
-   [:span.fa {:class icon-name}]]))
+   [:span.fa.fa-fw {:class icon-name}]]))
 
 (defn toolbar
   "-> Component
@@ -72,6 +72,55 @@
      [switch-button "search" "show-searchbox" "Ctrl+F"]
      [switch-button "plus" "show-enter-task" "Ctrl+Enter"]]]])
 
+
+(defn select
+  "ListOf* -> Component
+  Consumes a list of anything loa; produces the component of a select field."
+  [loa]
+  [:select#enter-task-status.form-control
+   (for [a loa]
+     [:option a])])
+
+(defn enter-task-status
+  "ListOfTaskState -> Component
+  Consumes the a list of taskstate lot; 
+  produces the component of the select field for the state of the new task."
+  [lot]
+  (select lot))
+
+(defn enter-task-project
+  "ListofString -> Component
+  Consumes a list of string los; produces the component for the project select."
+  [los]
+  (select los))
+
+(defn enter-task
+  "-> Component
+  The entry form for entering tasks"
+  []
+  [:div#enter-task-div.container-fluid
+   [:form#enter-task.row
+    [:input#enter-headline.form-control {:type "text" :placeholder "Enter Headline"}]
+    [enter-task-status ["TODO", "DOING", "DONE"]]
+    [enter-task-project ["Inbox"]]
+    [:button.btn.btn-default {:type "submit"} "Create"]
+    [:button#cancel-enter-task.btn.btn-link {:type "button"} "Cancel"]]])
+
+(defn search
+  "-> Component
+  The entry form for searching tasks"
+  []
+  [:div#search-form
+   [:input#search-input.form-control {:type "text"}]
+   [:span#search-input-icon.fa.fa-search]])
+
+(defn editor
+  "-> Component
+  The textarea to directly edit the task list in markdown"
+  []
+  [:div#editor
+   [:textarea {:rows 3}]])
+
 (defn task [t]
   [:tr
    [:td (:todo t)]
@@ -89,6 +138,9 @@
   []
   [:div#app
    [toolbar]
+   [enter-task]
+   [search]
+   [editor]
    [task-list]])
 
 (defn big-bang []

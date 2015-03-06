@@ -22,5 +22,9 @@
              :background-color bc
              :overflow-y "hidden"
              :height "100vh"}]
-     [:.navbar-flex {:display "flex"}]
+
+     
+     [:.navbar-flex :#enter-task :#search-form :#editor {:display "flex"}]
+     [:#editor [:textarea {:width "100%" :height "100%"}]]
+
      [:.spacer {:flex 1}])
