@@ -48,12 +48,17 @@
 
 (defn switch-button
   "String String String -> Component
-  Consumes the icon name in, the id and title t of the button;
+  Consumes the icon name in, the id and title t of the button, the test function tfn?;
   produces the component for the button."
-  [in id t]
-  (let [icon-name (str "fa-" in)]
-  [:button.btn.btn-default.navbar-btn.btn-square {:id id :title t}
+  [in id t tfn? onfn]
+  (let [icon-name (str "fa-" in)
+        active? (if (tfn?) "active" "")]
+  [:button.btn.btn-default.navbar-btn.btn-square {:id id :title t :class active? :on-click onfn}
    [:span.fa.fa-fw {:class icon-name}]]))
+
+(def editor-switch [switch-button "file-text-o" "show-editor" "Ctrl+E / Ctrl+Space" db/editor? db/switch-editor!])
+(def search-switch [switch-button "search" "show-searchbox" "Ctrl+F" db/search? db/switch-search!])
+(def entry-switch  [switch-button "plus" "show-enter-task" "Ctrl+Enter" db/entry? db/switch-entry!])
 
 (defn toolbar
   "-> Component
@@ -68,9 +73,9 @@
       [list-state-button "Done" "show-done" "Ctrl+3"]]
      [list-state-button "Board" "show-all" "Ctrl+4"]
      [:div.spacer]
-     [switch-button "file-text-o" "show-editor" "Ctrl+E / Ctrl+Space"]
-     [switch-button "search" "show-searchbox" "Ctrl+F"]
-     [switch-button "plus" "show-enter-task" "Ctrl+Enter"]]]])
+     editor-switch
+     search-switch
+     entry-switch]]])
 
 
 (defn select
@@ -136,10 +141,12 @@
    [:td (:headline t)]])
 
 (defn task-list []
-  [:table
+  (let [show? (if (not (db/editor?))
+                {:style {:display "inline-block"}}
+                {:style {:display "none"}})]
+  [:table {:display show?}
    (for [t (db/tasks)]
-     [task t])])
-
+     [task t])]))
 
 (defn app
   " -> Component
@@ -159,7 +166,5 @@
 
 (big-bang)
 
-;; Nächste Schritte
-;; - funktion um den Status von editor zu bekommen
-;; - in der Komponente feststellen ob der status true oder false ist"
-;; -  wenn true, dann editor zeigen, sonst nicht
+(db/switch-entry!)
+(db/switch-entry!)

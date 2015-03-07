@@ -179,10 +179,20 @@
      {:todo "DONE" :headline "Verzeichnis-akiee von Grund auf euida, mit leinigen templates"}]}
 
 (defn editor?
-  "->  Boolean
+  "-> Boolean
   returns the state of the editor"
   []
   (:editor? @app-state))
+
+(defn switch-editor!
+  "-> Boolean
+  switches the editor? state and returns it"
+  []
+  (if (editor?)
+    (let [new-state (global-state. false (:search? @app-state) (:entry? @app-state) (:ls @app-state) (:lon @app-state))]
+      (reset! app-state new-state))
+    (let [new-state (global-state. true (:search? @app-state) (:entry? @app-state) (:ls @app-state) (:lon @app-state))]      
+      (reset! app-state new-state))))
 
 (defn search?
   "-> Boolean
@@ -190,8 +200,29 @@
   []
   (:search? @app-state))
 
+(defn switch-search!
+  "-> GlobalState
+  switches the search? state and the new app-state"
+  []
+  (if (search?)
+    (let [new-state (global-state. (:editor? @app-state) false (:entry? @app-state) (:ls @app-state) (:lon @app-state))]
+      (reset! app-state new-state))
+    (let [new-state (global-state. (:editor? @app-state) true (:entry? @app-state) (:ls @app-state) (:lon @app-state))]
+      (reset! app-state new-state))))
+
+
 (defn entry?
   "-> Boolean
   returns the state of the task entry"
   []
   (:entry? @app-state))
+
+(defn switch-entry!
+  "-> GlobalState
+  switches the search? state and the new app-state"
+  []
+  (if (entry?)
+    (let [new-state (global-state. (:editor? @app-state) (:search? @app-state) false (:ls @app-state) (:lon @app-state))]
+      (reset! app-state new-state))
+    (let [new-state (global-state. (:editor? @app-state) (:search? @app-state) true (:ls @app-state) (:lon @app-state))]
+      (reset! app-state new-state))))
