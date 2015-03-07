@@ -177,3 +177,21 @@
      {:todo "DOING" :headline "Bräter 4 Stunden toasten"}
      {:todo "TODE" :headline "Ich teile nicht! schreiben"}
      {:todo "DONE" :headline "Verzeichnis-akiee von Grund auf euida, mit leinigen templates"}]}
+
+(defn editor?
+  "->  Boolean
+  returns the state of the editor"
+  []
+  (:editor? @app-state))
+
+(defn search?
+  "-> Boolean
+  returns the state of the search box"
+  []
+  (:search? @app-state))
+
+(defn entry?
+  "-> Boolean
+  returns the state of the task entry"
+  []
+  (:entry? @app-state))

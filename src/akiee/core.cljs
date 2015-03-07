@@ -3,7 +3,7 @@
             [clojure.string :as string]
             [reagent.core :as r]
             [akiee.constants :as c]
-            [akiee.app-db :refer [app-state tasks]]))
+            [akiee.app-db :as db]))
 
 (enable-console-print!)
 
@@ -98,28 +98,37 @@
   "-> Component
   The entry form for entering tasks"
   []
-  [:div#enter-task-div.container-fluid
+  (let [show? (if (db/entry?)
+                {:style {:display "block"}}
+                {:style {:display "none"}})]
+  [:div#enter-task-div.container-fluid show?
    [:form#enter-task.row
     [:input#enter-headline.form-control {:type "text" :placeholder "Enter Headline"}]
     [enter-task-status ["TODO", "DOING", "DONE"]]
     [enter-task-project ["Inbox"]]
     [:button.btn.btn-default {:type "submit"} "Create"]
-    [:button#cancel-enter-task.btn.btn-link {:type "button"} "Cancel"]]])
+    [:button#cancel-enter-task.btn.btn-link {:type "button"} "Cancel"]]]))
 
 (defn search
   "-> Component
   The entry form for searching tasks"
   []
-  [:div#search-form
+  (let [show? (if (db/search?)
+                {:style {:display "flex"}}
+                {:style {:display "none"}})]
+  [:div#search-form show?
    [:input#search-input.form-control {:type "text"}]
-   [:span#search-input-icon.fa.fa-search]])
+   [:span#search-input-icon.fa.fa-search]]))
 
 (defn editor
   "-> Component
   The textarea to directly edit the task list in markdown"
   []
-  [:div#editor
-   [:textarea {:rows 3}]])
+  (let [show? (if (db/editor?)
+                {:style {:display "inline-block"}}
+                {:style {:display "none"}})]
+  [:div#editor show?
+   [:textarea {:rows 3}]]))
 
 (defn task [t]
   [:tr
@@ -128,7 +137,7 @@
 
 (defn task-list []
   [:table
-   (for [t (tasks)]
+   (for [t (db/tasks)]
      [task t])])
 
 
@@ -149,3 +158,8 @@
     (.getElementById js/document "root")))
 
 (big-bang)
+
+;; Nächste Schritte
+;; - funktion um den Status von editor zu bekommen
+;; - in der Komponente feststellen ob der status true oder false ist"
+;; -  wenn true, dann editor zeigen, sonst nicht
