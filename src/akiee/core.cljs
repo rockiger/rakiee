@@ -2,7 +2,7 @@
   (:require [clojure.browser.repl :as repl]
             [clojure.string :as string]
             [reagent.core :as r]
-            [akiee.constants :as c]
+            [akiee.constants :as c :refer [TODO DOING DONE ALL]]
             [akiee.app-db :as db]))
 
 (enable-console-print!)
@@ -11,12 +11,8 @@
 ;; TODO figwhell for node-webkit
 
 ;; =================
-;; Constants:
+;; Constants: in akiee.constants
 
-(def TODO "TODO")
-(def DONE "DONE")
-(def DOING "DOING")
-(def ALL "ALL")
 
 ;; =================
 ;; Data definitions:
@@ -41,14 +37,28 @@
 ;TODO
 (defn list-state-button
   "String String String -> Component
-  Consumes the text tx, the id and the title t of the button;
+  Consumes the text tx, the id and the title t, the state,
+  the test function tfn, the on-click function onfn of the button;
   produces the component for the button."
-  [tx id t]
-  [:button.btn.btn-default.navbar-btn.btn-state {:type "button" :id id :title t} tx])
+  [tx id t state tfn onfn]
+  (let [active? (if (and (= (tfn) state) (not (db/editor?))) "active" "")]
+    [:button.btn.btn-default.navbar-btn.btn-state
+     {:type "button" :id id :title t :class active? :on-click onfn} tx]))
+  
+
+(def todo-button  [list-state-button "Todo" "show-todo" "Ctrl+1" TODO
+                                     db/list-state db/switch-todo!])
+(def doing-button [list-state-button "Doing" "show-doing" "Ctrl+2 / Ctrl+Space" DOING
+                                     db/list-state db/switch-doing!])
+(def done-button  [list-state-button "Done" "show-done" "Ctrl+3" DONE
+                                     db/list-state db/switch-done!])
+(def board-button [list-state-button "Board" "show-all" "Ctrl+4" ALL
+                                     db/list-state db/switch-all!])
 
 (defn switch-button
   "String String String -> Component
-  Consumes the icon name in, the id and title t of the button, the test function tfn?;
+  Consumes the icon name in, the id and title t of the button, the test function tfn?,
+  the on-click function onfn of the button.
   produces the component for the button."
   [in id t tfn? onfn]
   (let [icon-name (str "fa-" in)
@@ -68,10 +78,10 @@
    [:div.container-fluid
     [:div.navbar-flex
      [:div#taskbuttons.btn-group
-      [list-state-button "Todo" "show-todo" "Ctrl+1"]
-      [list-state-button "Doing" "show-doing" "Ctrl+2 / Ctrl+Space"]
-      [list-state-button "Done" "show-done" "Ctrl+3"]]
-     [list-state-button "Board" "show-all" "Ctrl+4"]
+      todo-button
+      doing-button
+      done-button]
+     board-button
      [:div.spacer]
      editor-switch
      search-switch
@@ -144,9 +154,10 @@
   (let [show? (if (not (db/editor?))
                 {:style {:display "inline-block"}}
                 {:style {:display "none"}})]
-  [:table {:display show?}
-   (for [t (db/tasks)]
-     [task t])]))
+    [:table {:display show?}
+     [:tbody
+      (for [t (db/tasks)]
+        [task t])]]))
 
 (defn app
   " -> Component

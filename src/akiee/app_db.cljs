@@ -115,7 +115,7 @@
 (def app-state  (rc/atom (load-app-state FP)))
 (def test-state (rc/atom (load-app-state fo/testfile)))
 
-;(println @app-state)
+(println (:ls @app-state))
 
 
 (defn higher-rank?
@@ -166,23 +166,30 @@
   shows the tasks of the app-stat, according to the current ListState"
   []
   (tasks-helper app-state))
-(println (tasks))
-;; old app-state :
-#_
-{:tasks
-    [{:todo "DOING" :headline "Remove Ace-dependency from enterTask.js"}
-     {:todo "DOING" :headline "AuxMoney Test starten"}
-     {:todo "DOING" :headline "Karo und Diana das Briefing für das Designn schicken"}
-     {:todo "DOING" :headline "Licht reklamieren, Kontoauszug raussuchen"}
-     {:todo "DOING" :headline "Bräter 4 Stunden toasten"}
-     {:todo "TODE" :headline "Ich teile nicht! schreiben"}
-     {:todo "DONE" :headline "Verzeichnis-akiee von Grund auf euida, mit leinigen templates"}]}
 
 (defn editor?
   "-> Boolean
   returns the state of the editor"
   []
   (:editor? @app-state))
+
+(defn entry?
+  "-> Boolean
+  returns the state of the task entry"
+  []
+  (:entry? @app-state))
+
+(defn search?
+  "-> Boolean
+  returns the state of the search box"
+  []
+  (:search? @app-state))
+
+(defn list-state
+  "-> ListStat
+  returns the state of the List"
+  []
+  (:ls @app-state))
 
 (defn switch-editor!
   "-> Boolean
@@ -191,14 +198,8 @@
   (if (editor?)
     (let [new-state (global-state. false (:search? @app-state) (:entry? @app-state) (:ls @app-state) (:lon @app-state))]
       (reset! app-state new-state))
-    (let [new-state (global-state. true (:search? @app-state) (:entry? @app-state) (:ls @app-state) (:lon @app-state))]      
+    (let [new-state (global-state. true false false (:ls @app-state) (:lon @app-state))]      
       (reset! app-state new-state))))
-
-(defn search?
-  "-> Boolean
-  returns the state of the search box"
-  []
-  (:search? @app-state))
 
 (defn switch-search!
   "-> GlobalState
@@ -207,15 +208,8 @@
   (if (search?)
     (let [new-state (global-state. (:editor? @app-state) false (:entry? @app-state) (:ls @app-state) (:lon @app-state))]
       (reset! app-state new-state))
-    (let [new-state (global-state. (:editor? @app-state) true (:entry? @app-state) (:ls @app-state) (:lon @app-state))]
+    (let [new-state (global-state. false true false (:ls @app-state) (:lon @app-state))]
       (reset! app-state new-state))))
-
-
-(defn entry?
-  "-> Boolean
-  returns the state of the task entry"
-  []
-  (:entry? @app-state))
 
 (defn switch-entry!
   "-> GlobalState
@@ -224,5 +218,38 @@
   (if (entry?)
     (let [new-state (global-state. (:editor? @app-state) (:search? @app-state) false (:ls @app-state) (:lon @app-state))]
       (reset! app-state new-state))
-    (let [new-state (global-state. (:editor? @app-state) (:search? @app-state) true (:ls @app-state) (:lon @app-state))]
+    (let [new-state (global-state. false false true (:ls @app-state) (:lon @app-state))]
       (reset! app-state new-state))))
+
+(defn switch-list-state!
+  "ListState -> GlobalState
+  Consumes a Liststate ls switches the ls variable and editor? search? search? accordingly"
+  [ls]
+  (let [lon (:lon @app-state)]
+    (do
+      (reset! app-state (global-state. false false false ls lon))
+      (println (:ls @app-state)))))
+
+(defn switch-todo!
+  "-> GlobalState
+  switches the ls variable to TODO and editor? search? search? accordingly"
+  []
+  (switch-list-state! TODO))
+
+(defn switch-doing!
+  "-> GlobalState
+  switches the ls variable to DOING and editor? search? search? accordingly"
+  []
+  (switch-list-state! DOING))
+
+(defn switch-done!
+  "-> GlobalState
+  switches the ls variable to DONE and editor? search? search? accordingly"
+  []
+  (switch-list-state! DONE))
+
+(defn switch-all!
+  "-> GlobalState
+  switches the ls variable to ALL and editor? search? search? accordingly"
+  []
+  (switch-list-state! ALL))

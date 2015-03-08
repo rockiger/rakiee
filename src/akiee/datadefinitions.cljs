@@ -33,7 +33,7 @@
 ;; - tags default {}
 ;; - todo: task state, default null
 ;; - priority, default null
-;; - scheduled, default null
+;; - scheduled, defa ult null
 ;; - deadline, default null
 ;; - drawer, default {}
 ;; - rank: unique Ranking in File, default null
@@ -169,7 +169,7 @@
    (= ls TODO)  (ddd)
    (= ls DOING) (ddd)
    (= ls DONE)  (ddd)
-   :else        (ddd)))
+   (= ls ALL)   (ddd)))
 
 
 ;; NodeStyle is one of:
