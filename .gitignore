@@ -12,3 +12,5 @@ pom.xml
 .lein-failures
 .repl-*
 *~
+/.idea/
+akiee.iml
