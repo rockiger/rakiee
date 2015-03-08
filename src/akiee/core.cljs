@@ -114,9 +114,9 @@
   The entry form for entering tasks"
   []
   (let [show? (if (db/entry?)
-                {:style {:display "block"}}
-                {:style {:display "none"}})]
-  [:div#enter-task-div.container-fluid show?
+                {:class ""}
+                {:class "closed"})]
+  [:div#enter-task-div.container-fluid.slider show?
    [:form#enter-task.row
     [:input#enter-headline.form-control {:type "text" :placeholder "Enter Headline"}]
     [enter-task-status ["TODO", "DOING", "DONE"]]
@@ -129,9 +129,9 @@
   The entry form for searching tasks"
   []
   (let [show? (if (db/search?)
-                {:style {:display "flex"}}
-                {:style {:display "none"}})]
-  [:div#search-form show?
+                {:class ""}
+                {:class "closed"})]
+  [:div#search-form.slider show?
    [:input#search-input.form-control {:type "text"}]
    [:span#search-input-icon.fa.fa-search]]))
 
@@ -176,6 +176,3 @@
     (.getElementById js/document "root")))
 
 (big-bang)
-
-(db/switch-entry!)
-(db/switch-entry!)

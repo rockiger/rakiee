@@ -27,4 +27,8 @@
      [:.navbar-flex :#enter-task :#search-form :#editor {:display "flex"}]
      [:#editor [:textarea {:width "100%" :height "100%"}]]
 
-     [:.spacer {:flex 1}])
+     [:.spacer {:flex 1}]
+
+     [:.slider {:overflow-y "hidden" :height (px 65)
+                :transition "height .5s cubic-bezier(0, 1, 0.5, 1)"}]
+     [:.slider.closed {:height (px 0) :transition "height .5s cubic-bezier(0, 1, 0.5, 1)"}])

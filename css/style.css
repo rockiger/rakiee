@@ -21,3 +21,14 @@ body {
 .spacer {
   flex: 1;
 }
+
+.slider {
+  transition: height .5s cubic-bezier(0, 1, 0.5, 1);
+  height: 65px;
+  overflow-y: hidden;
+}
+
+.slider.closed {
+  transition: height .5s cubic-bezier(0, 1, 0.5, 1);
+  height: 0px;
+}
