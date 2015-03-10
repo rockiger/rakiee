@@ -4,6 +4,21 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
+     <script type="text/javascript">
+        var gnomeExternalCss='css/gnome.css';
+        var ubuntuExternalCss='css/ubuntu.css';
+        var cssUrl = '';
+
+        if (process.env.DESKTOP_SESSION === "gnome") {
+            cssUrl = gnomeExternalCss;
+        } else if (process.env.DESKTOP_SESSION === "ubuntu" || process.env.DESKTOP_SESSION === 'ubntu-2d') {
+            cssUrl = ubuntuExternalCss;
+        }
+
+        if (cssUrl) {
+            document.write('<link rel="stylesheet" type="text/css" href="'+ cssUrl +'">');
+        }
+    </script>
   </head>
     <body>
         <div id="root"></div>
@@ -21,7 +36,7 @@
                 gui.Window.reloadIgnoringCache();
             }
             fs.watch(path, reload);*/
-            gui.Window.get().showDevTools();
+            //gui.Window.get().showDevTools();
         </script>
     </body>
 </html>

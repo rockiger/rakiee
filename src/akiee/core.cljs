@@ -44,7 +44,7 @@
   (let [active? (if (and (= (tfn) state) (not (db/editor?))) "active" "")]
     [:button.btn.btn-default.navbar-btn.btn-state
      {:type "button" :id id :title t :class active? :on-click onfn} tx]))
-  
+
 
 (def todo-button  [list-state-button "Todo" "show-todo" "Ctrl+1" TODO
                                      db/list-state db/switch-todo!])
@@ -98,7 +98,7 @@
 
 (defn enter-task-status
   "ListOfTaskState -> Component
-  Consumes the a list of taskstate lot; 
+  Consumes the a list of taskstate lot;
   produces the component of the select field for the state of the new task."
   [lot]
   (select lot))
@@ -154,7 +154,7 @@
   (let [show? (if (not (db/editor?))
                 {:style {:display "inline-block"}}
                 {:style {:display "none"}})]
-    [:table {:display show?}
+    [:table.table {:display show?}
      [:tbody
       (for [t (db/tasks)]
         [task t])]]))

@@ -9,13 +9,19 @@ body {
   margin: 0;
 }
 
+navbar-header {
+  height: 52px;
+  width: 100%;
+}
+
 .navbar-flex, #enter-task, #search-form, #editor {
   display: flex;
 }
 
-#editor textarea {
-  height: 100%;
-  width: 100%;
+.navbar-default {
+  border-color: #a1a1a1;
+  background-image: none;
+  background-color: #ededed;
 }
 
 .spacer {
@@ -31,4 +37,274 @@ body {
 .slider.closed {
   transition: height .5s cubic-bezier(0, 1, 0.5, 1);
   height: 0px;
+}
+
+#editor textarea {
+  height: 100%;
+  width: 100%;
+}
+
+#editor, #list {
+  right: 0;
+  left: 0;
+  bottom: 0;
+  top: 52px;
+  position: absolute;
+  margin: 0;
+}
+
+#list, table, tbody, tr {
+  width: 100%;
+}
+
+#list {
+  overflow-y: auto;
+  table-layout: fixed;
+}
+
+#list:hover {
+  outline: none;
+}
+
+.nav, .pagination, .carousel, .hover-button {
+  cursor: pointer;
+}
+
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
+  vertical: middle;
+}
+
+.kanban-column {
+  background-color: #ddd;
+}
+
+.kanban-column tr {
+  background-color: #fff;
+}
+
+.kanban-column td {
+  border-top: 1px solid #ddd;
+  line-height: 1.428571143;
+  padding: 8px;
+}
+
+#kanban-row:hover {
+  cursor: default;
+  background-color: transparent;
+}
+
+.todo td {
+  background-color: #d9edf7 !important;
+  color: #31708f;
+}
+
+.doing td {
+  background-color: #dff0d8 !important;
+  color: #3c763d;
+}
+
+.done td {
+  text-decoration: line-through;
+  color: #777 !important;
+}
+
+.selected {
+  background-color: #729FCF;
+  color: white;
+}
+
+tr:nth-child(2) {
+  width: 100%;
+}
+
+tr:hover {
+  background-color: #f2f2f2;
+}
+
+tr.selected:hover {
+  background-color: #4281c3;
+}
+
+.table>thead>tr>th.kanban-column, .table>tbody>tr>th.kanban-column, .table>tfoot>tr>th.kanban-column, .table>thead>tr>td.kanban-column, .table>tbody>tr>td.kanban-column, .table>tfoot>tr>td.kanban-column {
+  vertical-align: top;
+  width: 30%;
+}
+
+#enterTaskDiv, #search-form {
+  height: 65px;
+  display: none;
+  border-bottom: 1px solid #a1a1a1;
+  padding-bottom: 10px;
+  margin-top: -10px;
+  background-color: #d6d6d6;
+}
+
+#enterTask, #search-form.row {
+  margin-top: 20px;
+}
+
+#enterTask div {
+  padding-right: 0;
+}
+
+#search-input {
+  padding-left: 30px;
+}
+
+#search-input-icon {
+  padding: 8px, 27px;
+  left: 0px;
+  position: absolute;
+}
+
+.empty-list-image {
+  height: 100%;
+  overflow: hidden;
+}
+
+.empty-list {
+  width: 100%;
+  top: 30%;
+  position: fixed;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.btn, .btn:active, .btn:focus {
+  line-height: 14px;
+  font-size: 16px;
+  margin-left: 3px;
+  box-shadow: inset 0 1px white, 0 1px white;
+  color: #2e3436;
+  border-radius: 3px;
+  background-image: linear-gradient(to bottom, #fafafa 0%, #ededed 40%, #e0e0e0 100%);
+}
+
+.btn:focus, .btn:focus:active, .btn.active:focus, .btn-group>.btn:focus, .btn-group-vertical>.btn:focus {
+  outline-width: 1px;
+  outline-style: dashed;
+  outline-offset: -4px;
+  outline-color: rgba(46,52,52,0.3);
+}
+
+.btn.active, .btn.active:hover, .btn:hover:active {
+  border-radius: 3px;
+  background-image: linear-gradient(#d6d6d6, #e0e0e0);
+  font-size: 16px;
+  color: #2e3436;
+  box-shadow: none;
+}
+
+.btn-default, .btn-default:focus, .btn-default:active, .btn-default:focus:active {
+  background-position: 0;
+  background-color: transparent;
+  transition: all 200ms ease-out;
+  padding: 8px 16px;
+  outline-offset: -4px;
+  text-shadow: 0 1px rgba(256, 256, 256, 0.76923);
+  icon-shadow: 0 1px rgba(256, 256, 256, 0.76923);
+  border-color: #a1a1a1;
+}
+
+.btn-default:hover {
+  background-position: 0;
+  background-image: linear-gradient(to bottom, white 0%, #f7f7f7 40%, #ededed 100%);
+}
+
+.btn-default.active, .btn-default.active:hover, .btn-default:hover:active {
+  transition: all 200ms ease-out;
+  outline-offset: -4px;
+  outline: rgba(46, 52, 54, 0.3) 1px dashed !important;
+  text-shadow: 0 1px rgba(256, 256, 256, 0.76923);
+  icon-shadow: 0 1px rgba(256, 256, 256, 0.76923);
+  border-color: #a1a1a1;
+}
+
+.btn-square, .btn-square:hover, .btn-square.active, .btn-square.active:hover, .btn-square:active, .btn-square:hover:active, btn-square:focus {
+  padding: 8px 9px !important;
+  margin-left: 6px !important;
+  font-size: 13px !important;
+}
+
+.btn-link, .btn-link:focus, btn-link:active {
+  text-decoration: underline;
+  background: none;
+  color: #2a76c6;
+  box-shadow: none;
+}
+
+.btn-link:hover {
+  color: #4a90d9;
+}
+
+#show-enterTask {
+  padding: 8px 8px 8px 10px !important;
+}
+
+*:before {
+  font-size: 13px;
+}
+
+table td .glyphicon-chevron-up {
+  color: #54595a;
+  padding-left: 9px;
+  padding: 8px;
+  border: 1px solid transparent;
+}
+
+.glyphicon-chevron-down, .hover-button {
+  color: #54595a;
+  padding-left: 9px;
+  padding: 8px;
+  border: 1px solid transparent;
+}
+
+table td .glyphicon-chevron-down {
+  color: #54595a;
+  padding-left: 8px;
+}
+
+table td .glyphicon-chevron-up:hover, table td .glyphicon-chevron-down:hover {
+  background-image: linear-gradient(to bottom, white 0%, #f7f7f7 40%, #ededed 100%);
+  border-radius: 3px;
+  border: 1px solid #a1a1a1;
+}
+
+.hover-button:hover {
+  background-image: linear-gradient(to bottom, white 0%, #f7f7f7 40%, #ededed 100%);
+  border-radius: 3px;
+  border: 1px solid #a1a1a1;
+}
+
+btn-group>.btn:first-child, .btn-group>.btn:last-child {
+  width: 100px;
+}
+
+.btn-group>.btn {
+  padding-top: 7px !important;
+  height: 32px;
+  width: 98px;
+}
+
+.todo td glyphicon-chevron-up, .todo td glyphicon-chevron-down, .doing td glyphicon-chevron-up, .doing td glyphicon-chevron-down, .done td glyphicon-chevron-up, .done td glyphicon-chevron-down, .selected td glyphicon-chevron-up, .selected td glyphicon-chevron-down, tr:hover td glyphicon-chevron-up, tr:hover td glyphicon-chevron-down {
+  border-color: transparent;
+}
+
+table td .glyphicon-chevron-up:focus, table td .glyphicon-chevron-down:focus {
+  outline-offset: -4px;
+  outline: rgba(46, 52, 54, 0.3) 1px dashed !important;
+}
+
+.form-control {
+  transition: all 200ms ease-out;
+  background-image: linear-gradient(#f7f7f7, #ffffff 90%);
+  background-color: transparent;
+  box-shadow: inset 0 3px transparent;
+  border-radius: 3px;
+  border: garden.types.CSSUnit@a22e2a2solid#a1a1a1;
+}
+
+.form-control:focus {
+  box-shadow: inset 0 3px rgba(0, 0, 0, 0.02);
+  border-color: #4a90d9;
 }
