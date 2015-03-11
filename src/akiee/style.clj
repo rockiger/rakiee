@@ -69,14 +69,13 @@
       :.table>tbody>tr>td.kanban-column :.table>tfoot>tr>td.kanban-column
       {:width (percent 30) :vertical-align "top"}]
 
-     [:#enterTaskDiv :#search-form {:background-color "#d6d6d6" :margin-top (px -10)
-                                    :padding-bottom (px 10)
-                                    :border-bottom "1px solid #a1a1a1" :display "none"
-                                    :height (px 65)}]
+     [:#enter-task-div :#search-form {:background-color "#d6d6d6"
+                                      :border-bottom "1px solid #a1a1a1" }]
+     [:#search-form {:align-items "center" :justify-content "center"}]
      [:#enterTask :#search-form.row {:margin-top (px 20)}]
      [:#enterTask [:div {:padding-right 0}]]
 
-     [:#search-input {:padding-left (px 30)}]
+     [:#search-input {:padding-left (px 30) :width (px 300)}]
      [:#search-input-icon {:position "absolute" :left (px 0) :padding [(px 8) (px 27)]}]
 
      [:.empty-list-image {:overflow "hidden" :height (percent 100)}]
@@ -108,7 +107,6 @@
     [:.btn-default.active :.btn-default.active:hover :.btn-default:hover:active
      {:border-color medium-grey :icon-shadow "0 1px rgba(256, 256, 256, 0.76923)"
       :text-shadow "0 1px rgba(256, 256, 256, 0.76923)"
-      :outline "rgba(46, 52, 54, 0.3) 1px dashed !important"
       :outline-offset (px -4)
       :transition "all 200ms ease-out"}]
     [:.btn-square :.btn-square:hover :.btn-square.active :.btn-square.active:hover
@@ -146,7 +144,7 @@
                    {:outline "rgba(46, 52, 54, 0.3) 1px dashed !important"
                     :outline-offset (px -4)}]]]
 
-     [:.form-control {:border (str (px 1) "solid" medium-grey) :border-radius (px 3)
+     [:.form-control {:border "1px solid medium-grey" :border-radius (px 3)
                       :box-shadow "inset 0 3px transparent" :background-color "transparent"
                       :background-image "linear-gradient(#f7f7f7, #ffffff 90%)"
                       :transition "all 200ms ease-out"}]
