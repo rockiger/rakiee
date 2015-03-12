@@ -18,7 +18,6 @@
 
 (css {:output-to "css/style.css"}
      [:body {:margin 0
-             :padding-top (px 52)
              :font-family "'Source Sans Pro', Cantarell, Ubuntu, 'Helvetica Neue', Helvetica, Calibri, Verdana, Arial, sans-serif"
              :font-size (px 16)
              :color fc
@@ -26,6 +25,7 @@
              :overflow-y "hidden"
              :height "100vh"}]
 
+     [:#toolbar {:border-radius 0 :border-width "0 0 1px 0" :margin-bottom 0}]
      [:navbar-header {:width (percent 100) :height (px 52)}]
      [:.navbar-flex :#enter-task :#search-form :#editor {:display "flex"}]
      [:.navbar-default {:background-color "#ededed" :background-image "none"
@@ -33,8 +33,8 @@
 
      [:.spacer {:flex 1}]
 
-     [:.slider {:overflow-y "hidden" :height (px 65)
-                :transition "height .5s cubic-bezier(0, 1, 0.5, 1)"}]
+     [:.slider {:overflow-y "hidden" :height (px 46)
+                :transition "height .3s cubic-bezier(0, 1, 0.5, 1)"}]
      [:.slider.closed {:height (px 0) :transition "height .5s cubic-bezier(0, 1, 0.5, 1)"}]
 
 
@@ -71,12 +71,18 @@
 
      [:#enter-task-div :#search-form {:background-color "#d6d6d6"
                                       :border-bottom "1px solid #a1a1a1" }]
-     [:#search-form {:align-items "center" :justify-content "center"}]
+     [:#search-form {:align-items "center" :justify-content "center" :margin-top "-3px"}]
      [:#enterTask :#search-form.row {:margin-top (px 20)}]
      [:#enterTask [:div {:padding-right 0}]]
 
-     [:#search-input {:padding-left (px 30) :width (px 300)}]
-     [:#search-input-icon {:position "absolute" :left (px 0) :padding [(px 8) (px 27)]}]
+     [:#search-input {:padding-left (px 30) :width (px 300)
+                      }
+      ]
+     [:#search-input {:background "url('./img/folder-saved-search.png') no-repeat scroll 7px 9px"
+                      :background-color "#fff"}]
+     [:#search-input-icon {:position "absolute" :left (px 0) :padding "8px 27px"
+                           :background-image "url('./img/folder-saved-search-symbolic.svg')"
+                           :background-color "white"}]
 
      [:.empty-list-image {:overflow "hidden" :height (percent 100)}]
      [:.empty-list {:vertical-align "middle" :text-align "center" :position "fixed"
@@ -144,7 +150,7 @@
                    {:outline "rgba(46, 52, 54, 0.3) 1px dashed !important"
                     :outline-offset (px -4)}]]]
 
-     [:.form-control {:border "1px solid medium-grey" :border-radius (px 3)
+     [:.form-control {:border "1px solid #a1a1a1" :border-radius (px 3)
                       :box-shadow "inset 0 3px transparent" :background-color "transparent"
                       :background-image "linear-gradient(#f7f7f7, #ffffff 90%)"
                       :transition "all 200ms ease-out"}]

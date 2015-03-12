@@ -74,7 +74,7 @@
   "-> Component
   The toolbar for changing the state of the Akiee"
   []
-  [:nav#toolbar.navbar.navbar-default.navbar-fixed-top {:role "navigation"}
+  [:nav#toolbar.navbar.navbar-default {:role "navigation"}
    [:div.container-fluid
     [:div.navbar-flex
      [:div#taskbuttons.btn-group
@@ -132,8 +132,7 @@
                 {:class ""}
                 {:class "closed"})]
   [:div#search-form.slider show?
-   [:input#search-input.form-control {:type "text"}]
-   [:span#search-input-icon.fa.fa-search]]))
+    [:input#search-input.form-control {:type "text"}]]))
 
 (defn editor
   "-> Component
