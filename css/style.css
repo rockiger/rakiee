@@ -19,7 +19,7 @@ navbar-header {
   width: 100%;
 }
 
-.navbar-flex, #enter-task, #search-form, #editor {
+.navbar-flex, #enter-task, #enter-task-div, #search-form, #editor {
   display: flex;
 }
 
@@ -122,6 +122,10 @@ tr:nth-child(2) {
   width: 100%;
 }
 
+tr {
+  background-color: white;
+}
+
 tr:hover {
   background-color: #f2f2f2;
 }
@@ -135,12 +139,31 @@ tr.selected:hover {
   width: 30%;
 }
 
+#enter-task {
+  width: 100%;
+  margin: 0;
+}
+
+#enter-task input, #enter-task select {
+  height: 32px;
+  margin-right: 8px;
+}
+
+#enter-headline {
+  flex: 1;
+  width: 45%;
+}
+
+#enter-task-status {
+  width: 116px;
+}
+
 #enter-task-div, #search-form {
   border-bottom: 1px solid #a1a1a1;
   background-color: #d6d6d6;
 }
 
-#search-form {
+#search-form, #enter-task-div, enter-task {
   justify-content: center;
   margin-top: -3px;
   align-items: center;
@@ -155,12 +178,13 @@ tr.selected:hover {
 }
 
 #search-input {
+  height: 32px;
   width: 300px;
   padding-left: 30px;
 }
 
 #search-input {
-  background: url('./img/folder-saved-search.png') no-repeat scroll 7px 9px;
+  background: url('./img/search.png') no-repeat scroll 9px 7px;
   background-color: #fff;
 }
 

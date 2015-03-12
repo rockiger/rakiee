@@ -27,7 +27,7 @@
 
      [:#toolbar {:border-radius 0 :border-width "0 0 1px 0" :margin-bottom 0}]
      [:navbar-header {:width (percent 100) :height (px 52)}]
-     [:.navbar-flex :#enter-task :#search-form :#editor {:display "flex"}]
+     [:.navbar-flex :#enter-task :#enter-task-div :#search-form :#editor {:display "flex"}]
      [:.navbar-default {:background-color "#ededed" :background-image "none"
                         :border-color medium-grey}]
 
@@ -61,6 +61,7 @@
      [:.selected {:background-color "#729FCF" :color "white"}]
 
      [(keyword "tr:nth-child(2)") {:width (percent 100)}]
+     [:tr {:background-color "white"}]
      [:tr:hover {:background-color "#f2f2f2"}]
      [:tr.selected:hover {:background-color "#4281c3"}]
 
@@ -69,16 +70,18 @@
       :.table>tbody>tr>td.kanban-column :.table>tfoot>tr>td.kanban-column
       {:width (percent 30) :vertical-align "top"}]
 
+     [:#enter-task {:margin 0 :width (percent 100)}]
+     [:#enter-task [:input :select {:margin-right (px 8) :height (px 32)}]]
+     [:#enter-headline {:width (percent 45) :flex 1}]
+     [:#enter-task-status {:width (px 116)}]
      [:#enter-task-div :#search-form {:background-color "#d6d6d6"
                                       :border-bottom "1px solid #a1a1a1" }]
-     [:#search-form {:align-items "center" :justify-content "center" :margin-top "-3px"}]
+     [:#search-form :#enter-task-div :enter-task {:align-items "center" :justify-content "center" :margin-top "-3px"}]
      [:#enterTask :#search-form.row {:margin-top (px 20)}]
      [:#enterTask [:div {:padding-right 0}]]
 
-     [:#search-input {:padding-left (px 30) :width (px 300)
-                      }
-      ]
-     [:#search-input {:background "url('./img/folder-saved-search.png') no-repeat scroll 7px 9px"
+     [:#search-input {:padding-left (px 30) :width (px 300) :height (px 32)}]
+     [:#search-input {:background "url('./img/search.png') no-repeat scroll 9px 7px"
                       :background-color "#fff"}]
      [:#search-input-icon {:position "absolute" :left (px 0) :padding "8px 27px"
                            :background-image "url('./img/folder-saved-search-symbolic.svg')"

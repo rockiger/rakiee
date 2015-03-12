@@ -117,7 +117,7 @@
                 {:class ""}
                 {:class "closed"})]
   [:div#enter-task-div.container-fluid.slider show?
-   [:form#enter-task.row
+   [:form#enter-task
     [:input#enter-headline.form-control {:type "text" :placeholder "Enter Headline"}]
     [enter-task-status ["TODO", "DOING", "DONE"]]
     [enter-task-project ["Inbox"]]
