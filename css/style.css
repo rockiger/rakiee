@@ -34,13 +34,13 @@ navbar-header {
 }
 
 .slider {
-  transition: height .3s cubic-bezier(0, 1, 0.5, 1);
+  transition: height .1s linear;
   height: 46px;
   overflow-y: hidden;
 }
 
 .slider.closed {
-  transition: height .5s cubic-bezier(0, 1, 0.5, 1);
+  transition: height .1s linear;
   height: 0px;
 }
 
@@ -165,7 +165,7 @@ tr.selected:hover {
 
 #search-form, #enter-task-div, enter-task {
   justify-content: center;
-  margin-top: -3px;
+  margin-top: -1px;
   align-items: center;
 }
 

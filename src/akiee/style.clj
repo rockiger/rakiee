@@ -34,8 +34,8 @@
      [:.spacer {:flex 1}]
 
      [:.slider {:overflow-y "hidden" :height (px 46)
-                :transition "height .3s cubic-bezier(0, 1, 0.5, 1)"}]
-     [:.slider.closed {:height (px 0) :transition "height .5s cubic-bezier(0, 1, 0.5, 1)"}]
+                :transition "height .1s linear"}]
+     [:.slider.closed {:height (px 0) :transition "height .1s linear"}]
 
 
      [:#editor [:textarea {:width "100%" :height "100%"}]]
@@ -76,7 +76,7 @@
      [:#enter-task-status {:width (px 116)}]
      [:#enter-task-div :#search-form {:background-color "#d6d6d6"
                                       :border-bottom "1px solid #a1a1a1" }]
-     [:#search-form :#enter-task-div :enter-task {:align-items "center" :justify-content "center" :margin-top "-3px"}]
+     [:#search-form :#enter-task-div :enter-task {:align-items "center" :justify-content "center" :margin-top "-1px"}]
      [:#enterTask :#search-form.row {:margin-top (px 20)}]
      [:#enterTask [:div {:padding-right 0}]]
 
