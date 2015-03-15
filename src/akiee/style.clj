@@ -120,7 +120,7 @@
       :transition "all 200ms ease-out"}]
     [:.btn-square :.btn-square:hover :.btn-square.active :.btn-square.active:hover
      :.btn-square:active :.btn-square:hover:active :btn-square:focus
-     {:padding "8px 9px !important" :font-size "13px !important"
+     {:padding "8px 7px !important" :font-size "13px !important"
       :margin-left "6px !important"}]
 
     [:.btn-link :.btn-link:focus :btn-link:active
