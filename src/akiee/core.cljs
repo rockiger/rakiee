@@ -3,7 +3,8 @@
             [clojure.string :as string]
             [reagent.core :as r]
             [akiee.constants :as c :refer [TODO DOING DONE ALL]]
-            [akiee.app-db :as db]))
+            [akiee.app-db :as db]
+            [akiee.handlers :as h]))
 
 (enable-console-print!)
 
@@ -132,7 +133,7 @@
                 {:class ""}
                 {:class "closed"})]
   [:div#search-form.slider show?
-    [:input#search-input.form-control {:type "text"}]]))
+    [:input#search-input.form-control {:type "text" :on-key-down #(println %)}]]))
 
 (defn editor
   "-> Component
@@ -170,6 +171,7 @@
    [task-list]])
 
 (defn big-bang []
+  (h/register-keyevents)
   (r/render-component
     [app]
     (.getElementById js/document "root")))
