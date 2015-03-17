@@ -27,3 +27,15 @@
   "Register the keyhandlers"
   []
   (events/listen js/document "keyup" handle-keyup))
+
+(defn handle-enter-task
+  "DOMElement -> Bool
+  Handles the submisson of element e that are created by the enter task form"
+  [ev]
+  (let [form (aget ev "target")
+        els  (aget form "elements")
+        hdln (.-value (aget els "headline"))
+        tast (.-value (aget els "task-status"))
+        tapr (.-value (aget els "task-project"))]
+    (do
+      false)))

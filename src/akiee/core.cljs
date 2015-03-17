@@ -90,10 +90,10 @@
 
 
 (defn select
-  "ListOf* -> Component
-  Consumes a list of anything loa; produces the component of a select field."
-  [loa]
-  [:select#enter-task-status.form-control
+  "ListOf* String -> Component
+  Consumes a list of anything loa and a name; produces the component of a select field."
+  [loa n]
+  [:select#enter-task-status.form-control {:name n}
    (for [a loa]
      [:option a])])
 
@@ -102,13 +102,13 @@
   Consumes the a list of taskstate lot;
   produces the component of the select field for the state of the new task."
   [lot]
-  (select lot))
+  (select lot "task-status"))
 
 (defn enter-task-project
   "ListofString -> Component
   Consumes a list of string los; produces the component for the project select."
   [los]
-  (select los))
+  (select los "task-project"))
 
 (defn enter-task
   "-> Component
@@ -118,8 +118,9 @@
                 {:class ""}
                 {:class "closed"})]
   [:div#enter-task-div.container-fluid.slider show?
-   [:form#enter-task
-    [:input#enter-headline.form-control {:type "text" :placeholder "Enter Headline"}]
+   [:form#enter-task {:on-submit h/handle-enter-task}
+    [:input#enter-headline.form-control {:type "text" :placeholder "Enter Headline"
+                                         :name "headline"}]
     [enter-task-status ["TODO", "DOING", "DONE"]]
     [enter-task-project ["Inbox"]]
     [:button.btn.btn-default {:type "submit"} "Create"]
