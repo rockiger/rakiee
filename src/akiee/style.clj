@@ -159,5 +159,6 @@
                       :transition "all 200ms ease-out"}]
      [:.form-control:focus {:border-color light-blue
                             :box-shadow "inset 0 3px rgba(0, 0, 0, 0.02)"}]
+     [:#show-enter-task [:span:before {:content "\"+\"" :font-weight "bold"}]]
 
      )
