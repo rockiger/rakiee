@@ -38,4 +38,7 @@
         tast (.-value (aget els "task-status"))
         tapr (.-value (aget els "task-project"))]
     (do
+      (when (not= hdln "")
+        (db/add-task! tast hdln tapr))
+      ;; cancel enter-task
       false)))

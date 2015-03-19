@@ -73,4 +73,4 @@
 
 (is (= (load-file "") ""))
 (is (= (load-file "eurniate") ""))
-(is (= (load-file testfile) "# Inbox\n## TODO Test\n"))
+(is (= (load-file testfile) "# Inbox\n## TODO Test\nRANK: 9\n"))

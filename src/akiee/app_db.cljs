@@ -109,7 +109,8 @@
                                            {:key "orgode_33.##" :level 2  :headline "Test"
                                             :body ""  :tag nil :tags {} :todo "TODO"
                                             :priority nil :scheduled nil :deadline nil
-                                            :properties {} :drawer {} :rank nil :style nil}])))
+                                            :properties {} :drawer {} :rank "9"
+                                            :style nil}])))
 
 
 (def app-state  (rc/atom (load-app-state FP)))
@@ -198,7 +199,7 @@
   (if (editor?)
     (let [new-state (global-state. false (:search? @app-state) (:entry? @app-state) (:ls @app-state) (:lon @app-state))]
       (reset! app-state new-state))
-    (let [new-state (global-state. true false false (:ls @app-state) (:lon @app-state))]      
+    (let [new-state (global-state. true false false (:ls @app-state) (:lon @app-state))]
       (reset! app-state new-state))))
 
 (defn switch-search!
@@ -253,3 +254,60 @@
   switches the ls variable to ALL and editor? search? search? accordingly"
   []
   (switch-list-state! ALL))
+
+
+(defn ->rank-helper
+  "GlobalState -> Int
+  produces a new rank based on the tasks in the GlobalState gs"
+  [gs]
+  (let [filter-tasks (fn [x] (if (not= (:rank x) nil) true false ))]
+    (inc (int (:rank (last (vec (sort-by :rank higher-rank? (filter filter-tasks
+                                                               (:lon @gs))))))))))
+(is (= (->rank-helper test-state) 10))
+
+(defn ->rank
+  "-> Int
+  produces a new rank based on the app-state"
+  []
+  (->rank-helper app-state))
+
+(defn ->node
+  "TaskState String String -> Node
+  Consumes a TaskState ts a headline hl and a project pro;
+  creates a node"
+  [ts hl]
+  {:key nil ;; should create a key
+   :level 2
+   :headline hl
+   :body ""
+   :tag nil
+   :tags {}
+   :todo ts
+   :priority nil
+   :scheduled nil
+   :deadline nil
+   :properties {}
+   :drawer {}
+   :rank (->rank)
+   :style nil})
+
+(is (= (->node TODO "Test Headline")
+       {:key nil ;; should create a key
+        :level 2 :headline "Test Headline" :body ""  :tag nil
+        :tags {} :todo TODO :priority nil :scheduled nil
+        :deadline nil :properties {} :drawer {} :rank (->rank)
+        :style nil}))
+
+(defn insert-node!
+  "Node String -> GlobalState
+  Inserts a node n at the right position in project pro and returns the app-state"
+  [n pro]
+  (println (->rank)))
+
+(defn add-task!
+  "TaskState String String -> GlobalState
+  Consumes a TaskState ts a headline hl and a project pro;
+  adds a task to the app-state"
+  [ts hl pro]
+  (let [n (->node ts hl)]
+    (insert-node! n pro)))
