@@ -6,7 +6,39 @@
 ;; Handles events for user interactions
 
 ;; =================
+;; Helpers:
+
+(defn get-element
+  "String -> DOMElement
+  Consumes a CSS indetifier i and returns a DOMElement"
+  [i]
+  (.getElementById js/document i))
+
+;; =================
 ;; Functions:
+
+(defn cancel-enter-task
+  "closes the entry box and hides it"
+  []
+  (let [hdln (get-element "enter-headline")]
+    (do
+      (set! (.-value hdln) "")
+      (db/switch-entry!))))
+
+(defn handle-enter-task
+  "DOMElement -> Bool
+  Handles the submisson of element e that are created by the enter task form"
+  [ev]
+  (let [form (aget ev "target")
+        els  (aget form "elements")
+        hdln (.-value (aget els "headline"))
+        tast (.-value (aget els "task-status"))
+        tapr (.-value (aget els "task-project"))]
+    (do
+      (when (not= hdln "")
+        (db/add-task! tast hdln tapr))
+      (cancel-enter-task)
+      false)))
 
 (defn handle-keyup [ev]
   "KeyEvent -> GlobalState
@@ -21,24 +53,10 @@
      (and (or (= (ky ev) 52) (= (ky ev) 100)) (ctrl? ev)) (db/switch-all!)    ;; Ctrl + 4
      (and (or (= (ky ev) 69) (= (ky ev) 101)) (ctrl? ev)) (db/switch-editor!) ;; Ctrl + E
      (and (= (ky ev) 13) (ctrl? ev)) (db/switch-entry!)                       ;; Ctrl + Enter
-     (and (= (ky ev) 70) (ctrl? ev)) (db/switch-search!))))                   ;; Ctrl + F
+     (and (= (ky ev) 70) (ctrl? ev)) (db/switch-search!)                      ;; Ctrl + F
+     (and (= (ky ev) 27) (db/entry?)) (cancel-enter-task))))                  ;; ESC
 
 (defn register-keyevents
   "Register the keyhandlers"
   []
   (events/listen js/document "keyup" handle-keyup))
-
-(defn handle-enter-task
-  "DOMElement -> Bool
-  Handles the submisson of element e that are created by the enter task form"
-  [ev]
-  (let [form (aget ev "target")
-        els  (aget form "elements")
-        hdln (.-value (aget els "headline"))
-        tast (.-value (aget els "task-status"))
-        tapr (.-value (aget els "task-project"))]
-    (do
-      (when (not= hdln "")
-        (db/add-task! tast hdln tapr))
-      ;; cancel enter-task
-      false)))
