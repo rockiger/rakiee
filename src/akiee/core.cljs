@@ -124,7 +124,8 @@
     [enter-task-status ["TODO", "DOING", "DONE"]]
     [enter-task-project ["Inbox"]]
     [:button.btn.btn-default {:type "submit"} "Create"]
-    [:button#cancel-enter-task.btn.btn-link {:type "button"} "Cancel"]]]))
+    [:button#cancel-enter-task.btn.btn-link
+     {:type "button" :on-click h/cancel-enter-task} "Cancel"]]]))
 
 (defn search
   "-> Component

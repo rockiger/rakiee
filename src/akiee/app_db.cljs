@@ -2,6 +2,7 @@
   (:require [akiee.fileoperations :as fo]
             [akiee.datadefinitions :as dd :refer [global-state]]
             [akiee.constants :refer [TODO DOING DONE ALL]]
+            [akiee.dom-helpers :as dom]
             [cljs.test :refer-macros [is deftest]]
             [cljs.nodejs :as nj]
             [reagent.core :as rc]))
@@ -210,8 +211,11 @@
   (if (search?)
     (let [new-state (global-state. (:editor? @app-state) false (:entry? @app-state) (:ls @app-state) (:lon @app-state))]
       (reset! app-state new-state))
-    (let [new-state (global-state. false true false (:ls @app-state) (:lon @app-state))]
-      (reset! app-state new-state))))
+    (let [new-state (global-state. false true false (:ls @app-state) (:lon @app-state))
+          se (dom/get-element "search-input")]
+      (do
+        (reset! app-state new-state)
+        (.focus se)))))
 
 (defn switch-entry!
   "-> GlobalState
@@ -220,8 +224,11 @@
   (if (entry?)
     (let [new-state (global-state. (:editor? @app-state) (:search? @app-state) false (:ls @app-state) (:lon @app-state))]
       (reset! app-state new-state))
-    (let [new-state (global-state. false false true (:ls @app-state) (:lon @app-state))]
-      (reset! app-state new-state))))
+    (let [new-state (global-state. false false true (:ls @app-state) (:lon @app-state))
+          entry (dom/get-element "enter-headline")]
+      (do
+        (reset! app-state new-state)
+        (.focus entry)))))
 
 (defn switch-list-state!
   "ListState -> GlobalState

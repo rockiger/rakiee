@@ -1,18 +1,11 @@
 (ns akiee.handlers
   (:require [goog.events :as events]
-            [akiee.app-db :as db]))
+            [akiee.app-db :as db]
+            [akiee.dom-helpers :as dom :refer [get-element]]))
 
 (enable-console-print!)
 ;; Handles events for user interactions
 
-;; =================
-;; Helpers:
-
-(defn get-element
-  "String -> DOMElement
-  Consumes a CSS indetifier i and returns a DOMElement"
-  [i]
-  (.getElementById js/document i))
 
 ;; =================
 ;; Functions:
