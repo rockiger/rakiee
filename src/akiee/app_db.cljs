@@ -8,6 +8,7 @@
 
 ;; Node modules
 (def org (nj/require "./lib/markdown-org-mode-parser"))
+
 (def parse-file (.-parseBigString org))
 
 (enable-console-print!)
@@ -53,20 +54,21 @@
   consumes a javascript org-node (object) jn and produces a node
   TODO make this more robust and general"
   [jn]
-  {:key (aget jn "key")
-   :level (aget jn "level")
-   :headline (str (aget jn "headline"))
-   :body (str (aget jn "body"))
-   :tag nil
-   :tags {}
-   :todo (aget jn "todo")
-   :priority nil
-   :scheduled nil
-   :deadline nil
-   :properties {}
-   :drawer {}
-   :rank (aget jn "rank")
-   :style nil})
+  (let [rank (aget jn "rank")]
+    {:key (aget jn "key")
+     :level (aget jn "level")
+     :headline (str (aget jn "headline"))
+     :body (str (aget jn "body"))
+     :tag nil
+     :tags {}
+     :todo (aget jn "todo")
+     :priority nil
+     :scheduled nil
+     :deadline nil
+     :properties {}
+     :drawer {}
+     :rank (if (not= rank nil) (int rank) nil)
+     :style nil}))
 
 (is (node=? (jsnode->node dd/jsN1) dd/N1))
 (is (= (:key (jsnode->node dd/jsN1)) (:key dd/N1)))
@@ -116,7 +118,7 @@
 (def app-state  (rc/atom (load-app-state FP)))
 (def test-state (rc/atom (load-app-state fo/testfile)))
 
-(println (:ls @app-state))
+;;(println (:ls @app-state))
 
 
 (defn higher-rank?
@@ -143,7 +145,6 @@
 (is (= (higher-rank? n1 n4) true))
 (is (= (higher-rank? n4 n1) false))
 
-
 (defn tasks-helper
   "GlobalState -> lon
   consumes an GlobalState gs and  returns the tasks, according to the current ListState"
@@ -164,7 +165,7 @@
 
 (defn tasks
   "-> lon
-  shows the tasks of the app-stat, according to the current ListState"
+  shows the tasks of the app-state, according to the current ListState"
   []
   (tasks-helper app-state))
 
@@ -227,9 +228,7 @@
   Consumes a Liststate ls switches the ls variable and editor? search? search? accordingly"
   [ls]
   (let [lon (:lon @app-state)]
-    (do
-      (reset! app-state (global-state. false false false ls lon))
-      (println (:ls @app-state)))))
+      (reset! app-state (global-state. false false false ls lon))))
 
 (defn switch-todo!
   "-> GlobalState
@@ -255,6 +254,16 @@
   []
   (switch-list-state! ALL))
 
+(defn tasks-helper
+  "GlobalState -> lon
+  consumes an GlobalState gs and  returns the tasks, according to the current ListState"
+  [gs]
+    (let [filter-tasks (fn [x] (if (= (:level x) 2) true false ))
+          filter-state (fn [x] (cond
+                                (= (:ls @gs) ALL) true
+                                (= (:ls @gs) (:todo x)) true
+                                :else false))]
+      (vec (sort-by :rank higher-rank? (filter filter-state (filter filter-tasks (:lon @gs)))))))
 
 (defn ->rank-helper
   "GlobalState -> Int
@@ -263,7 +272,7 @@
   (let [filter-tasks (fn [x] (if (not= (:rank x) nil) true false ))]
     (inc (int (:rank (last (vec (sort-by :rank higher-rank? (filter filter-tasks
                                                                (:lon @gs))))))))))
-(is (= (->rank-helper test-state) 10))
+;(is (= (->rank-helper test-state) 10))
 
 (defn ->rank
   "-> Int
@@ -298,11 +307,50 @@
         :deadline nil :properties {} :drawer {} :rank (->rank)
         :style nil}))
 
+
+(defn index-of-node-helper [coll hl i]
+  (cond (and (= 1 (int (:level (first coll)))) (= hl (:headline (first coll)))) i
+        (empty? coll) nil
+        :else (index-of-node-helper (rest coll) hl (inc 1))))
+
+(defn index-of-node
+  "Collection String -> Integer
+  Consumes a Collection coll and a healine hl;
+  produces the position of the element with the headline hl and level 1"
+  [coll hl]
+    (index-of-node-helper coll hl 0))
+(is (= (index-of-node (:lon @test-state) "Inbox") 0))
+(is (= (index-of-node (:lon @test-state) "XXXXX") nil))
+(is (= (index-of-node (:lon @test-state) "Test") nil
+))
+
+(defn reset-lon!
+  "Global-State ListOfNode -> GlobalState
+  Resets the ListOfNode lon in the app-state; produces a new GlobalState"
+  [gs lon]
+  (let [ed? (:editor? @app-state)
+        se? (:search? @app-state)
+        en? (:entry?  @app-state)
+        ls  (:ls      @app-state)]
+    (reset! gs (global-state. ed? se? en? ls lon))))
+
+(defn insert-node-helper!
+  "Node String GlobalState -> GlobalState
+  Inserts a node n at the right position in project pro and GlobalState gs;
+  returns a ListOfNode"
+  [n pro gs]
+  (let [lon (vec (:lon @gs))
+        i (inc (index-of-node lon pro))
+        new-lon (vec (concat (subvec lon 0 i) [n] (subvec lon i)))]
+   (reset-lon! gs new-lon)))
+(is (= (get (:lon (insert-node-helper! (->node TODO "Test Headline") "Inbox" test-state)) 1)
+       (->node TODO "Test Headline")))
+
 (defn insert-node!
-  "Node String -> GlobalState
-  Inserts a node n at the right position in project pro and returns the app-state"
+  "Node String GlobalState -> ListOfNode
+  Inserts a node n at the right position in project pro and returns a ListOfNode"
   [n pro]
-  (println (->rank)))
+  (insert-node-helper! n pro app-state))
 
 (defn add-task!
   "TaskState String String -> GlobalState
