@@ -194,6 +194,14 @@
   []
   (:ls @app-state))
 
+(defn projects
+  "-> ListOfString
+  returns a List of Strings with the projects in the app-state"
+  []
+  (let [filter-nodes (fn [x] (if (= (:level x) 1) true false ))]
+    (vec (sort (map :headline (filter filter-nodes (:lon @app-state)))))))
+(println (projects))
+
 (defn switch-editor!
   "-> Boolean
   switches the editor? state and returns it"
@@ -366,3 +374,4 @@
   [ts hl pro]
   (let [n (->node ts hl)]
     (insert-node! n pro)))
+

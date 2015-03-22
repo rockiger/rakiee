@@ -93,7 +93,7 @@
   "ListOf* String -> Component
   Consumes a list of anything loa and a name; produces the component of a select field."
   [loa n]
-  [:select#enter-task-status.form-control {:name n}
+  [:select#enter-task-status.form-control {:name n :defaultValue "Inbox"}
    (for [a loa]
      [:option a])])
 
@@ -122,7 +122,7 @@
     [:input#enter-headline.form-control {:type "text" :placeholder "Enter Headline"
                                          :name "headline"}]
     [enter-task-status ["TODO", "DOING", "DONE"]]
-    [enter-task-project ["Inbox"]]
+    [enter-task-project (db/projects)]
     [:button.btn.btn-default {:type "submit"} "Create"]
     [:button#cancel-enter-task.btn.btn-link
      {:type "button" :on-click h/cancel-enter-task} "Cancel"]]]))
