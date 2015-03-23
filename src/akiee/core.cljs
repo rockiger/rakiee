@@ -174,6 +174,7 @@
 
 (defn big-bang []
   (h/register-keyevents)
+  (h/register-winevents)
   (r/render-component
     [app]
     (.getElementById js/document "root")))

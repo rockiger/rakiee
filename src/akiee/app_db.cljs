@@ -89,7 +89,7 @@
 (is (= (array->vec [] (js* "[1, 2, 3]")) [1 2 3]))
 
 
-(defn nodes
+(defn ->nodes
   "String -> ListOfNodes
   consumes the path p to the task file and produces a list of nodes
   TODO find way to test, without :key"
@@ -103,7 +103,7 @@
   consumes the path p to the task file and produces the initial app-state
   TODO find way to test, without :key"
   [p]
-  (global-state. false false false DOING (nodes p)))
+  (global-state. false false false DOING (->nodes p)))
 
 (is (= (:lon (load-app-state fo/testfile) [{:key "orgode_33.##" :level 1 :headline "Inbox"
                                             :body "" :tag nil :tags {}  :todo "DOING"

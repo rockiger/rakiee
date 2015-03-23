@@ -16,7 +16,7 @@
 ;; Constants:
 
 (def dirname ".akiee")
-(def filename "liveflow.md")
+(def filename "testflow.md")
 (def testfile "/home/macco/Listings/rakiee/test-load-file.md")
 
 ;; =================
@@ -70,7 +70,9 @@
   (if (.existsSync fs p)
     (str (.readFileSync fs p "utf8"))
     ""))
-
 (is (= (load-file "") ""))
 (is (= (load-file "eurniate") ""))
 (is (= (load-file testfile) "# Inbox\n## TODO Test\nRANK: 9\n"))
+
+(defn save-file []
+  (println "save-file"))

@@ -1,11 +1,17 @@
 (ns akiee.handlers
   (:require [goog.events :as events]
             [akiee.app-db :as db]
-            [akiee.dom-helpers :as dom :refer [get-element]]))
+            [akiee.dom-helpers :as dom :refer [get-element]]
+            [akiee.fileoperations :as fo]))
+;; Node modules
+(def gui (js/require "nw.gui"))
 
 (enable-console-print!)
 ;; Handles events for user interactions
 
+;; =================
+;; Constants:
+(def WIN (.get (.-Window gui)))
 
 ;; =================
 ;; Functions:
@@ -33,9 +39,10 @@
       (cancel-enter-task)
       false)))
 
-(defn handle-keyup [ev]
+(defn handle-keyup
   "KeyEvent -> GlobalState
   Handles the keyevents that are created by js/document"
+  [ev]
   (let [ky  #(.-keyCode %)
         ctrl? #(.-ctrlKey %)]
     (cond
@@ -53,3 +60,25 @@
   "Register the keyhandlers"
   []
   (events/listen js/document "keyup" handle-keyup))
+
+(defn handle-close
+  "Event ->
+  Handles the close event of win"
+  [ev]
+  (do
+    (fo/save-file db/nodes)
+    (.close WIN true)))
+
+(defn handle-blur
+  "Event ->
+  Handles the close event of win"
+  [ev]
+  (do
+    (fo/save-file db/nodes)))
+
+(defn register-winevents
+  "Register the window event handlers"
+  []
+  (do
+    (events/listen js/window "blur" handle-blur)
+    (.on WIN "close" handle-close))) ;; can't use google closure here, because of nw.js
