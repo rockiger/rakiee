@@ -74,5 +74,5 @@
 (is (= (load-file "eurniate") ""))
 (is (= (load-file testfile) "# Inbox\n## TODO Test\nRANK: 9\n"))
 
-(defn save-file []
+(defn save-file [lon]
   (println "save-file"))

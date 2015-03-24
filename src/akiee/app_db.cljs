@@ -59,7 +59,8 @@
     {:key (aget jn "key")
      :level (aget jn "level")
      :headline (str (aget jn "headline"))
-     :body (str (aget jn "body"))
+     :body (if (and (> (count (aget jn "body")) 0) (not= (aget jn "body") "\n"))
+                 (aget jn "body") nil)
      :tag nil
      :tags {}
      :todo (aget jn "todo")
@@ -71,7 +72,7 @@
      :rank (if (not= rank nil) (int rank) nil)
      :style nil}))
 
-(is (node=? (jsnode->node dd/jsN1) dd/N1))
+;;(is (node=? (jsnode->node dd/jsN1) dd/N1))
 (is (= (:key (jsnode->node dd/jsN1)) (:key dd/N1)))
 
 (defn array->vec
@@ -87,7 +88,6 @@
 
 (is (= (array->vec [] (js* "[]")) []))
 (is (= (array->vec [] (js* "[1, 2, 3]")) [1 2 3]))
-
 
 (defn ->nodes
   "String -> ListOfNodes
@@ -119,8 +119,19 @@
 (def app-state  (rc/atom (load-app-state FP)))
 (def test-state (rc/atom (load-app-state fo/testfile)))
 
-;;(println (:ls @app-state))
 
+(defn lon->md [lon]
+  (if (empty? lon)
+    ""
+    (let [n (first lon)]
+      (str
+       (if (= (:level n) 1) "# " "## ")
+       (cond (:todo n) (str (:todo n) " "))
+       (:headline n) "\n"
+       (cond (:body n) (str (:body n) "\n\n"))
+       (cond (:rank n) (str "RANK: "(:rank n) "\n"))
+       (lon->md (rest lon))))))
+(is (= (lon->md (:lon @test-state)) (fo/load-file fo/testfile)))
 
 (defn higher-rank?
   "Node Node -> Boolean
@@ -200,7 +211,6 @@
   []
   (let [filter-nodes (fn [x] (if (= (:level x) 1) true false ))]
     (vec (sort (map :headline (filter filter-nodes (:lon @app-state)))))))
-(println (projects))
 
 (defn switch-editor!
   "-> Boolean
