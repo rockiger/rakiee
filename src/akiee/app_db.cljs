@@ -5,7 +5,8 @@
             [akiee.dom-helpers :as dom]
             [cljs.test :refer-macros [is deftest]]
             [cljs.nodejs :as nj]
-            [reagent.core :as rc]))
+            [reagent.core :as rc]
+            [clojure.string :as s :refer [trim]]))
 
 ;; Node modules
 (def org (nj/require "./lib/markdown-org-mode-parser"))
@@ -59,8 +60,8 @@
     {:key (aget jn "key")
      :level (aget jn "level")
      :headline (str (aget jn "headline"))
-     :body (if (and (> (count (aget jn "body")) 0) (not= (aget jn "body") "\n"))
-                 (aget jn "body") nil)
+     :body (if (and (> (count (trim (aget jn "body"))) 0) (not= (aget jn "body") "\n"))
+                 (trim (aget jn "body")) nil)
      :tag nil
      :tags {}
      :todo (aget jn "todo")
@@ -127,8 +128,8 @@
       (str
        (if (= (:level n) 1) "# " "## ")
        (cond (:todo n) (str (:todo n) " "))
-       (:headline n) "\n"
-       (cond (:body n) (str (:body n) "\n\n"))
+       (trim (:headline n)) "\n"
+       (cond (:body n) (str (:body n) "\n"))
        (cond (:rank n) (str "RANK: "(:rank n) "\n"))
        (lon->md (rest lon))))))
 (is (= (lon->md (:lon @test-state)) (fo/load-task-file fo/testfile)))
@@ -259,15 +260,12 @@
         (reset! app-state new-state)
         (.focus entry)))))
 
-(defn switch-changed!
-  "-> GlobalState
-  switches the changed? variable and return the new app-statel"
-  []
-  (if (changed?)
-    (let [new-state (global-state. (:editor? @app-state) (:search? @app-state) (:entry? @app-state) false (:ls @app-state) (:lon @app-state))]
-      (reset! app-state new-state))
-    (let [new-state (global-state. (:editor? @app-state) (:search? @app-state) (:entry? @app-state) true (:ls @app-state) (:lon @app-state))]
-      (reset! app-state new-state))))
+(defn set-changed!
+  "Bool -> GlobalState
+  consumes the new state s switches the changed? variable and return the new app-statel"
+  [s]
+    (let [new-state (global-state. (:editor? @app-state) (:search? @app-state) (:entry? @app-state) s (:ls @app-state) (:lon @app-state))]
+      (reset! app-state new-state)))
 
 (defn switch-list-state!
   "ListState -> GlobalState
@@ -378,11 +376,11 @@
         se? (:search? @app-state)
         en? (:entry?  @app-state)
         ls  (:ls      @app-state)]
-    (reset! gs (global-state. ed? se? en? (:changed? @app-state) ls lon))))
+    (reset! gs (global-state. ed? se? en? true ls lon))))
 
 (defn insert-node-helper!
   "Node String GlobalState -> GlobalState
-  Inserts a node n at the right position in project pro and GlobalState gs;
+  Inserts a node n at the right position in project pro and returns GlobalState gs;
   returns a ListOfNode"
   [n pro gs]
   (let [lon (vec (:lon @gs))

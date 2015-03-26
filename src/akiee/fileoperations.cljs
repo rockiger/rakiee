@@ -80,5 +80,5 @@
   (if changed?
     (do
       (.writeFileSync fs p c)
-      (chfn!))
-    "not changed"))
+      (chfn! false))
+    (println "not changed")))

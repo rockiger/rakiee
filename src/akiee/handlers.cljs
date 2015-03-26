@@ -66,7 +66,7 @@
   Handles the close event of win"
   [ev]
   (do
-    (fo/save-task-file (db/lon->md (db/nodes)) "/home/macco/.akiee/testflow.md" (db/changed?) db/switch-changed!)
+    (fo/save-task-file (db/lon->md (db/nodes)) "/home/macco/.akiee/testflow.md" (db/changed?) db/set-changed!)
     (.close WIN true)))
 
 (defn handle-blur
@@ -74,7 +74,7 @@
   Handles the close event of win"
   [ev]
   (do
-    (fo/save-task-file (db/lon->md (db/nodes)) "/home/macco/.akiee/testflow.md" (db/changed?) db/switch-changed!)))
+    (fo/save-task-file (db/lon->md (db/nodes)) "/home/macco/.akiee/testflow.md" (db/changed?) db/set-changed!)))
 
 (defn register-winevents
   "Register the window event handlers"
