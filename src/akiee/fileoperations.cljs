@@ -70,9 +70,9 @@
   (if (.existsSync fs p)
     (str (.readFileSync fs p "utf8"))
     ""))
-(is (= (load-file "") ""))
-(is (= (load-file "eurniate") ""))
-(is (= (load-file testfile) "# Inbox\n## TODO Test\nRANK: 9\n"))
+(is (= (load-task-file "") ""))
+(is (= (load-task-file "eurniate") ""))
+(is (= (load-task-file testfile) "# Inbox\n## TODO Test\nRANK: 9\n"))
 
 (defn save-task-file [c p changed? chfn!]
   "String String ListOfNode -> Nil
