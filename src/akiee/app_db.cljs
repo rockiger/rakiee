@@ -94,7 +94,7 @@
   consumes the path p to the task file and produces a list of nodes
   TODO find way to test, without :key"
   [p]
-  (let [nodes-array (parse-file (fo/load-file p))]
+  (let [nodes-array (parse-file (fo/load-task-file p))]
     (map jsnode->node (array->vec [] nodes-array))))
 
 
@@ -131,7 +131,7 @@
        (cond (:body n) (str (:body n) "\n\n"))
        (cond (:rank n) (str "RANK: "(:rank n) "\n"))
        (lon->md (rest lon))))))
-(is (= (lon->md (:lon @test-state)) (fo/load-file fo/testfile)))
+(is (= (lon->md (:lon @test-state)) (fo/load-task-file fo/testfile)))
 
 (defn higher-rank?
   "Node Node -> Boolean

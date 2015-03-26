@@ -63,7 +63,7 @@
 
 (is (string? (task-file-path)))
 
-(defn load-file
+(defn load-task-file
   "String -> String
   consumes the path p for a file and returns the content of the file"
   [p]
@@ -74,7 +74,7 @@
 (is (= (load-file "eurniate") ""))
 (is (= (load-file testfile) "# Inbox\n## TODO Test\nRANK: 9\n"))
 
-(defn save-file [c p changed? chfn!]
+(defn save-task-file [c p changed? chfn!]
   "String String ListOfNode -> Nil
   Consume the content c, the path of the target-file p; returns nil"
   (if changed?
