@@ -74,5 +74,11 @@
 (is (= (load-file "eurniate") ""))
 (is (= (load-file testfile) "# Inbox\n## TODO Test\nRANK: 9\n"))
 
-(defn save-file [lon]
-  (println "save-file"))
+(defn save-file [c p changed? chfn!]
+  "String String ListOfNode -> Nil
+  Consume the content c, the path of the target-file p; returns nil"
+  (if changed?
+    (do
+      (.writeFileSync fs p c)
+      (chfn!))
+    "not changed"))

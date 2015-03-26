@@ -203,16 +203,17 @@
     (ddd ss)
     (ddd ss)))
 
-(defrecord global-state [editor? search? entry? ls lon])
+(defrecord global-state [editor? search? entry? changed? ls lon])
 ;; GlobalState is (global-state. false false false LS-3 LON-2) of:
 ;; - SwitchState editor
 ;; - SwitchState search
 ;; - SwitchState entry
+;; - Bool changed? - if lon changed
 ;; - ListState
 ;; - ListOfNode
 
-(def GS1 (global-state. false false false LS-3 LON-2))
-(def GS2 (global-state. false false false LS-3 (conj LON-2 N1)))
+(def GS1 (global-state. false false false false LS-3 LON-2))
+(def GS2 (global-state. false false false false LS-3 (conj LON-2 N1)))
 
 #_
 (defn fn-for-game [gs]

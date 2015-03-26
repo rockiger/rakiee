@@ -66,7 +66,7 @@
   Handles the close event of win"
   [ev]
   (do
-    (fo/save-file db/nodes)
+    (fo/save-file (db/lon->md (db/nodes)) "/home/macco/.akiee/testflow.md" (db/changed?) db/switch-changed!)
     (.close WIN true)))
 
 (defn handle-blur
@@ -74,7 +74,7 @@
   Handles the close event of win"
   [ev]
   (do
-    (fo/save-file db/nodes)))
+    (fo/save-file (db/lon->md (db/nodes)) "/home/macco/.akiee/testflow.md" (db/changed?) db/switch-changed!)))
 
 (defn register-winevents
   "Register the window event handlers"
