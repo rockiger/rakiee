@@ -27,11 +27,7 @@
 (defn cancel-search
   "closes the search box and resets the search-string in the app-state"
   []
-  (let [search (get-element "search-input")]
-    (do
-      (set! (.-value search) "")
-      (db/set-search-string! "")
-      (db/switch-search!))))
+  (db/switch-search!))
 
 (defn handle-enter-task
   "DOMElement -> Bool

@@ -260,8 +260,10 @@
   switches the search? state and the new app-state"
   []
   (if (search?)
-    (let [new-state (global-state. (:editor? @app-state) false (:entry? @app-state) (:changed? @app-state) (:ss @app-state) (:ls @app-state) (:lon @app-state))]
-      (reset! app-state new-state))
+    (let [new-state (global-state. (:editor? @app-state) false (:entry? @app-state) (:changed? @app-state) "" (:ls @app-state) (:lon @app-state))]
+      (do
+        (set! (.-value (dom/get-element "search-input")) "")
+        (reset! app-state new-state)))
     (let [new-state (global-state. false true false (:changed? @app-state) (:ss @app-state) (:ls @app-state) (:lon @app-state))
           se (dom/get-element "search-input")]
       (do
