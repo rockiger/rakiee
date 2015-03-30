@@ -167,7 +167,7 @@
                                 (= (:ls @gs) ALL) true
                                 (= (:ls @gs) (:todo x)) true
                                 :else false))
-          filter-search (fn [x] (if (:ss @gs)
+          filter-search (fn [x] (if (not (empty? (:ss @gs)))
                                   (if (re-find (re-pattern
                                                 (str "(?i)"(:ss @gs))) (:headline x))
                                     true
