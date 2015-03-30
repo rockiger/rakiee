@@ -104,7 +104,7 @@
   consumes the path p to the task file and produces the initial app-state
   TODO find way to test, without :key"
   [p]
-  (global-state. false false false false DOING (->nodes p)))
+  (global-state. false false false false "" DOING (->nodes p)))
 
 (is (= (:lon (load-app-state fo/testfile) [{:key "orgode_33.##" :level 1 :headline "Inbox"
                                             :body "" :tag nil :tags {}  :todo "DOING"
@@ -166,8 +166,29 @@
           filter-state (fn [x] (cond
                                 (= (:ls @gs) ALL) true
                                 (= (:ls @gs) (:todo x)) true
-                                :else false))]
-      (vec (sort-by :rank higher-rank? (filter filter-state (filter filter-tasks (:lon @gs)))))))
+                                :else false))
+          filter-search (fn [x] (if (:ss @gs)
+                                  (if (re-find (re-pattern
+                                                (str "(?i)"(:ss @gs))) (:headline x))
+                                    true
+                                    false)
+                                  true))]
+      (vec (sort-by :rank higher-rank?
+                    (filter filter-search
+                    (filter filter-state
+                    (filter filter-tasks (:lon @gs))))))))
+
+(let [filter-tasks (fn [x] (if (= (:level x) 2) true false ))
+      filter-state (fn [x] (cond
+                                (= (:ls @app-state) ALL) true
+                                (= (:ls @app-state) (:todo x)) true
+                                :else false))
+      filter-search (fn [x] (if (:ss @app-state)
+                                  (if (re-find (re-pattern (:ss @app-state)) (:headline x))
+                                    true
+                                    false)
+                                  true))]
+  (filter filter-search (filter filter-state (filter filter-tasks (:lon @app-state)))))
 
 ;; Test fails becaus of :body one seems to have an "\n"
 #_(is (node=? (nth (tasks-helper test-state) 0) {:key "orgode_33.##" :level 2  :headline "Test"
@@ -229,9 +250,9 @@
   switches the editor? state and returns it"
   []
   (if (editor?)
-    (let [new-state (global-state. false (:search? @app-state) (:entry? @app-state) (:changed? @app-state) (:ls @app-state) (:lon @app-state))]
+    (let [new-state (global-state. false (:search? @app-state) (:entry? @app-state) (:changed? @app-state) (:ss @app-state) (:ls @app-state) (:lon @app-state))]
       (reset! app-state new-state))
-    (let [new-state (global-state. true false false (:changed? @app-state) (:ls @app-state) (:lon @app-state))]
+    (let [new-state (global-state. true false false (:changed? @app-state) (:ss @app-state) (:ls @app-state) (:lon @app-state))]
       (reset! app-state new-state))))
 
 (defn switch-search!
@@ -239,9 +260,9 @@
   switches the search? state and the new app-state"
   []
   (if (search?)
-    (let [new-state (global-state. (:editor? @app-state) false (:entry? @app-state) (:changed? @app-state) (:ls @app-state) (:lon @app-state))]
+    (let [new-state (global-state. (:editor? @app-state) false (:entry? @app-state) (:changed? @app-state) (:ss @app-state) (:ls @app-state) (:lon @app-state))]
       (reset! app-state new-state))
-    (let [new-state (global-state. false true false (:changed? @app-state) (:ls @app-state) (:lon @app-state))
+    (let [new-state (global-state. false true false (:changed? @app-state) (:ss @app-state) (:ls @app-state) (:lon @app-state))
           se (dom/get-element "search-input")]
       (do
         (reset! app-state new-state)
@@ -252,9 +273,9 @@
   switches the search? state and the new app-state"
   []
   (if (entry?)
-    (let [new-state (global-state. (:editor? @app-state) (:search? @app-state) false (:changed? @app-state) (:ls @app-state) (:lon @app-state))]
+    (let [new-state (global-state. (:editor? @app-state) (:search? @app-state) false (:changed? @app-state) (:ss @app-state) (:ls @app-state) (:lon @app-state))]
       (reset! app-state new-state))
-    (let [new-state (global-state. false false true (:changed? @app-state) (:ls @app-state) (:lon @app-state))
+    (let [new-state (global-state. false false true (:changed? @app-state) (:ss @app-state) (:ls @app-state) (:lon @app-state))
           entry (dom/get-element "enter-headline")]
       (do
         (reset! app-state new-state)
@@ -262,17 +283,24 @@
 
 (defn set-changed!
   "Bool -> GlobalState
-  consumes the new state s switches the changed? variable and return the new app-statel"
+  consumes the new state s switches the changed? variable and return the new app-state"
   [s]
-    (let [new-state (global-state. (:editor? @app-state) (:search? @app-state) (:entry? @app-state) s (:ls @app-state) (:lon @app-state))]
+    (let [new-state (global-state. (:editor? @app-state) (:search? @app-state) (:entry? @app-state) s (:ss @app-state) (:ls @app-state) (:lon @app-state))]
       (reset! app-state new-state)))
+
+(defn set-search-string!
+  "String -> GlobalState
+  consumes a String s and changes the search-string of the app-state accordingly;
+  returns the new GlobalState"
+  [s]
+  (reset! app-state (global-state. (:editor? @app-state) (:search? @app-state) (:entry? @app-state) (:changed? @app-state) s (:ls @app-state) (:lon @app-state))))
 
 (defn switch-list-state!
   "ListState -> GlobalState
   Consumes a Liststate ls switches the ls variable and editor? search? search? accordingly"
   [ls]
   (let [lon (:lon @app-state)]
-      (reset! app-state (global-state. false false false (:changed? @app-state) ls lon))))
+      (reset! app-state (global-state. false false false (:changed? @app-state) (:ss @app-state) ls lon))))
 
 (defn switch-todo!
   "-> GlobalState
@@ -297,17 +325,6 @@
   switches the ls variable to ALL and editor? search? search? accordingly"
   []
   (switch-list-state! ALL))
-
-(defn tasks-helper
-  "GlobalState -> lon
-  consumes an GlobalState gs and  returns the tasks, according to the current ListState"
-  [gs]
-    (let [filter-tasks (fn [x] (if (= (:level x) 2) true false ))
-          filter-state (fn [x] (cond
-                                (= (:ls @gs) ALL) true
-                                (= (:ls @gs) (:todo x)) true
-                                :else false))]
-      (vec (sort-by :rank higher-rank? (filter filter-state (filter filter-tasks (:lon @gs)))))))
 
 (defn ->rank-helper
   "GlobalState -> Int
@@ -375,8 +392,9 @@
   (let [ed? (:editor? @app-state)
         se? (:search? @app-state)
         en? (:entry?  @app-state)
+        ss  (:ss @app-state)
         ls  (:ls      @app-state)]
-    (reset! gs (global-state. ed? se? en? true ls lon))))
+    (reset! gs (global-state. ed? se? en? true ss ls lon))))
 
 (defn insert-node-helper!
   "Node String GlobalState -> GlobalState

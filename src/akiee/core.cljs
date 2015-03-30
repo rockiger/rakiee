@@ -135,7 +135,7 @@
                 {:class ""}
                 {:class "closed"})]
   [:div#search-form.slider show?
-    [:input#search-input.form-control {:type "text" :on-key-down #(println %)}]]))
+    [:input#search-input.form-control {:type "text" :on-change h/handle-onchange-search}]]))
 
 (defn editor
   "-> Component

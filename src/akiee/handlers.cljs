@@ -82,3 +82,10 @@
   (do
     (events/listen js/window "blur" handle-blur)
     (.on WIN "close" handle-close))) ;; can't use google closure here, because of nw.js
+
+(defn handle-onchange-search
+  "Event -> GlobalState
+  Consumes the onchange Event ev and changes global filter string for search;
+  returns the app-state"
+  [ev]
+  (db/set-search-string! (.-value (.-target ev)))); set-search-string!
