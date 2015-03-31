@@ -95,3 +95,13 @@
   returns the app-state"
   [ev]
   (db/set-search-string! (.-value (.-target ev)))); set-search-string!
+
+(defn handle-blur-editor
+  "Event -> GlobalState
+  Consumes the onblur Event ev and changes global lon ;
+  returns the app-state"
+  [ev]
+  (let [lon (map db/jsnode->node (db/array->vec [] (db/parse-file (.-value (.-target ev)))))]
+    (do
+      (db/reset-lon! db/app-state lon)
+      (db/set-changed! true))))

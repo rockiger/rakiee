@@ -145,7 +145,7 @@
                 {:style {:display "inline-block"}}
                 {:style {:display "none"}})]
   [:div#editor show?
-   [:textarea {:rows 3}]]))
+   [:textarea#editor-area {:rows 3 :on-blur h/handle-blur-editor}]]))
 
 (defn task [t]
   [:tr

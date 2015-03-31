@@ -252,8 +252,13 @@
   (if (editor?)
     (let [new-state (global-state. false (:search? @app-state) (:entry? @app-state) (:changed? @app-state) (:ss @app-state) (:ls @app-state) (:lon @app-state))]
       (reset! app-state new-state))
-    (let [new-state (global-state. true false false (:changed? @app-state) (:ss @app-state) (:ls @app-state) (:lon @app-state))]
-      (reset! app-state new-state))))
+    (let [new-state (global-state. true false false (:changed? @app-state) (:ss @app-state) (:ls @app-state) (:lon @app-state))
+          ea (dom/get-element "editor-area")]
+      (do
+        (reset! app-state new-state)
+        (set! (.-value ea) (lon->md (nodes)))
+        (.focus ea)
+        (.click ea)))))
 
 (defn switch-search!
   "-> GlobalState
