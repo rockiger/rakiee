@@ -160,5 +160,6 @@
      [:.form-control:focus {:border-color light-blue
                             :box-shadow "inset 0 3px rgba(0, 0, 0, 0.02)"}]
      [:#show-enter-task [:span:before {:content "\"+\"" :font-weight "bold"}]]
+     [:#editor-area {:font-family "'Source Code Pro', Consolas, 'Ubuntu Mono', 'Andale Mono WT', 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L', Monaco, 'Courier New', Courier, monospace"}]
 
      )

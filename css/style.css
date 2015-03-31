@@ -351,3 +351,7 @@ table td .glyphicon-chevron-up:focus, table td .glyphicon-chevron-down:focus {
   content: "+";
   font-weight: bold;
 }
+
+#editor-area {
+  font-family: 'Source Code Pro', Consolas, 'Ubuntu Mono', 'Andale Mono WT', 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L', Monaco, 'Courier New', Courier, monospace;
+}
