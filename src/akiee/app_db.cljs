@@ -28,7 +28,7 @@
 ;; =================
 ;; Functions:
 
-(defn node=?
+(defn node=
   "Node Node -> Boolean
   Compares 2 Nodes n1 n2, the :key of the nodes is ignored,
   because it's random"
@@ -48,8 +48,8 @@
    (= (:rank n1)       (:rank n2))
    (= (:style n1)      (:style n2))))
 
-(is (= (node=? dd/N1 dd/N1a) true))
-(is (= (node=? dd/N1 dd/N2)  false))
+(is (= (node= dd/N1 dd/N1a) true))
+(is (= (node= dd/N1 dd/N2)  false))
 
 (defn jsnode->node
   "JsNode -> Node
@@ -73,7 +73,7 @@
      :rank (if (not= rank nil) (int rank) nil)
      :style nil}))
 
-;;(is (node=? (jsnode->node dd/jsN1) dd/N1))
+;;(is (node= (jsnode->node dd/jsN1) dd/N1))
 (is (= (:key (jsnode->node dd/jsN1)) (:key dd/N1)))
 
 (defn array->vec
@@ -191,7 +191,7 @@
   (filter filter-search (filter filter-state (filter filter-tasks (:lon @app-state)))))
 
 ;; Test fails becaus of :body one seems to have an "\n"
-#_(is (node=? (nth (tasks-helper test-state) 0) {:key "orgode_33.##" :level 2  :headline "Test"
+#_(is (node= (nth (tasks-helper test-state) 0) {:key "orgode_33.##" :level 2  :headline "Test"
                                               :body ""  :tag nil :tags {} :todo "TODO"
                                               :priority nil :scheduled nil :deadline nil
                                               :properties {} :drawer {} :rank nil :style nil}))
@@ -353,7 +353,7 @@
   Consumes a TaskState ts a headline hl and a project pro;
   creates a node"
   [ts hl]
-  {:key nil ;; should create a key
+  {:key (str (gensym "orgNode_") "." 2)
    :level 2
    :headline hl
    :body ""
@@ -368,8 +368,8 @@
    :rank (->rank)
    :style nil})
 
-(is (= (->node TODO "Test Headline")
-       {:key nil ;; should create a key
+(is (node= (->node TODO "Test Headline")
+       {:key nil
         :level 2 :headline "Test Headline" :body ""  :tag nil
         :tags {} :todo TODO :priority nil :scheduled nil
         :deadline nil :properties {} :drawer {} :rank (->rank)
@@ -412,7 +412,7 @@
         i (inc (index-of-node lon pro))
         new-lon (vec (concat (subvec lon 0 i) [n] (subvec lon i)))]
    (reset-lon! gs new-lon)))
-(is (= (get (:lon (insert-node-helper! (->node TODO "Test Headline") "Inbox" test-state)) 1)
+(is (node= (get (:lon (insert-node-helper! (->node TODO "Test Headline") "Inbox" test-state)) 1)
        (->node TODO "Test Headline")))
 
 (defn insert-node!

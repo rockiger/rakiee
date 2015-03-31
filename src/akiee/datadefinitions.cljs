@@ -158,7 +158,6 @@
 ;; interp. what is shown in the tasklist
 ;; ALL means all TaskState tasks are shown combined
 
-
 (def LS-1 "TODO")
 (def LS-2 "ALL")
 (def LS-3 "DOING")

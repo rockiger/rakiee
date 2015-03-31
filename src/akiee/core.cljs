@@ -20,18 +20,6 @@
 
 ;; World State is ... (give WS a better name)
 
-#_
-(def app-state
-  (r/atom
-   {:tasks
-    [{:todo "DOING" :headline "Remove Ace-dependency from enterTask.js"}
-     {:todo "DOING" :headline "AuxMoney Test starten"}
-     {:todo "DOING" :headline "Karo und Diana das Briefing für das Designn schicken"}
-     {:todo "DOING" :headline "Licht reklamieren, Kontoauszug raussuchen"}
-     {:todo "DOING" :headline "Bräter 4 Stunden toasten"}
-     {:todo "TODE" :headline "Ich teile nicht! schreiben"}
-     {:todo "DONE" :headline "Verzeichnis-akiee von Grund auf euida, mit leinigen templates"}]}))
-
 ;; =================
 ;; Functions:
 
@@ -148,7 +136,7 @@
    [:textarea#editor-area {:rows 3 :on-blur h/handle-blur-editor}]]))
 
 (defn task [t]
-  [:tr
+  [:tr {:data-key (:key t)}
    [:td (:todo t)]
    [:td (:headline t)]])
 
