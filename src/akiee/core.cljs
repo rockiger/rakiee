@@ -137,7 +137,7 @@
 
 (defn task [t]
   [:tr {:data-key (:key t)}
-   [:td (:todo t)]
+   [:td {:on-click h/handle-onclick-taskstate} [:span {:class "hover-button"} (:todo t)]]
    [:td (:headline t)]])
 
 (defn task-list []

@@ -1,9 +1,10 @@
 (ns akiee.handlers
   (:require [goog.events :as events]
             [akiee.app-db :as db]
+            [akiee.node :as no]
             [akiee.dom-helpers :as dom :refer [get-element]]
             [akiee.fileoperations :as fo]))
-;; Node modules
+;; Nodejs modules
 (def gui (js/require "nw.gui"))
 
 (enable-console-print!)
@@ -72,7 +73,7 @@
   Handles the close event of win"
   [ev]
   (do
-    (fo/save-task-file (db/lon->md (db/nodes)) "/home/macco/.akiee/testflow.md" (db/changed?) db/set-changed!)
+    (fo/save-task-file (no/lon->md (db/nodes)) "/home/macco/.akiee/testflow.md" (db/changed?) db/set-changed!)
     (.close WIN true)))
 
 (defn handle-blur
@@ -80,7 +81,7 @@
   Handles the close event of win"
   [ev]
   (do
-    (fo/save-task-file (db/lon->md (db/nodes)) "/home/macco/.akiee/testflow.md" (db/changed?) db/set-changed!)))
+    (fo/save-task-file (no/lon->md (db/nodes)) "/home/macco/.akiee/testflow.md" (db/changed?) db/set-changed!)))
 
 (defn register-winevents
   "Register the window event handlers"
@@ -101,7 +102,16 @@
   Consumes the onblur Event ev and changes global lon ;
   returns the app-state"
   [ev]
-  (let [lon (map db/jsnode->node (db/array->vec [] (db/parse-file (.-value (.-target ev)))))]
+  (let [lon (map no/jsnode->node (no/array->vec [] (no/parse-file (.-value (.-target ev)))))]
     (do
       (db/reset-lon! db/app-state lon)
       (db/set-changed! true))))
+
+(defn handle-onclick-taskstate
+  "Event -> GlobalState
+  Consumes the onclick Event ev and changes global lon with task to next state;
+  returns the app-state"
+  [ev]
+  (let [row  (.-parentNode (.-currentTarget ev))
+        ky (.-key (.-dataset row))]
+    (db/next-ts! ky)))
