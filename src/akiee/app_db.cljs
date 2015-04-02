@@ -262,7 +262,7 @@
   (let [ed? (:editor? @app-state)
         se? (:search? @app-state)
         en? (:entry?  @app-state)
-        ss  (:ss @app-state)
+        ss  (:ss      @app-state)
         ls  (:ls      @app-state)]
     (reset! gs (global-state. ed? se? en? true ss ls lon))))
 
@@ -293,9 +293,41 @@
     (insert-node! n pro)))
 
 ;; TODO
+(defn positions
+  "Function Collection -> Integer
+  Return the positions in positions of elements in coll that match the predicate pred "
+  [pred coll]
+  (keep-indexed (fn [idx x]
+                  (when (pred x)
+                    idx))
+                coll))
+
+(defn node-pos
+  "String ListOfNode -> Integer
+  Returns the position of the first of occurence of a node with key ky in ListOfNode lon"
+  [ky lon]
+  (first (positions
+          (fn [x] (if (= (:key x) ky) true false))
+          lon)))
+(let [lon [{:key "node_2"} {:key "node_1"} {:key "orgode_33.##"}]]
+  (is (= (node-pos "node_2" lon) 0))
+  (is (= (node-pos "node_1" lon) 1))
+  (is (= (node-pos "orgode_33.##" lon) 2))
+  (println (node-pos "orgode_33.##" lon)))
+
 (defn next-ts!
   "String -> GlobalState
-  Consumes a key ky and changes the task-state of that task in lon;
+  Consumes a key ky and changes the task-state of that task in :lon;
   returns the app-state"
   [ky]
-  false)
+  (let [lon (vec (:lon @app-state))
+        pos (node-pos ky lon)
+        nd  (get lon pos)
+        ts  (:todo nd)]
+    (reset-lon! app-state
+                (assoc lon pos
+                  (assoc nd :todo
+                    (cond
+                     (= ts TODO)  DOING
+                     (= ts DOING) DONE
+                     (= ts DONE)  TODO))))))
