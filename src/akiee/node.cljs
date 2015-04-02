@@ -14,11 +14,15 @@
 (def parse-file (.-parseBigString org))
 ;; Functions that create, convert and compare nodes
 
+;; =================
+;; Functions:
+
 (defn ->key
   "Nil -> String
   Returns a unique key for new nodes"
   []
   (str (gensym "node_")))
+(is (->key))
 
 (defn node=
   "Node Node -> Boolean
@@ -127,10 +131,10 @@
        (if (= (:level n) 1) "# " "## ")
        (cond (:todo n) (str (:todo n) " "))
        (trim (:headline n)) "\n"
-       (cond (:body n) (str (:body n) "\n"))
+       (cond (not-empty (:body n)) (str (:body n) "\n"))
        (cond (:rank n) (str "RANK: "(:rank n) "\n"))
        (lon->md (rest lon))))))
-(is (= (lon->md ([(->node TODO "Ueberschrift" 1)])) ("## TODO Ueberschrift\nRANK: 1\n")))
+(is (= (lon->md [(->node TODO "Ueberschrift" 1)]) "## TODO Ueberschrift\nRANK: 1\n"))
 
 (defn higher-rank?
   "Node Node -> Boolean
