@@ -266,13 +266,46 @@
         ls  (:ls      @app-state)]
     (reset! gs (global-state. ed? se? en? true ss ls lon))))
 
+(defn positions
+  "Function Collection -> Integer
+  Return the positions in positions of elements in coll that match the predicate pred "
+  [pred coll]
+  (keep-indexed (fn [idx x]
+                  (when (pred x)
+                    idx))
+                coll))
+
+(defn node-pos-by-key
+  "String ListOfNode -> Integer
+  Returns the position of the first of occurence of a node with key ky in ListOfNode lon"
+  [ky lon]
+  (first (positions
+          (fn [x] (if (= (:key x) ky) true false))
+          lon)))
+(let [lon [{:key "node_2"} {:key "node_1"} {:key "orgode_33.##"}]]
+  (is (= (node-pos-by-key "node_2" lon) 0))
+  (is (= (node-pos-by-key "node_1" lon) 1))
+  (is (= (node-pos-by-key "orgode_33.##" lon) 2)))
+
+(defn node-pos-by-headline
+  "String ListOfNode -> Integer
+  Returns the position of the first of occurence of a node with key ky in ListOfNode lon"
+  [hdln lon]
+  (first (positions
+          (fn [x] (if (= (:headline x) hdln) true false))
+          lon)))
+(let [lon [{:headline "node_2"} {:headline "node_1"} {:headline "orgode_33.##"}]]
+  (is (= (node-pos-by-headline "node_2" lon) 0))
+  (is (= (node-pos-by-headline "node_1" lon) 1))
+  (is (= (node-pos-by-headline "orgode_33.##" lon) 2)))
+
 (defn insert-node-helper!
   "Node String GlobalState -> GlobalState
   Inserts a node n at the right position in project pro and returns GlobalState gs;
   returns a ListOfNode"
   [n pro gs]
   (let [lon (vec (:lon @gs))
-        i (inc (index-of-node lon pro))
+        i (inc (node-pos-by-headline pro lon))
         new-lon (vec (concat (subvec lon 0 i) [n] (subvec lon i)))]
    (reset-lon! gs new-lon)))
 (is (no/node= (get (:lon (insert-node-helper! (no/->node TODO "Test Headline" (->rank)) "Inbox" test-state)) 1)
@@ -292,36 +325,13 @@
   (let [n (no/->node ts hl (->rank))]
     (insert-node! n pro)))
 
-;; TODO
-(defn positions
-  "Function Collection -> Integer
-  Return the positions in positions of elements in coll that match the predicate pred "
-  [pred coll]
-  (keep-indexed (fn [idx x]
-                  (when (pred x)
-                    idx))
-                coll))
-
-(defn node-pos
-  "String ListOfNode -> Integer
-  Returns the position of the first of occurence of a node with key ky in ListOfNode lon"
-  [ky lon]
-  (first (positions
-          (fn [x] (if (= (:key x) ky) true false))
-          lon)))
-(let [lon [{:key "node_2"} {:key "node_1"} {:key "orgode_33.##"}]]
-  (is (= (node-pos "node_2" lon) 0))
-  (is (= (node-pos "node_1" lon) 1))
-  (is (= (node-pos "orgode_33.##" lon) 2))
-  (println (node-pos "orgode_33.##" lon)))
-
 (defn next-ts!
   "String -> GlobalState
   Consumes a key ky and changes the task-state of that task in :lon;
   returns the app-state"
   [ky]
   (let [lon (vec (:lon @app-state))
-        pos (node-pos ky lon)
+        pos (node-pos-by-key ky lon)
         nd  (get lon pos)
         ts  (:todo nd)]
     (reset-lon! app-state
