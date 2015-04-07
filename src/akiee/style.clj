@@ -47,7 +47,7 @@
      [:.nav :.pagination :.carousel :.hover-button {:cursor "pointer"}]
 
      [:.table>thead>tr>th :.table>tbody>tr>th :.table>tfoot>tr>th
-      :.table>thead>tr>td :.table>tbody>tr>td :.table>tfoot>tr>td {:vertical "middle"}]
+      :.table>thead>tr>td :.table>tbody>tr>td :.table>tfoot>tr>td {:padding (px 14)}]
 
      [:.kanban-column {:background-color "#ddd"}]
      [:.kanban-column [:tr {:background-color "#fff"}]]
