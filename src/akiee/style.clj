@@ -22,8 +22,7 @@
              :font-size (px 16)
              :color fc
              :background-color bc
-             :overflow-y "hidden"
-             :height "100vh"}]
+             :overflow-y "hidden"}]
 
      [:#toolbar {:border-radius 0 :border-width "0 0 1px 0" :margin-bottom 0}]
      [:navbar-header {:width (percent 100) :height (px 52)}]
@@ -39,15 +38,20 @@
 
 
      [:#editor [:textarea {:width "100%" :height "100%"}]]
-     [:#editor :#list {:margin 0 :position "absolute" :top (px 52) :bottom 0 :left 0 :right 0}]
+     [:#editor {:margin 0 :position "absolute" :top (px 52) :bottom 0 :left 0 :right 0}]
      [:#list :table :tbody :tr {:width (percent 100)}]
-     [:#list {:table-layout "fixed" :overflow-y "auto"}]
+     [:#list [:table {:margin 0}]]
+     [:#list {:overflow-y "auto" :height "calc(100vh - 50px)"}]
      [:#list:hover {:outline "none"}]
 
      [:.nav :.pagination :.carousel :.hover-button {:cursor "pointer"}]
 
      [:.table>thead>tr>th :.table>tbody>tr>th :.table>tfoot>tr>th
-      :.table>thead>tr>td :.table>tbody>tr>td :.table>tfoot>tr>td {:padding (px 14)}]
+      :.table>thead>tr>td :.table>tbody>tr>td :.table>tfoot>tr>td
+      {:vertical-align "middle" :padding (px 10)}]
+
+     [:td.taskstate {:width (px 64)}]
+     [:td.rank {:width (px 32)}]
 
      [:.kanban-column {:background-color "#ddd"}]
      [:.kanban-column [:tr {:background-color "#fff"}]]

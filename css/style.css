@@ -1,5 +1,4 @@
 body {
-  height: 100vh;
   overflow-y: hidden;
   background-color: #fff;
   color: #54595a;
@@ -49,7 +48,7 @@ navbar-header {
   width: 100%;
 }
 
-#editor, #list {
+#editor {
   right: 0;
   left: 0;
   bottom: 0;
@@ -62,9 +61,13 @@ navbar-header {
   width: 100%;
 }
 
+#list table {
+  margin: 0;
+}
+
 #list {
+  height: calc(100vh - 50px);
   overflow-y: auto;
-  table-layout: fixed;
 }
 
 #list:hover {
@@ -76,7 +79,16 @@ navbar-header {
 }
 
 .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
-  padding: 14px;
+  padding: 10px;
+  vertical-align: middle;
+}
+
+td.taskstate {
+  width: 64px;
+}
+
+td.rank {
+  width: 32px;
 }
 
 .kanban-column {

@@ -23,7 +23,6 @@
 ;; =================
 ;; Functions:
 
-;TODO
 (defn list-state-button
   "String String String -> Component
   Consumes the text tx, the id and the title t, the state,
@@ -137,17 +136,19 @@
 
 (defn task [t]
   [:tr {:data-key (:key t)}
-   [:td {:on-click h/handle-onclick-taskstate} [:span {:class "hover-button"} (:todo t)]]
-   [:td (:headline t)]])
+   [:td.taskstate {:on-click h/handle-onclick-taskstate} [:span {:class "hover-button"} (:todo t)]]
+   [:td (:headline t)]
+   [:td.rank [:span.fa.fa-chevron-up.hover-button]]
+   [:td.rank [:span.fa.fa-chevron-down.hover-button]]])
 
 (defn task-list []
   (let [show? (if (not (db/editor?))
                 {:style {:display "inline-block"}}
                 {:style {:display "none"}})]
-    [:table.table {:display show?}
+    [:div#list [:table.table show?
      [:tbody
       (for [t (db/tasks)]
-        [task t])]]))
+        [task t])]]]))
 
 (defn app
   " -> Component
