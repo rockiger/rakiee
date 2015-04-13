@@ -40,8 +40,6 @@
       (db/reset-lon! db/app-state newer-lon)
       (println "No target task")
       )))
-;; set on-click-node with target-rank
-;; edge cases abfangen
 
 (defn up-rank
   "String ->
