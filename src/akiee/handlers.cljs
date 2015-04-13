@@ -3,7 +3,8 @@
             [akiee.app-db :as db]
             [akiee.node :as no]
             [akiee.dom-helpers :as dom :refer [get-element]]
-            [akiee.fileoperations :as fo]))
+            [akiee.fileoperations :as fo]
+            [akiee.rank :as r]))
 ;; Nodejs modules
 (def gui (js/require "nw.gui"))
 
@@ -115,3 +116,23 @@
   (let [row  (.-parentNode (.-currentTarget ev))
         ky (.-key (.-dataset row))]
     (db/next-ts! ky)))
+
+(defn rank-helper
+  "Event -> String
+  Consume an Event from a rank changing button and returns the key of the corresponding row"
+  [ev]
+  (.-key (.-dataset (.-parentNode (.-parentNode (.-currentTarget ev))))))
+
+(defn handle-onclick-down
+  "Event -> GlobalState
+  Consumes the onclick Event ev and changes the global lon with rank change down-wards"
+  [ev]
+  (let [ky (rank-helper ev)]
+    (r/down-rank ky)))
+
+(defn handle-onclick-up
+  "Event -> GlobalState
+  Consumes the onclick Event ev and changes the global lon with rank change up-wards"
+  [ev]
+  (let [ky (rank-helper ev)]
+    (r/up-rank ky)))

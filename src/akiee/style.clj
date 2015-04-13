@@ -36,7 +36,7 @@
                 :transition "height .1s linear"}]
      [:.slider.closed {:height (px 0) :transition "height .1s linear"}]
 
-
+table
      [:#editor [:textarea {:width "100%" :height "100%"}]]
      [:#editor {:margin 0 :position "absolute" :top (px 52) :bottom 0 :left 0 :right 0}]
      [:#list :table :tbody :tr {:width (percent 100)}]

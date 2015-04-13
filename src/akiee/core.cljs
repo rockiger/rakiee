@@ -138,8 +138,8 @@
   [:tr {:data-key (:key t)}
    [:td.taskstate {:on-click h/handle-onclick-taskstate} [:span {:class "hover-button"} (:todo t)]]
    [:td (:headline t)]
-   [:td.rank [:span.fa.fa-chevron-up.hover-button]]
-   [:td.rank [:span.fa.fa-chevron-down.hover-button]]])
+   [:td.rank [:span.fa.fa-chevron-up.hover-button {:on-click h/handle-onclick-up}]]
+   [:td.rank [:span.fa.fa-chevron-down.hover-button {:on-click h/handle-onclick-down}]]])
 
 (defn task-list []
   (let [show? (if (not (db/editor?))

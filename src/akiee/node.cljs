@@ -12,6 +12,7 @@
 (def org (nj/require "./lib/markdown-org-mode-parser"))
 
 (def parse-file (.-parseBigString org))
+
 ;; Functions that create, convert and compare nodes
 
 ;; =================

@@ -341,3 +341,9 @@
                      (= ts TODO)  DOING
                      (= ts DOING) DONE
                      (= ts DONE)  TODO))))))
+
+(defn node-by-pos
+  "Integer -> Node
+  Returns node at pos"
+  [pos]
+  (nth (:lon @app-state) pos))
