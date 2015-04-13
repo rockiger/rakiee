@@ -15,7 +15,7 @@
   "Integer -> Node
   Returns node at pos"
   [pos]
-  (nth (db/tasks) pos))
+  (get (db/tasks) pos))
 
 (defn move-rank!
   "String Integer Integer -> ?"
@@ -23,9 +23,7 @@
   (let [source-task (task-by-pos sp)
         target-task (task-by-pos tp)
         source-rank (:rank source-task)
-        target-rank (:rank (try
-                               (task-by-pos tp)
-                               (catch js/Error e (println e))))
+        target-rank (:rank target-task)
         pred? (if (= direction "up")
                 (fn [x] (if (and (>= (:rank x) target-rank)(< (:rank x) source-rank))
                           (assoc x :rank (inc (:rank x)))
@@ -38,12 +36,9 @@
         np (db/node-pos-by-key ky (db/nodes))
         newer-lon (assoc new-lon np new-task)
         ]
-    (when target-rank
-      (println newer-lon)
-
-      (println source-rank target-rank)
-      (println new-task)
+    (if target-rank
       (db/reset-lon! db/app-state newer-lon)
+      (println "No target task")
       )))
 ;; set on-click-node with target-rank
 ;; edge cases abfangen
@@ -53,7 +48,9 @@
   Consumes a key-String ky;
   changes the rank of the corresponding node to rank higher"
   [ky]
-  (move-rank! ky 10 9 "up"))
+  (let [sp (db/node-pos-by-key ky (db/tasks))
+        tp (dec (db/node-pos-by-key ky (db/tasks)))
+        ](move-rank! ky sp tp "up")))
 
 (defn down-rank
   "String ->
