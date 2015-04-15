@@ -197,7 +197,7 @@
   Consumes a Liststate ls switches the ls variable and editor? search? search? accordingly"
   [ls]
   (let [lon (:lon @app-state)]
-      (reset! app-state (global-state. false false false (:changed? @app-state) (:ss @app-state) ls lon))))
+      (reset! app-state (global-state. false false false (:changed? @app-state) "" ls lon))))
 
 (defn switch-todo!
   "-> GlobalState
