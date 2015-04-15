@@ -146,6 +146,7 @@
           ea (dom/get-element "editor-area")]
       (do
         (reset! app-state new-state)
+        (set-changed! true)
         (set! (.-value ea) (no/lon->md (nodes)))
         (.focus ea)
         (.click ea)))))
