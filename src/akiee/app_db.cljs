@@ -135,6 +135,20 @@
   (let [filter-nodes (fn [x] (if (= (:level x) 1) true false ))]
     (vec (sort (map :headline (filter filter-nodes (:lon @app-state)))))))
 
+(defn set-changed!
+  "Bool -> GlobalState
+  consumes the new state s switches the changed? variable and return the new app-state"
+  [s]
+    (let [new-state (global-state. (:editor? @app-state) (:search? @app-state) (:entry? @app-state) s (:ss @app-state) (:ls @app-state) (:lon @app-state))]
+      (reset! app-state new-state)))
+
+(defn set-search-string!
+  "String -> GlobalState
+  consumes a String s and changes the search-string of the app-state accordingly;
+  returns the new GlobalState"
+  [s]
+  (reset! app-state (global-state. (:editor? @app-state) (:search? @app-state) (:entry? @app-state) (:changed? @app-state) s (:ls @app-state) (:lon @app-state))))
+
 (defn switch-editor!
   "-> Boolean
   switches the editor? state and returns it"
@@ -178,20 +192,6 @@
       (do
         (reset! app-state new-state)
         (.focus entry)))))
-
-(defn set-changed!
-  "Bool -> GlobalState
-  consumes the new state s switches the changed? variable and return the new app-state"
-  [s]
-    (let [new-state (global-state. (:editor? @app-state) (:search? @app-state) (:entry? @app-state) s (:ss @app-state) (:ls @app-state) (:lon @app-state))]
-      (reset! app-state new-state)))
-
-(defn set-search-string!
-  "String -> GlobalState
-  consumes a String s and changes the search-string of the app-state accordingly;
-  returns the new GlobalState"
-  [s]
-  (reset! app-state (global-state. (:editor? @app-state) (:search? @app-state) (:entry? @app-state) (:changed? @app-state) s (:ls @app-state) (:lon @app-state))))
 
 (defn switch-list-state!
   "ListState -> GlobalState
