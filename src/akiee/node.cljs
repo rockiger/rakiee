@@ -161,3 +161,28 @@
 (is (= (higher-rank? n1 n4) true))
 (is (= (higher-rank? n4 n1) false))
 
+(defn project
+  "ListOfNodes Node String -> String
+  Consumes a lon, a Node n and a project name pr returns the project of n"
+  [lon n]
+  (defn project-helper [lon n pr]
+    (cond (or (= (:key (first lon)) (:key n)) (not (first lon))) pr
+          (= (:level (first lon)) 1) (project-helper (rest lon) n (:headline (first lon)))
+          :else (project-helper (rest lon) n pr)))
+  (project-helper lon n "Inbox"))
+
+(def lon [{:key (->key) :headline "head 1" :level 1}
+          (->node "TODO" "Task 1" 1)
+          (->node "TODO" "Task 2" 2)
+          (->node "TODO" "Task 3" 3)
+          {:key (->key) :headline "head 2" :level 1}
+          (->node "TODO" "Task 4" 4)
+          (->node "TODO" "Task 5" 5)
+          (->node "TODO" "Task 6" 6)])
+
+(is (project lon (get lon 1)) "head 1")
+(is (project lon (get lon 2)) "head 1")
+(is (project lon (get lon 3)) "head 1")
+(is (project lon (get lon 5)) "head 2")
+(is (project lon (get lon 6)) "head 2")
+(is (project lon (get lon 7)) "head 2")

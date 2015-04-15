@@ -4,7 +4,8 @@
             [reagent.core :as r]
             [akiee.constants :as c :refer [TODO DOING DONE ALL]]
             [akiee.app-db :as db]
-            [akiee.handlers :as h]))
+            [akiee.handlers :as h]
+            [akiee.node :as nd]))
 
 (enable-console-print!)
 
@@ -137,7 +138,7 @@
 (defn task [t]
   [:tr {:data-key (:key t)}
    [:td.taskstate {:on-click h/handle-onclick-taskstate} [:span {:class "hover-button"} (:todo t)]]
-   [:td (:headline t)]
+   [:td [:span.project-tag.label (nd/project (db/nodes) t)](:headline t)]
    [:td.rank [:span.fa.fa-chevron-up.hover-button {:on-click h/handle-onclick-up}]]
    [:td.rank [:span.fa.fa-chevron-down.hover-button {:on-click h/handle-onclick-down}]]])
 

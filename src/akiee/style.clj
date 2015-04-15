@@ -36,7 +36,6 @@
                 :transition "height .1s linear"}]
      [:.slider.closed {:height (px 0) :transition "height .1s linear"}]
 
-table
      [:#editor [:textarea {:width "100%" :height "100%"}]]
      [:#editor {:margin 0 :position "absolute" :top (px 52) :bottom 0 :left 0 :right 0}]
      [:#list :table :tbody :tr {:width (percent 100)}]
@@ -94,6 +93,10 @@ table
      [:.empty-list-image {:overflow "hidden" :height (percent 100)}]
      [:.empty-list {:vertical-align "middle" :text-align "center" :position "fixed"
                     :top (percent 30) :width (percent 100)}]
+
+     [:.project-tag {:font-weight "normal" :color "#4281c3" :padding-left 0}]
+     [:.deadline {:font-weight "normal" :float "right" :color "#ccc" :padding-top (px 7)}]
+     [:tr.selected:hover [:.project-tag {:color "#729FCF"}]]
 
      ;; Bootstrap-Theme Override
 

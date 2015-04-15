@@ -221,6 +221,23 @@ tr.selected:hover {
   vertical-align: middle;
 }
 
+.project-tag {
+  padding-left: 0;
+  font-weight: normal;
+  color: #4281c3;
+}
+
+.deadline {
+  padding-top: 7px;
+  color: #ccc;
+  float: right;
+  font-weight: normal;
+}
+
+tr.selected:hover .project-tag {
+  color: #729FCF;
+}
+
 .btn, .btn:active, .btn:focus {
   line-height: 14px;
   font-size: 16px;
