@@ -167,8 +167,8 @@
   [lon n]
   (defn project-helper [lon n pr]
     (cond (or (= (:key (first lon)) (:key n)) (not (first lon))) pr
-          (= (:level (first lon)) 1) (project-helper (rest lon) n (:headline (first lon)))
-          :else (project-helper (rest lon) n pr)))
+          (= (:level (first lon)) 1) (recur (rest lon) n (:headline (first lon)))
+          :else (recur (rest lon) n pr)))
   (project-helper lon n "Inbox"))
 
 (def lon [{:key (->key) :headline "head 1" :level 1}
