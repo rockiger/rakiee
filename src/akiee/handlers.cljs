@@ -74,7 +74,7 @@
   Handles the close event of win"
   [ev]
   (do
-    (fo/save-task-file (no/lon->md (db/nodes)) "/home/macco/.akiee/testflow.md" (db/changed?) db/set-changed!)
+    (fo/save-task-file (no/lon->md (db/nodes)) (fo/task-file-path) (db/changed?) db/set-changed!)
     (.close WIN true)))
 
 (defn handle-blur
