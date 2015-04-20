@@ -47,15 +47,50 @@
 (def test-state (rc/atom (load-app-state fo/testfile)))
 
 
+(defn nodes
+  "-> ListOfNode
+  returns the nodes of the app-state"
+  []
+  (:lon @app-state))
+
+(defn editor?
+  "-> Boolean
+  returns the state of the editor"
+  []
+  (:editor? @app-state))
+
+(defn entry?
+  "-> Boolean
+  returns the state of the task entry"
+  []
+  (:entry? @app-state))
+
+(defn search?
+  "-> Boolean
+  returns the state of the search box"
+  []
+  (:search? @app-state))
+
+(defn changed?
+  "-> Boolean"
+  []
+  (:changed? @app-state))
+
+(defn list-state
+  "-> ListStat
+  returns the state of the List"
+  []
+  (:ls @app-state))
+
 
 (defn tasks-helper
-  "GlobalState -> lon
-  consumes an GlobalState gs and  returns the tasks, according to the current ListState"
-  [gs]
+  "GlobalState ListState -> lon
+  consumes an GlobalState gs , a ListState ls and  returns the tasks, according to the current ListState"
+  [gs ls]
     (let [filter-tasks (fn [x] (if (= (:level x) 2) true false ))
           filter-state (fn [x] (cond
-                                (= (:ls @gs) ALL) true
-                                (= (:ls @gs) (:todo x)) true
+                                (= ls ALL) true
+                                (= ls (:todo x)) true
                                 :else false))
           filter-search (fn [x] (if (not (empty? (:ss @gs)))
                                   (if (re-find (re-pattern
@@ -91,42 +126,9 @@
   "-> ListOfNode
   shows the tasks of the app-state, according to the current ListState"
   []
-  (tasks-helper app-state))
-
-(defn nodes
-  "-> ListOfNode
-  returns the nodes of the app-state"
-  []
-  (:lon @app-state))
-
-(defn editor?
-  "-> Boolean
-  returns the state of the editor"
-  []
-  (:editor? @app-state))
-
-(defn entry?
-  "-> Boolean
-  returns the state of the task entry"
-  []
-  (:entry? @app-state))
-
-(defn search?
-  "-> Boolean
-  returns the state of the search box"
-  []
-  (:search? @app-state))
-
-(defn changed?
-  "-> Boolean"
-  []
-  (:changed? @app-state))
-
-(defn list-state
-  "-> ListStat
-  returns the state of the List"
-  []
-  (:ls @app-state))
+  (if (= (list-state) ALL)
+    [(tasks-helper app-state TODO) (tasks-helper app-state DOING) (tasks-helper app-state DONE)]
+    (tasks-helper app-state (list-state))))
 
 (defn projects
   "-> ListOfString

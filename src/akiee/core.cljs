@@ -138,18 +138,25 @@
 (defn task [t]
   [:tr {:data-key (:key t)}
    [:td.taskstate {:on-click h/handle-onclick-taskstate} [:span {:class "hover-button"} (:todo t)]]
-   [:td [:span.project-tag.label (nd/project (db/nodes) t)](:headline t)]
+   [:td [:span.project-tag.label (nd/project (db/nodes) t)] (:headline t)]
    [:td.rank [:span.fa.fa-chevron-up.hover-button {:on-click h/handle-onclick-up}]]
    [:td.rank [:span.fa.fa-chevron-down.hover-button {:on-click h/handle-onclick-down}]]])
+
+(defn task-table [tb]
+  [:table.table
+     [:tbody
+      (for [t tb]
+        [task t])]])
 
 (defn task-list []
   (let [show? (if (not (db/editor?))
                 {:style {:display "inline-block"}}
                 {:style {:display "none"}})]
-    [:div#list [:table.table show?
-     [:tbody
-      (for [t (db/tasks)]
-        [task t])]]]))
+    [:div#list show? (if (= (db/list-state) ALL)
+                       [:table.table [:tbody [:tr.kanban-row
+                       (for [tb (db/tasks)]
+                         [:td.kanban-column (task-table tb)])]]]
+                       (task-table (db/tasks)))]))
 
 (defn app
   " -> Component
