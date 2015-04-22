@@ -93,8 +93,10 @@
                                 (= ls (:todo x)) true
                                 :else false))
           filter-search (fn [x] (if (not (empty? (:ss @gs)))
-                                  (if (re-find (re-pattern
+                                  (if (or (re-find (re-pattern
                                                 (str "(?i)"(:ss @gs))) (:headline x))
+                                          (re-find (re-pattern
+                                                (str "(?i)"(:ss @gs))) (:project x)))
                                     true
                                     false)
                                   true))]
@@ -103,17 +105,22 @@
                     (filter filter-state
                     (filter filter-tasks (:lon @gs))))))))
 
+;; ==========================================================
+;; TEST
 (let [filter-tasks (fn [x] (if (= (:level x) 2) true false ))
       filter-state (fn [x] (cond
                                 (= (:ls @app-state) ALL) true
                                 (= (:ls @app-state) (:todo x)) true
                                 :else false))
       filter-search (fn [x] (if (:ss @app-state)
-                                  (if (re-find (re-pattern (:ss @app-state)) (:headline x))
+                                  (if (or
+                                       (re-find (re-pattern (:ss @app-state)) (:headline x))
+                                       (re-find (re-pattern (:ss @app-state)) (:project x)))
                                     true
                                     false)
                                   true))]
   (filter filter-search (filter filter-state (filter filter-tasks (:lon @app-state)))))
+;; END TEST
 
 ;; Test fails becaus of :body one seems to have an "\n"
 #_(is (no/node= (nth (tasks-helper test-state) 0) {:key "orgode_33.##" :level 2  :headline "Test"
