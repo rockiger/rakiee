@@ -37,8 +37,10 @@
 ;; - deadline, default null
 ;; - drawer, default {}
 ;; - rank: unique Ranking in File, default null
-;; - style: the NodeStyle of a node TODO: has to be initially creted in markdown-org-mode;
-;;          defaul null
+;; - style: the NodeStyle of a node TODO: has to be initially created in markdown-org-mode;
+;;          defaul nil
+;; - project: The name of the project corresponding project that is one level higher, has to
+;;            found out via a function
 
 (def N1 {:key "orgode_33.##"
          :level 2
@@ -53,7 +55,8 @@
          :properties {}
          :drawer {}
          :rank nil
-         :style nil})
+         :style nil
+         :project "Inbox"})
 
 (def jsN1 (clj->js {:key "orgode_33.##"
          :level 2
@@ -68,7 +71,8 @@
          :properties {}
          :drawer {}
          :rank nil
-         :style nil}))
+         :style nil
+         :project "nil"}))
 
 (def N1a {:key "orgode_45.##"
          :level 2
@@ -83,7 +87,8 @@
          :properties {}
          :drawer {}
          :rank nil
-         :style nil})
+         :style nil
+         :project "nil"})
 
 (def N2 {:key "orgode_83.##"
          :level 1
@@ -98,7 +103,8 @@
          :properties {}
          :drawer {}
          :rank nil
-         :style nil})
+         :style nil
+         :project "nil"})
 
 #_
 (defn fn-for-node [n]

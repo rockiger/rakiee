@@ -311,8 +311,8 @@
         i (inc (node-pos-by-headline pro lon))
         new-lon (vec (concat (subvec lon 0 i) [n] (subvec lon i)))]
    (reset-lon! gs new-lon)))
-(is (no/node= (get (:lon (insert-node-helper! (no/->node TODO "Test Headline" (->rank)) "Inbox" test-state)) 1)
-       (no/->node TODO "Test Headline" (->rank))))
+(is (no/node= (get (:lon (insert-node-helper! (no/->node TODO "Test Headline" "Inbox" (->rank)) "Inbox" test-state)) 1)
+       (no/->node TODO "Test Headline" "Inbox" (->rank))))
 
 (defn insert-node!
   "Node String GlobalState -> ListOfNode
@@ -325,7 +325,7 @@
   Consumes a TaskState ts a headline hl and a project pro;
   adds a task to the app-state"
   [ts hl pro]
-  (let [n (no/->node ts hl (->rank))]
+  (let [n (no/->node ts hl pro (->rank))]
     (insert-node! n pro)))
 
 (defn next-ts!
