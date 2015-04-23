@@ -131,11 +131,18 @@
 
 (defn tasks
   "-> ListOfNode
-  shows the tasks of the app-state, according to the current ListState"
-  []
-  (if (= (list-state) ALL)
+  shows the tasks of the app-state, according to the current ListState
+  ---------------------------------------------------------------------------
+  ListState -> ListOfNode
+  consumes a ListState ls, shows the tasks of the app-state, according to ls"
+  ([]
+   (if (= (list-state) ALL)
     [(tasks-helper app-state TODO) (tasks-helper app-state DOING) (tasks-helper app-state DONE)]
     (tasks-helper app-state (list-state))))
+  ([ls]
+   (if (= ls ALL)
+    [(tasks-helper app-state TODO) (tasks-helper app-state DOING) (tasks-helper app-state DONE)]
+    (tasks-helper app-state ls))))
 
 (defn projects
   "-> ListOfString

@@ -13,15 +13,23 @@
 
 (defn task-by-pos
   "Integer -> Node
+  Returns node at pos
+  -------------------------
+  Integer ListState -> Node
   Returns node at pos"
-  [pos]
-  (get (db/tasks) pos))
+  ([pos] (get (db/tasks) pos))
+  ([pos ls] (get (db/tasks ls) pos)))
 
 (defn move-rank!
   "String Integer Integer -> ?"
-  [ky sp tp direction]
-  (let [source-task (task-by-pos sp)
-        target-task (task-by-pos tp)
+  [ky direction]
+  (let [ls (:todo (db/node-by-pos (db/node-pos-by-key ky (db/nodes))))
+        sp (db/node-pos-by-key ky (db/tasks ls))
+        tp (if (= direction "up")
+             (dec (db/node-pos-by-key ky (db/tasks ls)))
+             (inc (db/node-pos-by-key ky (db/tasks ls))))
+        source-task (task-by-pos sp ls)
+        target-task (task-by-pos tp ls)
         source-rank (:rank source-task)
         target-rank (:rank target-task)
         pred? (if (= direction "up")
@@ -46,16 +54,12 @@
   Consumes a key-String ky;
   changes the rank of the corresponding node to rank higher"
   [ky]
-  (let [sp (db/node-pos-by-key ky (db/tasks))
-        tp (dec (db/node-pos-by-key ky (db/tasks)))
-        ](move-rank! ky sp tp "up")))
+  (move-rank! ky "up"))
 
 (defn down-rank
   "String ->
   Consumes a key-String ky;
   changes the rank of the corresponding node to rank lower"
   [ky]
-  (let [sp (db/node-pos-by-key ky (db/tasks))
-        tp (inc (db/node-pos-by-key ky (db/tasks)))]
-    (move-rank! ky sp tp "down")))
+  (move-rank! ky "down"))
 
