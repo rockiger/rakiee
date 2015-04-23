@@ -186,6 +186,7 @@
     (let [new-state (global-state. false true false (:changed? @app-state) (:ss @app-state) (:ls @app-state) (:lon @app-state))
           se (dom/get-element "search-input")]
       (do
+        (set! (.-value (dom/get-element "search-input")) "")
         (reset! app-state new-state)
         (.focus se)))))
 
