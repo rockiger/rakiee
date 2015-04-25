@@ -170,9 +170,9 @@
   switches the editor? state and returns it"
   []
   (if (editor?)
-    (let [new-state (global-state. false (:search? @app-state) (:entry? @app-state) (:changed? @app-state) (:ss @app-state) (:ls @app-state) (:lon @app-state))]
+    (let [new-state (global-state. false (:search? @app-state) (:entry? @app-state) (:changed? @app-state) "" (:ls @app-state) (:lon @app-state))]
       (reset! app-state new-state))
-    (let [new-state (global-state. true false false (:changed? @app-state) (:ss @app-state) (:ls @app-state) (:lon @app-state))
+    (let [new-state (global-state. true false false (:changed? @app-state) "" (:ls @app-state) (:lon @app-state))
           ea (dom/get-element "editor-area")]
       (do
         (reset! app-state new-state)
@@ -202,9 +202,9 @@
   switches the search? state and the new app-state"
   []
   (if (entry?)
-    (let [new-state (global-state. (:editor? @app-state) (:search? @app-state) false (:changed? @app-state) (:ss @app-state) (:ls @app-state) (:lon @app-state))]
+    (let [new-state (global-state. (:editor? @app-state) (:search? @app-state) false (:changed? @app-state) "" (:ls @app-state) (:lon @app-state))]
       (reset! app-state new-state))
-    (let [new-state (global-state. false false true (:changed? @app-state) (:ss @app-state) (:ls @app-state) (:lon @app-state))
+    (let [new-state (global-state. false false true (:changed? @app-state) "" (:ls @app-state) (:lon @app-state))
           entry (dom/get-element "enter-headline")]
       (do
         (reset! app-state new-state)
