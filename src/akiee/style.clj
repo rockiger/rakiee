@@ -40,7 +40,7 @@
      [:#editor {:margin 0 :position "absolute" :top (px 52) :bottom 0 :left 0 :right 0}]
 
      [:#tasks {:display "flex"}]
-     [:#task-sidebar {:width "220px"}]
+     [:#task-sidebar {:width "220px" :background-color "#fafafa" :border-left "1px solid #a1a1a1"}]
      [:#list {:flex 1}]
      [:table :tbody :tr {:width (percent 100)}]
      [:#list [:table {:margin 0}]]

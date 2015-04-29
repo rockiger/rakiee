@@ -62,7 +62,9 @@ navbar-header {
 }
 
 #task-sidebar {
+  border-left: 1px solid #a1a1a1;
   width: 220px;
+  background-color: #fafafa;
 }
 
 #list {
