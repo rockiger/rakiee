@@ -38,7 +38,11 @@
 
      [:#editor [:textarea {:width "100%" :height "100%"}]]
      [:#editor {:margin 0 :position "absolute" :top (px 52) :bottom 0 :left 0 :right 0}]
-     [:#list :table :tbody :tr {:width (percent 100)}]
+
+     [:#tasks {:display "flex"}]
+     [:#task-sidebar {:width "220px"}]
+     [:#list {:flex 1}]
+     [:table :tbody :tr {:width (percent 100)}]
      [:#list [:table {:margin 0}]]
      [:#list {:overflow-y "auto" :height "calc(100vh - 50px)"}]
      [:#list:hover {:outline "none"}]

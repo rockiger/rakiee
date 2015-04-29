@@ -150,13 +150,14 @@
 
 (defn task-list []
   (let [show? (if (not (db/editor?))
-                {:style {:display "inline-block"}}
+                {:style {:display "flex"}}
                 {:style {:display "none"}})]
-    [:div#list show? (if (= (db/list-state) ALL)
+    [:div#tasks show? [:div#list (if (= (db/list-state) ALL)
                        [:table.table [:tbody [:tr.kanban-row
                        (for [tb (db/tasks)]
                          [:td.kanban-column (task-table tb)])]]]
-                       (task-table (db/tasks)))]))
+                       (task-table (db/tasks)))]
+     [:aside#task-sidebar "Sidebar"]]))
 
 (defn app
   " -> Component
