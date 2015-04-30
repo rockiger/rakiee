@@ -30,7 +30,7 @@
   consumes the path p to the task file and produces the initial app-state
   TODO find way to test, without :key"
   [p]
-  (global-state. false false false false "" DOING (no/->nodes p)))
+  (global-state. false false false false "" nil DOING (no/->nodes p)))
 
 (is (= (:lon (load-app-state fo/testfile) [{:key "orgode_33.##" :level 1 :headline "Inbox"
                                             :body "" :tag nil :tags {}  :todo "DOING"
@@ -153,29 +153,26 @@
 
 (defn set-changed!
   "Bool -> GlobalState
-  consumes the new state s switches the changed? variable and return the new app-state"
-  [s]
-    (let [new-state (global-state. (:editor? @app-state) (:search? @app-state) (:entry? @app-state) s (:ss @app-state) (:ls @app-state) (:lon @app-state))]
-      (reset! app-state new-state)))
+  consumes the Bool b switches the changed? variable and return the new app-state"
+  [b]
+  (swap! app-state assoc :changed? b))
 
 (defn set-search-string!
   "String -> GlobalState
   consumes a String s and changes the search-string of the app-state accordingly;
   returns the new GlobalState"
   [s]
-  (reset! app-state (global-state. (:editor? @app-state) (:search? @app-state) (:entry? @app-state) (:changed? @app-state) s (:ls @app-state) (:lon @app-state))))
+  (swap! app-state assoc :ss s))
 
 (defn switch-editor!
   "-> Boolean
   switches the editor? state and returns it"
   []
   (if (editor?)
-    (let [new-state (global-state. false (:search? @app-state) (:entry? @app-state) (:changed? @app-state) "" (:ls @app-state) (:lon @app-state))]
-      (reset! app-state new-state))
-    (let [new-state (global-state. true false false (:changed? @app-state) "" (:ls @app-state) (:lon @app-state))
-          ea (dom/get-element "editor-area")]
+    (swap! app-state assoc :editor? false :ss "")
+    (let [ea (dom/get-element "editor-area")]
       (do
-        (reset! app-state new-state)
+        (swap! app-state assoc :editor? true :search? false :entry? false :ss "")
         (set-changed! true)
         (set! (.-value ea) (no/lon->md (nodes)))
         (.focus ea)
@@ -186,15 +183,13 @@
   switches the search? state and the new app-state"
   []
   (if (search?)
-    (let [new-state (global-state. (:editor? @app-state) false (:entry? @app-state) (:changed? @app-state) "" (:ls @app-state) (:lon @app-state))]
+    (do
+      (set! (.-value (dom/get-element "search-input")) "")
+      (swap! app-state assoc :search? false :ss ""))
+    (let [se (dom/get-element "search-input")]
       (do
         (set! (.-value (dom/get-element "search-input")) "")
-        (reset! app-state new-state)))
-    (let [new-state (global-state. false true false (:changed? @app-state) (:ss @app-state) (:ls @app-state) (:lon @app-state))
-          se (dom/get-element "search-input")]
-      (do
-        (set! (.-value (dom/get-element "search-input")) "")
-        (reset! app-state new-state)
+        (swap! app-state assoc :editor? false :search? true :entry? false)
         (.focus se)))))
 
 (defn switch-entry!
@@ -202,12 +197,10 @@
   switches the search? state and the new app-state"
   []
   (if (entry?)
-    (let [new-state (global-state. (:editor? @app-state) (:search? @app-state) false (:changed? @app-state) "" (:ls @app-state) (:lon @app-state))]
-      (reset! app-state new-state))
-    (let [new-state (global-state. false false true (:changed? @app-state) "" (:ls @app-state) (:lon @app-state))
-          entry (dom/get-element "enter-headline")]
+    (swap! app-state assoc :entry? false :ss "")
+    (let [entry (dom/get-element "enter-headline")]
       (do
-        (reset! app-state new-state)
+        (swap! app-state assoc :editor? false :search? false :entry? true :ss "")
         (.focus entry)))))
 
 (defn switch-list-state!
@@ -215,7 +208,7 @@
   Consumes a Liststate ls switches the ls variable and editor? search? search? accordingly"
   [ls]
   (let [lon (:lon @app-state)]
-      (reset! app-state (global-state. false false false (:changed? @app-state) "" ls lon))))
+      (swap! app-state assoc :editor? false :search? false :entry? false :ss "" :ls ls)))
 
 (defn switch-todo!
   "-> GlobalState
@@ -277,12 +270,7 @@
   "Global-State ListOfNode -> GlobalState
   Resets the ListOfNode lon in the app-state; produces a new GlobalState"
   [gs lon]
-  (let [ed? (:editor? @app-state)
-        se? (:search? @app-state)
-        en? (:entry?  @app-state)
-        ss  (:ss      @app-state)
-        ls  (:ls      @app-state)]
-    (reset! gs (global-state. ed? se? en? true ss ls lon))))
+  (swap! gs assoc :changed? true :lon lon))
 
 (defn positions
   "Function Collection -> Integer
