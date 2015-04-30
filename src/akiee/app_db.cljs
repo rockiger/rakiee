@@ -82,6 +82,12 @@
   []
   (:ls @app-state))
 
+(defn selected
+  "-> String
+  returns the state of the selected filed"
+  []
+  (:selected @app-state))
+
 
 (defn tasks-helper
   "GlobalState ListState -> lon
@@ -163,6 +169,15 @@
   returns the new GlobalState"
   [s]
   (swap! app-state assoc :ss s))
+
+(defn set-selected!
+  "String -> GlobalState
+  consumes a String ky and changes the :selected GlobalState accordingly;
+  retruns the new GlobalState"
+  [ky]
+  (if (= (:selected @app-state) ky)
+    (swap! app-state assoc :selected nil)
+    (swap! app-state assoc :selected ky)))
 
 (defn switch-editor!
   "-> Boolean

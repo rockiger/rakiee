@@ -128,11 +128,24 @@
   Consumes the onclick Event ev and changes the global lon with rank change down-wards"
   [ev]
   (let [ky (rank-helper ev)]
-    (r/down-rank ky)))
+    (do
+      (r/down-rank ky)
+      (.stopPropagation ev))))
 
 (defn handle-onclick-up
   "Event -> GlobalState
   Consumes the onclick Event ev and changes the global lon with rank change up-wards"
   [ev]
   (let [ky (rank-helper ev)]
-    (r/up-rank ky)))
+    (do
+      (r/up-rank ky)
+      (.stopPropagation ev))))
+
+(defn onclick-task
+  "Event -> GlobalState
+  Consumes the onclick Event ev and changes the global state selected"
+  [ev]
+  (let [ky (.-key (.-dataset (.-currentTarget ev)))]
+    (do
+      (db/set-selected! ky)
+      (.stopPropagation ev))))

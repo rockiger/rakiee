@@ -136,11 +136,14 @@
    [:textarea#editor-area {:rows 3 :on-blur h/handle-blur-editor}]]))
 
 (defn task [t]
-  [:tr {:data-key (:key t)}
+  (let [style (if (= (db/selected) (:key t))
+                {:background-color "#4a90d9"}
+                {:background-color "transparent"})]
+  [:tr {:data-key (:key t) :on-click h/onclick-task :style style}
    [:td.taskstate {:on-click h/handle-onclick-taskstate} [:span {:class "hover-button"} (:todo t)]]
    [:td [:span.project-tag.label (:project t)] (:headline t)]
    [:td.rank [:span.fa.fa-chevron-up.hover-button {:on-click h/handle-onclick-up}]]
-   [:td.rank [:span.fa.fa-chevron-down.hover-button {:on-click h/handle-onclick-down}]]])
+   [:td.rank [:span.fa.fa-chevron-down.hover-button {:on-click h/handle-onclick-down}]]]))
 
 (defn task-table [tb]
   [:table.table
