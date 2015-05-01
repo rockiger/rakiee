@@ -136,10 +136,10 @@
    [:textarea#editor-area {:rows 3 :on-blur h/handle-blur-editor}]]))
 
 (defn task [t]
-  (let [style (if (= (db/selected) (:key t))
-                {:background-color "#4a90d9"}
-                {:background-color "transparent"})]
-  [:tr {:data-key (:key t) :on-click h/onclick-task :style style}
+  (let [class (if (= (db/selected) (:key t))
+                "selected"
+                "")]
+  [:tr {:data-key (:key t) :on-click h/onclick-task :class class}
    [:td.taskstate {:on-click h/handle-onclick-taskstate} [:span {:class "hover-button"} (:todo t)]]
    [:td [:span.project-tag.label (:project t)] (:headline t)]
    [:td.rank [:span.fa.fa-chevron-up.hover-button {:on-click h/handle-onclick-up}]]
@@ -154,13 +154,16 @@
 (defn task-list []
   (let [show? (if (not (db/editor?))
                 {:style {:display "flex"}}
-                {:style {:display "none"}})]
+                {:style {:display "none"}})
+        sidebar? (if (db/selected)
+                   {:class ""}
+                   {:class "closed"})]
     [:div#tasks show? [:div#list (if (= (db/list-state) ALL)
                        [:table.table [:tbody [:tr.kanban-row
                        (for [tb (db/tasks)]
                          [:td.kanban-column (task-table tb)])]]]
                        (task-table (db/tasks)))]
-     [:aside#task-sidebar "Sidebar"]]))
+     [:aside#task-sidebar sidebar? "Sidebar"]]))
 
 (defn app
   " -> Component

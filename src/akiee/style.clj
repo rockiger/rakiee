@@ -40,7 +40,8 @@
      [:#editor {:margin 0 :position "absolute" :top (px 52) :bottom 0 :left 0 :right 0}]
 
      [:#tasks {:display "flex"}]
-     [:#task-sidebar {:width "220px" :background-color "#fafafa" :border-left "1px solid #a1a1a1"}]
+     [:#task-sidebar {:width "220px" :background-color "#fafafa" :border-left "1px solid #a1a1a1" :transition "width .1s linear"}]
+     [:#task-sidebar.closed {:width 0 :transition "width .1s linear" :overflow-x "hidden"}]
      [:#list {:flex 1}]
      [:table :tbody :tr {:width (percent 100)}]
      [:#list [:table {:margin 0}]]
@@ -65,7 +66,7 @@
      [:.todo [:td {:background-color "#d9edf7 !important" :color "#31708f"}]]
      [:.doing [:td {:background-color "#dff0d8 !important" :color "#3c763d"}]]
      [:.done [:td {:color "#777 !important" :text-decoration "line-through"}]]
-     [:.selected {:background-color "#729FCF" :color "white"}]
+     [:.selected {:background-color "#729FCF" :color "white !important"}]
 
      [(keyword "tr:nth-child(2)") {:width (percent 100)}]
      [:tr {:background-color "white"}]

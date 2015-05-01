@@ -65,6 +65,13 @@ navbar-header {
   border-left: 1px solid #a1a1a1;
   width: 220px;
   background-color: #fafafa;
+  transition: width .1s linear;
+}
+
+#task-sidebar.closed {
+  overflow-x: hidden;
+  width: 0;
+  transition: width .1s linear;
 }
 
 #list {
@@ -141,7 +148,7 @@ td.rank {
 
 .selected {
   background-color: #729FCF;
-  color: white;
+  color: white !important;
 }
 
 tr:nth-child(2) {
