@@ -115,7 +115,9 @@
   [ev]
   (let [row  (.-parentNode (.-currentTarget ev))
         ky (.-key (.-dataset row))]
-    (db/next-ts! ky)))
+    (do
+      (db/next-ts! ky)
+      (.stopPropagation ev))))
 
 (defn rank-helper
   "Event -> String
