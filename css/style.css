@@ -63,7 +63,7 @@ navbar-header {
 
 #task-sidebar {
   border-left: 1px solid #a1a1a1;
-  width: 220px;
+  width: 300px;
   background-color: #fafafa;
   transition: width .1s linear;
 }
@@ -72,6 +72,23 @@ navbar-header {
   overflow-x: hidden;
   width: 0;
   transition: width .1s linear;
+}
+
+#details {
+  padding: 0 10px;
+}
+
+#details div:hover, #details h4:hover {
+  cursor: pointer;
+  background-color: #f2f2f2;
+}
+
+.details-left {
+  margin-right: 5px;
+}
+
+span.fa {
+  margin-left: 5px;
 }
 
 #list {
@@ -148,7 +165,7 @@ td.rank {
 
 .selected {
   background-color: #729FCF;
-  color: white !important;
+  color: white;
 }
 
 tr:nth-child(2) {

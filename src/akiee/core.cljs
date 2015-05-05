@@ -55,7 +55,7 @@
   [:button.btn.btn-default.navbar-btn.btn-square {:id id :title t :class active? :on-click onfn}
    [:span.fa.fa-fw {:class icon-name}]]))
 
-(def editor-switch [switch-button "file-text-o" "show-editor" "Ctrl+E / Ctrl+Space" db/editor? db/switch-editor!])
+(def editor-switch [switch-button "code" "show-editor" "Ctrl+E / Ctrl+Space" db/editor? db/switch-editor!])
 (def search-switch [switch-button "search" "show-searchbox" "Ctrl+F" db/search? db/switch-search!])
 (def entry-switch  [switch-button "plus" "show-enter-task" "Ctrl+Enter" db/entry? db/switch-entry!])
 
@@ -145,6 +145,26 @@
    [:td.rank [:span.fa.fa-chevron-up.hover-button {:on-click h/handle-onclick-up}]]
    [:td.rank [:span.fa.fa-chevron-down.hover-button {:on-click h/handle-onclick-down}]]]))
 
+(defn sidebar []
+  (let [node (db/sidebar-content)]
+    [:div#details
+     [:h4 (:headline node) [:span.fa.fa-pencil-square-o]]
+     [:div
+      [:span.details-left "Planned:"] [:span (if (:scheduled node) (:scheduled node) "Never")] [:span.fa.fa-calendar]]
+     [:div
+      [:span.details-left "Repeat:"] [:span "Never"] [:span.fa.fa-repeat]]
+     [:div
+      [:span.details-left "Due:"] [:span (if (:deadline node) (:deadline node) "Never")] [:span.fa.fa-calendar]]
+     [:div
+      [:span.details-left "Tags:"] [:span (if (:tags node) (:tags node) "None")] [:span.fa.fa-tags]]
+     [:div
+      [:span.details-left "State:"] [:span (:todo node)] [:span.fa.fa-check-square-o]]
+     [:div
+      [:span.details-left "Project:"] [:span (:project node)] [:span.fa.fa-list-alt]]
+     [:div
+      [:span.details-left "Note:"] [:span.fa.fa-file-text-o]]
+     [:div (:body node)]]))
+
 (defn task-table [tb]
   [:table.table
      [:tbody
@@ -163,7 +183,7 @@
                        (for [tb (db/tasks)]
                          [:td.kanban-column (task-table tb)])]]]
                        (task-table (db/tasks)))]
-     [:aside#task-sidebar sidebar? "Sidebar"]]))
+     [:aside#task-sidebar sidebar? (sidebar)]]))
 
 (defn app
   " -> Component

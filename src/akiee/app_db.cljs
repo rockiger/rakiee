@@ -368,3 +368,15 @@
   Returns node at pos"
   [pos]
   (nth (:lon @app-state) pos))
+
+(defn node-by-key
+  "String -> Node
+  Consumes a key and returns the node from the app-state"
+  [ky]
+  (node-by-pos (node-pos-by-key ky (nodes))))
+
+(defn sidebar-content
+  "-> node"
+  []
+  (when (selected)
+    (node-by-key (selected))))
