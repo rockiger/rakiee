@@ -157,11 +157,9 @@
   "Event -> GlobalState
   Consumes the onclick Event ev and changes the global state editable"
   [ev]
-  (let [el (.-currentTarget ev)
-        ip (.-firstChild el)]
     (do
       (db/set-editable! "hdln")
-      (.focus ip))))
+      (js/setTimeout #(.focus (get-element "sidebar-headline")) 100)))
 
 (defn onblur-sidebar-input
   "Event -> GlobalState
