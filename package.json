@@ -9,7 +9,7 @@
         "toolbar": true,
         "icon": "logo.png",
         "position": "center",
-        "width": 800,
+        "width": 1000,
         "height": 600,
         "resizable": true,
         "show": true,

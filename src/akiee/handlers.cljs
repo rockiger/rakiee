@@ -5,6 +5,7 @@
             [akiee.dom-helpers :as dom :refer [get-element]]
             [akiee.fileoperations :as fo]
             [akiee.rank :as r]))
+
 ;; Nodejs modules
 (def gui (js/require "nw.gui"))
 
@@ -151,3 +152,19 @@
     (do
       (db/set-selected! ky)
       (.stopPropagation ev))))
+
+(defn onclick-hdln
+  "Event -> GlobalState
+  Consumes the onclick Event ev and changes the global state editable"
+  [ev]
+  (let [el (.-currentTarget ev)
+        ip (.-firstChild el)]
+    (do
+      (db/set-editable! "hdln")
+      (.focus ip))))
+
+(defn onblur-sidebar-input
+  "Event -> GlobalState
+  Consumes the onclick Event ev and changes the headline of a task"
+  [ev]
+  (db/set-editable! nil))

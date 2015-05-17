@@ -20,8 +20,6 @@
 (def null (js* "null"))
 (def FP (fo/create-task-list-file (fo/user-home)))
 
-;;(defrecord global-state [editor? search? entry? ls lon])
-
 ;; =================
 ;; Functions:
 
@@ -30,7 +28,7 @@
   consumes the path p to the task file and produces the initial app-state
   TODO find way to test, without :key"
   [p]
-  (global-state. false false false false "" nil DOING (no/->nodes p)))
+  (global-state. false false false false "" nil nil DOING (no/->nodes p)))
 
 (is (= (:lon (load-app-state fo/testfile) [{:key "orgode_33.##" :level 1 :headline "Inbox"
                                             :body "" :tag nil :tags {}  :todo "DOING"
@@ -88,6 +86,11 @@
   []
   (:selected @app-state))
 
+(defn editable
+  "-> String
+  returns the state of the editable filed"
+  []
+  (:editable @app-state))
 
 (defn tasks-helper
   "GlobalState ListState -> lon
@@ -178,6 +181,13 @@
   (if (= (:selected @app-state) ky)
     (swap! app-state assoc :selected nil)
     (swap! app-state assoc :selected ky)))
+
+(defn set-editable!
+  "String -> GlobalState
+  consumes a String ky and changes the :selected GlobalState accordingly;
+  retruns the new GlobalState"
+  [attr]
+  (swap! app-state assoc :editable attr))
 
 (defn switch-editor!
   "-> Boolean

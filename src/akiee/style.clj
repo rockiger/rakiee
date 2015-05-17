@@ -45,6 +45,8 @@
      [:#details {:padding "0 10px"}]
      [:#details [:div:hover  :h4:hover {:background-color "#f2f2f2" :cursor "pointer"}]]
      [:.details-left {:margin-right "5px"}]
+     [:.sidebar-input {:height "32px" :width "80%" :display "inline"}]
+
      [:span.fa {:margin-left "5px"}]
      [:#list {:flex 1}]
      [:table :tbody :tr {:width (percent 100)}]
