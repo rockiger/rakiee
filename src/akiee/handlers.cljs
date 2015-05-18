@@ -165,4 +165,11 @@
   "Event -> GlobalState
   Consumes the onclick Event ev and changes the headline of a task"
   [ev]
-  (db/set-editable! nil))
+  (let [content (.-value (.-currentTarget ev))]
+    (do
+      (db/set-editable! nil)
+      (if (not= content (:headline (db/sidebar-content)))
+        (db/change-headline content (db/sidebar-content))
+        (println "content same")))))
+
+;; TODO change text if edited

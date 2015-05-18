@@ -390,3 +390,13 @@
   []
   (when (selected)
     (node-by-key (selected))))
+
+(defn change-headline
+  "String Node -> GlobalState
+  consumes content String c and Node n;
+  changes the headline in n and safes to app-state"
+  [c n]
+  (let [nn (assoc n :headline c)
+        np (node-pos-by-key (:key nn) (nodes))
+        nlon (assoc (vec (nodes)) np nn)]
+    (reset-lon! app-state nlon)))
