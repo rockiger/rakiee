@@ -15,7 +15,7 @@
 (defn headline [node]
      [:h4 {:on-click h/onclick-hdln}
       (if (and (db/selected) (= (db/editable) "hdln"))
-            [:input#sidebar-headline.sidebar-input.form-control {:type "text" :default-value (:headline node) :on-blur h/onblur-sidebar-input}]
+            [:input#sidebar-headline.sidebar-input.form-control {:type "text" :default-value (:headline node) :on-blur h/onblur-sidebar-input :on-submit h/onblur-sidebar-input}]
             (:headline node))
       [:span.fa.fa-pencil-square-o]])
 
