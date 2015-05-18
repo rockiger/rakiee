@@ -40,7 +40,7 @@
      [:#editor {:margin 0 :position "absolute" :top (px 52) :bottom 0 :left 0 :right 0}]
 
      [:#tasks {:display "flex"}]
-     [:#task-sidebar {:width "300px" :background-color "#fafafa" :border-left "1px solid #a1a1a1" :transition "width .1s linear" }]
+     [:#task-sidebar {:width "300px" :background-color "#fafafa" :border-left "1px solid #a1a1a1" :transition "width .1s linear" :overflow-x "hidden"}]
      [:#task-sidebar.closed {:width 0 :transition "width .1s linear" :overflow-x "hidden"}]
      [:#details {:padding "0 10px"}]
      [:#details [:div:hover  :h4:hover {:background-color "#f2f2f2" :cursor "pointer"}]]
