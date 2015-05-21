@@ -48,7 +48,7 @@
      [:.sidebar-input {:height "32px" :width "80%" :display "inline"}]
      [:#sidebar-body
       [:pre {:font-family "inherit" :font-size "inherit" :padding 0 :color "inherit" :border "none" :background-color "inherit" }]
-      [:textarea {:width "100%" :height "260px" :border-radius 0 :background-color "white" :font-size "inherit" :resize "none"}]]
+      [:textarea {:width "100%" :height "225px" :border-radius 0 :background-color "white" :font-size "inherit" :resize "none"}]]
 
      [:span.fa {:margin-left "5px"}]
      [:#list {:flex 1}]
