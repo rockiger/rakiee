@@ -138,6 +138,14 @@
       (db/set-editable! "hdln")
       (js/setTimeout #(.focus (get-element "sidebar-headline")) 100)))
 
+(defn onclick-body
+  "Event -> GlobalState
+  Consumes the onclick Event ev and changes the global state editable"
+  [ev]
+    (do
+      (db/set-editable! "body")
+      (js/setTimeout #(.focus (get-element "sidebar-body-ta")) 100)))
+
 (defn onblur-sidebar-input
   "Event -> GlobalState
   Consumes the onclick Event ev and changes the headline of a task"
@@ -148,11 +156,27 @@
       (when (not= content (:headline (db/sidebar-content)))
         (db/change-headline content (db/sidebar-content))))))
 
+(defn onblur-sidebar-body
+  "Event -> GlobalState
+  Consumes the onclick Event ev and changes the body of a task"
+  [ev]
+  (let [content (.-value (.-currentTarget ev))]
+    (do
+      (db/set-editable! nil)
+      (when (not= content (:body (db/sidebar-content)))
+        (db/change-body content (db/sidebar-content)))))) ;;!!
+
 (defn submit-sidebar-hdln
   "->
   creates an on-blur-event on the sidebar-headline"
   []
   (.blur (get-element "sidebar-headline")))
+
+(defn submit-sidebar-body
+  "->
+  creates an on-blur-event on the sidebar-headline"
+  []
+  (.blur (get-element "sidebar-body")))
 
 (defn handle-keyup
   "KeyEvent -> GlobalState
@@ -173,6 +197,7 @@
      (and (= (ky ev) 27) (db/search?)) (cancel-search)                        ;; ESC - search?
      (and (= (ky ev) 27) (db/editable)) (db/set-editable! nil)             ;; ESC - editable
      (and (= (ky ev) 13) (= (db/editable) "hdln")) (submit-sidebar-hdln)     ;; Enter - hdln
+     ;;(and (= (ky ev) 13) (= (db/editable) "body")) (submit-sidebar-body)     ;; Enter - hdln
      )))
 
 (defn register-keyevents

@@ -94,6 +94,24 @@ navbar-header {
   width: 80%;
 }
 
+#sidebar-body pre {
+  font-family: inherit;
+  border: none;
+  padding: 0;
+  background-color: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+#sidebar-body textarea {
+  height: 260px;
+  border-radius: 0;
+  resize: none;
+  width: 100%;
+  background-color: white;
+  font-size: inherit;
+}
+
 span.fa {
   margin-left: 5px;
 }

@@ -19,6 +19,15 @@
             (:headline node))
       [:span.fa.fa-pencil-square-o]])
 
+(defn body [node]
+     [:div#sidebar-body {:on-click h/onclick-body}
+      [:span.details-left "Details:"] [:span.fa.fa-file-text-o]
+      (if (and (db/selected) (= (db/editable) "body"))
+              [:div
+               [:textarea#sidebar-body-ta.sidebar-input.form-control {:default-value (:body node) :on-blur h/onblur-sidebar-body :on-submit h/onblur-sidebar-body}]
+               [:button#sidebar-body-submit.btn.btn-default {:type "button" :title "Tab" :style {:float "right" :margin-top "5px"}} "Save"]]
+            [:div [:pre (:body node)]])])
+
 (defn sidebar []
   (let [node (db/sidebar-content)]
     [:div#details
@@ -35,6 +44,4 @@
       [:span.details-left "State:"] [:span (:todo node)] [:span.fa.fa-check-square-o]]
      [:div
       [:span.details-left "Project:"] [:span (:project node)] [:span.fa.fa-list-alt]]
-     [:div
-      [:span.details-left "Note:"] [:span.fa.fa-file-text-o]]
-     [:div (:body node)]]))
+     (body node)]))
