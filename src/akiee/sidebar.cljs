@@ -32,7 +32,7 @@
      [:div#sidebar-state {:on-click h/onclick-state}
       [:span.details-left "State:"]
       (if (and (db/selected) (= (db/editable) "state"))
-        [:select#sidebar-task-state.form-control {:name "task-status" :defaultValue (:todo node) :on-blur h/onblur-sidebar-state :on-submit h/onblur-sidebar-state}
+        [:select#sidebar-task-state.form-control {:name "task-status" :defaultValue (:todo node) :on-blur h/onblur-sidebar-state :on-submit h/onblur-sidebar-state :on-change h/onblur-sidebar-state}
          [:option "TODO"]
          [:option "DOING"]
          [:option "DONE"]]
