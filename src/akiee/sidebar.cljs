@@ -28,6 +28,17 @@
                [:button#sidebar-body-submit.btn.btn-default {:type "button" :title "Tab" :style {:float "right" :margin-top "5px"}} "Save"]]
             [:div [:pre (:body node)]])])
 
+(defn state [node]
+     [:div#sidebar-state {:on-click h/onclick-state}
+      [:span.details-left "State:"]
+      (if (and (db/selected) (= (db/editable) "state"))
+        [:select#sidebar-task-state.form-control {:name "task-status" :defaultValue (:todo node) :on-blur h/onblur-sidebar-state :on-submit h/onblur-sidebar-state}
+         [:option "TODO"]
+         [:option "DOING"]
+         [:option "DONE"]]
+        [:span (:todo node)])
+      [:span.fa.fa-check-square-o]])
+
 (defn sidebar []
   (let [node (db/sidebar-content)]
     [:div#details
@@ -40,8 +51,7 @@
       [:span.details-left "Due:"] [:span (if (:deadline node) (:deadline node) "Never")] [:span.fa.fa-calendar]]
      [:div
       [:span.details-left "Tags:"] [:span (if (:tags node) (:tags node) "None")] [:span.fa.fa-tags]]
-     [:div
-      [:span.details-left "State:"] [:span (:todo node)] [:span.fa.fa-check-square-o]]
+     (state node)
      [:div
       [:span.details-left "Project:"] [:span (:project node)] [:span.fa.fa-list-alt]]
      (body node)]))

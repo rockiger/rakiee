@@ -146,6 +146,14 @@
       (db/set-editable! "body")
       (js/setTimeout #(.focus (get-element "sidebar-body-ta")) 100)))
 
+(defn onclick-state
+  "Event -> GlobalState
+  Consumes the onclick Event ev and changes the global state editable"
+  [ev]
+    (do
+      (db/set-editable! "state")
+      (js/setTimeout #(.focus (get-element "sidebar-task-state")))))
+
 (defn onblur-sidebar-input
   "Event -> GlobalState
   Consumes the onclick Event ev and changes the headline of a task"
@@ -164,7 +172,17 @@
     (do
       (db/set-editable! nil)
       (when (not= content (:body (db/sidebar-content)))
-        (db/change-body content (db/sidebar-content)))))) ;;!!
+        (db/change-body content (db/sidebar-content))))))
+
+(defn onblur-sidebar-state
+  "Event -> GlobalState
+  Consumes the onclick Event ev and changes the state of a task"
+  [ev]
+  (let [content (.-value (.-currentTarget ev))]
+    (do
+      (db/set-editable! nil)
+      (when (not= content (:todo (db/sidebar-content)))
+        (db/change-state content (db/sidebar-content)))))) ;;!!
 
 (defn submit-sidebar-hdln
   "->
