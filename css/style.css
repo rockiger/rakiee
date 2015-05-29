@@ -98,8 +98,11 @@ navbar-header {
   font-family: inherit;
   border: none;
   padding: 0;
+  word-wrap: break-word;
   background-color: inherit;
   font-size: inherit;
+  white-space: pre-wrap;
+  tab-size: 4;
   color: inherit;
 }
 
@@ -110,6 +113,11 @@ navbar-header {
   width: 100%;
   background-color: white;
   font-size: inherit;
+}
+
+#sidebar-task-state {
+  display: inline-block;
+  width: auto;
 }
 
 span.fa {
@@ -128,7 +136,7 @@ table, tbody, tr {
   margin: 0;
 }
 
-#list {
+#list, #task-sidebar {
   height: calc(100vh - 50px);
   overflow-y: auto;
 }
