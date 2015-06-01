@@ -49,7 +49,7 @@
      [:#sidebar-body
       [:pre {:font-family "inherit" :font-size "inherit" :padding 0 :color "inherit" :border "none" :background-color "inherit" :white-space "pre-wrap"  :word-wrap "break-word"  :tab-size 4 }]
       [:textarea {:width "100%" :height "225px" :border-radius 0 :background-color "white" :font-size "inherit" :resize "none"}]]
-     [:#sidebar-task-state {:width "auto" :display "inline-block"}]
+     [:#sidebar-task-state :#sidebar-task-project {:width "auto" :display "inline-block"}]
 
      [:span.fa {:margin-left "5px"}]
      [:#list {:flex 1}]

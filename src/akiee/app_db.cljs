@@ -414,9 +414,19 @@
 (defn change-state
   "String Node -> GlobalState
   consumes content String c and Node n;
-  changes the body in n and safes to app-state"
+  changes the state in n and safes to app-state"
   [c n]
   (let [nn (assoc n :todo c)
+        np (node-pos-by-key (:key nn) (nodes))
+        nlon (assoc (vec (nodes)) np nn)]
+    (reset-lon! app-state nlon)))
+
+(defn change-project
+  "String Node -> GlobalState
+  consumes content String c and Node n;
+  changes the project in n and safes to app-state"
+  [c n]
+  (let [nn (assoc n :project c)
         np (node-pos-by-key (:key nn) (nodes))
         nlon (assoc (vec (nodes)) np nn)]
     (reset-lon! app-state nlon)))

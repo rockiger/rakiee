@@ -2,7 +2,8 @@
   (:require [reagent.core :as r]
             [akiee.constants :as c :refer [TODO DOING DONE ALL]]
             [akiee.app-db :as db]
-            [akiee.handlers :as h]))
+            [akiee.handlers :as h]
+            [clojure.string :as s]))
 
 (enable-console-print!)
 
@@ -32,12 +33,22 @@
      [:div#sidebar-state {:on-click h/onclick-state}
       [:span.details-left "State:"]
       (if (and (db/selected) (= (db/editable) "state"))
-        [:select#sidebar-task-state.form-control {:name "task-status" :defaultValue (:todo node) :on-blur h/onblur-sidebar-state :on-submit h/onblur-sidebar-state :on-change h/onblur-sidebar-state}
+        [:select#sidebar-task-state.form-control {:name "task-status" :defaultValue (:todo node) :on-blur h/onblur-sidebar-state :on-submit h/onblur-sidebar-state :on-change h/onblur-sidebar-state :on-click h/submit-sidebar-state}
          [:option "TODO"]
          [:option "DOING"]
          [:option "DONE"]]
         [:span (:todo node)])
       [:span.fa.fa-check-square-o]])
+
+(defn project [node]
+  [:div#sidebar-project {:on-click h/onclick-project}
+   [:span.details-left "Project:"]
+   (if (and (db/selected) (= (db/editable) "project"))
+     [:select#sidebar-task-project.form-control {:name "task-project" :defaultValue (:project node) :on-blur h/onblur-sidebar-project :on-submit h/onblur-sidebar-project :on-change h/onblur-sidebar-project :on-click h/submit-sidebar-project}
+      (for [p (db/projects)]
+         [:option p])]
+     [:span (:project node)])
+   [:span.fa.fa-list-alt]])
 
 (defn sidebar []
   (let [node (db/sidebar-content)]
@@ -52,6 +63,5 @@
      [:div
       [:span.details-left "Tags:"] [:span (if (:tags node) (:tags node) "None")] [:span.fa.fa-tags]]
      (state node)
-     [:div
-      [:span.details-left "Project:"] [:span (:project node)] [:span.fa.fa-list-alt]]
+     (project node)
      (body node)]))

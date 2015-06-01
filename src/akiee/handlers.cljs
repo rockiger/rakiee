@@ -154,6 +154,14 @@
       (db/set-editable! "state")
       (js/setTimeout #(.focus (get-element "sidebar-task-state")))))
 
+(defn onclick-project
+  "Event -> GlobalState
+  Consumes the onclick Event ev and changes the global state editable"
+  [ev]
+    (do
+      (db/set-editable! "project")
+      (js/setTimeout #(.focus (get-element "sidebar-task-project")))))
+
 (defn onblur-sidebar-input
   "Event -> GlobalState
   Consumes the onclick Event ev and changes the headline of a task"
@@ -182,7 +190,17 @@
     (do
       (db/set-editable! nil)
       (when (not= content (:todo (db/sidebar-content)))
-        (db/change-state content (db/sidebar-content)))))) ;;!!
+        (db/change-state content (db/sidebar-content))))))
+
+(defn onblur-sidebar-project
+  "Event -> GlobalState
+  Consumes the onclick Event ev and changes the project of a task"
+  [ev]
+  (let [content (.-value (.-currentTarget ev))]
+    (do
+      (db/set-editable! nil)
+      (when (not= content (:project (db/sidebar-content)))
+        (db/change-project content (db/sidebar-content)))))) ;; !!
 
 (defn submit-sidebar-hdln
   "->
@@ -195,6 +213,18 @@
   creates an on-blur-event on the sidebar-headline"
   []
   (.blur (get-element "sidebar-body")))
+
+(defn submit-sidebar-state
+  "->
+  creates an on-blur-event on the sidebar-headline"
+  []
+  (.blur (get-element "sidebar-task-state")))
+
+(defn submit-sidebar-project
+  "->
+  creates an on-blur-event on the sidebar-headline"
+  []
+  (.blur (get-element "sidebar-task-project")))
 
 (defn handle-keyup
   "KeyEvent -> GlobalState

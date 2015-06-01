@@ -115,7 +115,7 @@ navbar-header {
   font-size: inherit;
 }
 
-#sidebar-task-state {
+#sidebar-task-state, #sidebar-task-project {
   display: inline-block;
   width: auto;
 }
