@@ -114,27 +114,27 @@
 
      ;; Bootstrap-Theme Override
 
-     [:.btn :.btn:active :.btn:focus
+     [:.btn :.btn:active :.btn:focus :select.form-control
       {:background-image "linear-gradient(to bottom, #fafafa 0%, #ededed 40%, #e0e0e0 100%)"
        :border-radius (px 3) :color "#2e3436" :box-shadow "inset 0 1px white, 0 1px white"
        :margin-left (px 3) :font-size (px 16)  :line-height (px 14)}]
      [:.btn:focus :.btn:focus:active :.btn.active:focus :.btn-group>.btn:focus
-      :.btn-group-vertical>.btn:focus {:outline-color "rgba(46,52,52,0.3)"
+      :.btn-group-vertical>.btn:focus :select.form-control:focus {:outline-color "rgba(46,52,52,0.3)"
                                        :outline-offset (px -4) :outline-style "dashed"
                                        :outline-width (px 1)}]
-     [:.btn.active :.btn.active:hover :.btn:hover:active
+     [:.btn.active :.btn.active:hover :.btn:hover:active :select.form-control:hover:active
       {:background-image "linear-gradient(#d6d6d6, #e0e0e0)" :border-radius "3px"
        :color "#2e3436" :box-shadow "none" :font-size "16px"}]
 
-    [:.btn-default :.btn-default:focus :.btn-default:active :.btn-default:focus:active
+    [:.btn-default :.btn-default:focus :.btn-default:active :.btn-default:focus:active :select.form-control
      {:border-color medium-grey :icon-shadow "0 1px rgba(256, 256, 256, 0.76923)"
       :text-shadow "0 1px rgba(256, 256, 256, 0.76923)" :outline-offset (px -4)
       :padding "8px 16px" :transition "all 200ms ease-out"
       :background-color "transparent" :background-position 0}]
-    [:.btn-default:hover
+    [:.btn-default:hover :select:hover
      {:background-image "linear-gradient(to bottom, white 0%, #f7f7f7 40%, #ededed 100%)"
       :background-position 0}]
-    [:.btn-default.active :.btn-default.active:hover :.btn-default:hover:active
+    [:.btn-default.active :.btn-default.active:hover :.btn-default:hover:active :select.form-control:active :select.form-control:hover:active
      {:border-color medium-grey :icon-shadow "0 1px rgba(256, 256, 256, 0.76923)"
       :text-shadow "0 1px rgba(256, 256, 256, 0.76923)"
       :outline-offset (px -4)
@@ -143,6 +143,9 @@
      :.btn-square:active :.btn-square:hover:active :btn-square:focus
      {:padding "8px 7px !important" :font-size "13px !important"
       :margin-left "6px !important"}]
+
+     [:select.form-control {:padding "4px 16px"}]
+     [:select.form-control:focus {:border-color "#a1a1a1"}]
 
     [:.btn-link :.btn-link:focus :btn-link:active
      {:text-decoration "underline" :background "none" :color "#2a76c6"

@@ -309,7 +309,7 @@ tr.selected:hover .project-tag {
   color: #729FCF;
 }
 
-.btn, .btn:active, .btn:focus {
+.btn, .btn:active, .btn:focus, select.form-control {
   line-height: 14px;
   font-size: 16px;
   margin-left: 3px;
@@ -319,14 +319,14 @@ tr.selected:hover .project-tag {
   background-image: linear-gradient(to bottom, #fafafa 0%, #ededed 40%, #e0e0e0 100%);
 }
 
-.btn:focus, .btn:focus:active, .btn.active:focus, .btn-group>.btn:focus, .btn-group-vertical>.btn:focus {
+.btn:focus, .btn:focus:active, .btn.active:focus, .btn-group>.btn:focus, .btn-group-vertical>.btn:focus, select.form-control:focus {
   outline-width: 1px;
   outline-style: dashed;
   outline-offset: -4px;
   outline-color: rgba(46,52,52,0.3);
 }
 
-.btn.active, .btn.active:hover, .btn:hover:active {
+.btn.active, .btn.active:hover, .btn:hover:active, select.form-control:hover:active {
   border-radius: 3px;
   background-image: linear-gradient(#d6d6d6, #e0e0e0);
   font-size: 16px;
@@ -334,7 +334,7 @@ tr.selected:hover .project-tag {
   box-shadow: none;
 }
 
-.btn-default, .btn-default:focus, .btn-default:active, .btn-default:focus:active {
+.btn-default, .btn-default:focus, .btn-default:active, .btn-default:focus:active, select.form-control {
   background-position: 0;
   background-color: transparent;
   transition: all 200ms ease-out;
@@ -345,12 +345,12 @@ tr.selected:hover .project-tag {
   border-color: #a1a1a1;
 }
 
-.btn-default:hover {
+.btn-default:hover, select:hover {
   background-position: 0;
   background-image: linear-gradient(to bottom, white 0%, #f7f7f7 40%, #ededed 100%);
 }
 
-.btn-default.active, .btn-default.active:hover, .btn-default:hover:active {
+.btn-default.active, .btn-default.active:hover, .btn-default:hover:active, select.form-control:active, select.form-control:hover:active {
   transition: all 200ms ease-out;
   outline-offset: -4px;
   text-shadow: 0 1px rgba(256, 256, 256, 0.76923);
@@ -362,6 +362,14 @@ tr.selected:hover .project-tag {
   padding: 8px 7px !important;
   margin-left: 6px !important;
   font-size: 13px !important;
+}
+
+select.form-control {
+  padding: 4px 16px;
+}
+
+select.form-control:focus {
+  border-color: #a1a1a1;
 }
 
 .btn-link, .btn-link:focus, btn-link:active {
