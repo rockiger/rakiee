@@ -13,6 +13,10 @@
 
 (def parse-file (.-parseBigString org))
 
+;; Constants
+
+(def week ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"])
+
 ;; Functions that create, convert and compare nodes
 
 ;; =================
@@ -77,8 +81,8 @@
      :tags {}
      :todo (aget jn "todo")
      :priority nil
-     :scheduled nil
-     :deadline nil
+     :scheduled (aget jn "scheduled")
+     :deadline (aget jn "deadline")
      :properties {}
      :drawer {}
      :rank (if (not= rank nil) (int rank) nil)
@@ -151,6 +155,16 @@
         lon-sin-pro (map jsnode->node (array->vec [] nodes-array))]
     (map (fn [x] (assoc x :project (project lon-sin-pro x))) lon-sin-pro)))
 
+(defn ->timestamp
+  "Date -> String
+  consumes a clojurescript date and produces a org-mode timestamp"
+  [d]
+  (str "<"
+       (.getFullYear d)
+       (cond (.getMonth d) (str "-" (inc (.getMonth d))))
+       (cond (.getDate d)  (str "-" (.getDate d)))
+       (cond (.getDay d)   (str " " (nth week (.getDay d))))
+       ">")) ;;SCHEDULED: <2015-06-07 Sun 13:30-14:30>
 
 (defn lon->md [lon]
   (if (empty? lon)
@@ -162,6 +176,7 @@
        (trim (:headline n)) "\n"
        (cond (not-empty (:body n)) (str (:body n) "\n"))
        (cond (:rank n) (str "RANK: "(:rank n) "\n"))
+       (cond (:scheduled n) (str "SCHEDULED: " (->timestamp (:scheduled n)) "\n"))
        (lon->md (rest lon))))))
 (is (= (lon->md [(->node TODO "Ueberschrift" "Inbox" 1)]) "## TODO Ueberschrift\nRANK: 1\n"))
 

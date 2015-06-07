@@ -55,7 +55,7 @@
     [:div#details
      (headline node)
      [:div
-      [:span.details-left "Planned:"] [:span (if (:scheduled node) (:scheduled node) "Never")] [:span.fa.fa-calendar]]
+      [:span.details-left "Planned:"] [:span (if (:scheduled node) (subs (.toString (:scheduled node)) 0 15) "Never")] [:span.fa.fa-calendar]]
      [:div
       [:span.details-left "Repeat:"] [:span "Never"] [:span.fa.fa-repeat]]
      [:div
