@@ -130,37 +130,43 @@
       (db/set-selected! ky)
       (.stopPropagation ev))))
 
+(defn onclick-sidebar-element
+  "String String -> GlobalState
+  Consumes the name of the sidebar element n and the id and changes the global state editable"
+  [n id]
+  (do
+      (db/set-editable! n)
+      (js/setTimeout #(.focus (get-element id)) 100)))
+
 (defn onclick-hdln
   "Event -> GlobalState
   Consumes the onclick Event ev and changes the global state editable"
   [ev]
-    (do
-      (db/set-editable! "hdln")
-      (js/setTimeout #(.focus (get-element "sidebar-headline")) 100)))
+    (onclick-sidebar-element "hdln" "sidebar-headline"))
 
 (defn onclick-body
   "Event -> GlobalState
   Consumes the onclick Event ev and changes the global state editable"
   [ev]
-    (do
-      (db/set-editable! "body")
-      (js/setTimeout #(.focus (get-element "sidebar-body-ta")) 100)))
+  (onclick-sidebar-element "body" "sidebar-body-ta"))
 
 (defn onclick-state
   "Event -> GlobalState
   Consumes the onclick Event ev and changes the global state editable"
   [ev]
-    (do
-      (db/set-editable! "state")
-      (js/setTimeout #(.focus (get-element "sidebar-task-state")))))
+  (onclick-sidebar-element "state" "sidebar-task-state"))
 
 (defn onclick-project
   "Event -> GlobalState
   Consumes the onclick Event ev and changes the global state editable"
   [ev]
-    (do
-      (db/set-editable! "project")
-      (js/setTimeout #(.focus (get-element "sidebar-task-project")))))
+  (onclick-sidebar-element "project" "sidebar-task-project"))
+
+(defn onclick-scheduled
+  "Event -> GlobalState
+  Consumes the onclick Event ev and changes the global state scheduled"
+  [ev]
+  (onclick-sidebar-element "scheduled" "sidebar-scheduled"))
 
 (defn onblur-sidebar-input
   "Event -> GlobalState
