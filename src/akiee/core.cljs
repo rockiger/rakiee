@@ -182,6 +182,8 @@
   (h/register-winevents)
   (r/render-component
     [app]
-    (.getElementById js/document "root")))
+    (.getElementById js/document "root"))
+  (sb/datepicker-config)
+  (h/register-datepicker-events))
 
 (big-bang)

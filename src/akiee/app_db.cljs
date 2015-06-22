@@ -391,42 +391,49 @@
   (when (selected)
     (node-by-key (selected))))
 
+(defn change-sidebar-element
+  "String Node Keyword -> GlobalState
+  consumes content String c, Node n and Keyword ky;
+  changes the content c for keywerd ky in n and safes to app-state"
+  [c n ky]
+  (let [nn (assoc n ky c)
+        np (node-pos-by-key (:key nn) (nodes))
+        nlon (assoc (vec (nodes)) np nn)]
+    (reset-lon! app-state nlon)))
+
 (defn change-headline
   "String Node -> GlobalState
   consumes content String c and Node n;
   changes the headline in n and safes to app-state"
   [c n]
-  (let [nn (assoc n :headline c)
-        np (node-pos-by-key (:key nn) (nodes))
-        nlon (assoc (vec (nodes)) np nn)]
-    (reset-lon! app-state nlon)))
+  (change-sidebar-element c n :headline))
 
 (defn change-body
   "String Node -> GlobalState
   consumes content String c and Node n;
   changes the body in n and safes to app-state"
   [c n]
-  (let [nn (assoc n :body c)
-        np (node-pos-by-key (:key nn) (nodes))
-        nlon (assoc (vec (nodes)) np nn)]
-    (reset-lon! app-state nlon)))
+  (change-sidebar-element c n :body))
 
 (defn change-state
   "String Node -> GlobalState
   consumes content String c and Node n;
   changes the state in n and safes to app-state"
   [c n]
-  (let [nn (assoc n :todo c)
-        np (node-pos-by-key (:key nn) (nodes))
-        nlon (assoc (vec (nodes)) np nn)]
-    (reset-lon! app-state nlon)))
+  (change-sidebar-element c n :todo))
 
 (defn change-project
   "String Node -> GlobalState
   consumes content String c and Node n;
   changes the project in n and safes to app-state"
   [c n]
-  (let [nn (assoc n :project c)
-        np (node-pos-by-key (:key nn) (nodes))
-        nlon (assoc (vec (nodes)) np nn)]
-    (reset-lon! app-state nlon)))
+  (change-sidebar-element c n :project))
+
+(defn change-scheduled
+  "String Node -> GlobalState
+  consumes content String c and Node n;
+  changes the project in n and safes to app-state"
+  [c n]
+  ;; transform content to date
+  (change-sidebar-element c n :scheduled))
+

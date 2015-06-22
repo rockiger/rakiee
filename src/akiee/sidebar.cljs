@@ -50,14 +50,27 @@
      [:span (:project node)])
    [:span.fa.fa-list-alt]])
 
+(defn input-date [date]
+  (if date
+    (str (inc (.getMonth date)) "/" (.getDate date) "/" (.getFullYear date))
+    ""))
+
+(defn scheduled [node]
+   (let [style (if (and (db/selected) (= (db/editable) "scheduled")) {:display "inline-block"} {:display "none"})
+         span-style (if (and (db/selected) (= (db/editable) "scheduled")) {:display "none"} {:display "inline"})]
+     [:div#sidebar-scheduled {:on-click h/onclick-scheduled}
+       [:span.details-left "Planned:"]
+        [:input#sidebar-scheduled-form.sidebar-input.form-control {:type "text" :value (input-date (:scheduled node)) :data-provide "datepicker" :style style}]
+        [:span {:style span-style} (if (:scheduled node) (.toLocaleDateString (:scheduled node)) "Never")]
+      [:span.fa.fa-calendar]]))
+
 (defn sidebar []
   (let [node (db/sidebar-content)]
     [:div#details
      (headline node)
-     [:div
-      [:span.details-left "Planned:"] [:span (if (:scheduled node) (subs (.toString (:scheduled node)) 0 15) "Never")] [:span.fa.fa-calendar]]
-     [:div
-      [:span.details-left "Repeat:"] [:span "Never"] [:span.fa.fa-repeat]]
+     (scheduled node)
+     ;;[:div
+     ;; [:span.details-left "Repeat:"] [:span "Never"] [:span.fa.fa-repeat]]
      [:div
       [:span.details-left "Due:"] [:span (if (:deadline node) (:deadline node) "Never")] [:span.fa.fa-calendar]]
      [:div
@@ -65,3 +78,10 @@
      (state node)
      (project node)
      (body node)]))
+
+(defn datepicker-config []
+  (.ready (js/$ js/document)
+          (do
+            (set! (.-autoclose (.-defaults (.-datepicker (.-fn js/$)))) true)
+            (set! (.-toggleActive (.-defaults (.-datepicker (.-fn js/$)))) true)
+            (set! (.-todayHighlight (.-defaults (.-datepicker (.-fn js/$)))) true))))

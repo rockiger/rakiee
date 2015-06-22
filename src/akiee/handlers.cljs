@@ -166,7 +166,7 @@
   "Event -> GlobalState
   Consumes the onclick Event ev and changes the global state scheduled"
   [ev]
-  (onclick-sidebar-element "scheduled" "sidebar-scheduled"))
+  (onclick-sidebar-element "scheduled" "sidebar-scheduled-form"))
 
 (defn onblur-sidebar-input
   "Event -> GlobalState
@@ -206,7 +206,17 @@
     (do
       (db/set-editable! nil)
       (when (not= content (:project (db/sidebar-content)))
-        (db/change-project content (db/sidebar-content)))))) ;; !!
+        (db/change-project content (db/sidebar-content))))))
+
+(defn onblur-sidebar-scheduled
+  "Event -> GlobalState
+  Consumes the onclick Event ev and changes the scheduled time of a task"
+  [ev]
+  (let [content (.-value (.-currentTarget ev))]
+    (do
+      (db/set-editable! nil)
+      (when (not= content (:scheduled (db/sidebar-content)))
+        (db/change-scheduled content (db/sidebar-content))))))
 
 (defn submit-sidebar-hdln
   "->
@@ -231,6 +241,15 @@
   creates an on-blur-event on the sidebar-headline"
   []
   (.blur (get-element "sidebar-task-project")))
+
+(defn handle-change-date
+  "Event -> GlobalState
+  Handles the event when the date changed and changes the GlobalState accordingly"
+  [ev]
+  (let [date (.-date ev)]
+    (when (= (db/editable) "scheduled")
+      (db/set-editable! nil)
+      (db/change-scheduled date (db/sidebar-content)))))
 
 (defn handle-keyup
   "KeyEvent -> GlobalState
@@ -258,3 +277,8 @@
   "Register the keyhandlers"
   []
   (events/listen js/document "keyup" handle-keyup))
+
+(defn register-datepicker-events
+  []
+  (.ready (js/$ js/document)
+          (fn [] (.on (.datepicker (js/$ "#sidebar-scheduled-form")) "hide" handle-change-date))))
