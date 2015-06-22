@@ -196,7 +196,7 @@ td.rank {
   color: #777 !important;
 }
 
-.selected {
+.selected, .selected>td>span.hover-button {
   background-color: #729FCF;
   color: white;
 }
@@ -213,7 +213,7 @@ tr:hover {
   background-color: #f2f2f2;
 }
 
-tr.selected:hover {
+tr.selected:hover, .selected:hover>td>span.hover-button {
   background-color: #4281c3;
 }
 
@@ -422,6 +422,13 @@ table td .glyphicon-chevron-up:hover, table td .glyphicon-chevron-down:hover {
   border: 1px solid #a1a1a1;
 }
 
+.selected>td>span.hover-button:hover {
+  color: #54595a;
+  background-image: linear-gradient(to bottom, white 0%, #f7f7f7 40%, #ededed 100%);
+  border-radius: 3px;
+  border: 1px solid #a1a1a1;
+}
+
 btn-group>.btn:first-child, .btn-group>.btn:last-child {
   width: 100px;
 }
@@ -460,6 +467,32 @@ table td .glyphicon-chevron-up:focus, table td .glyphicon-chevron-down:focus {
   font-weight: bold;
 }
 
-#editor-area {
+#editor-area, .datepicker.dropdown-menu {
   font-family: 'Source Code Pro', Consolas, 'Ubuntu Mono', 'Andale Mono WT', 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L', Monaco, 'Courier New', Courier, monospace;
+}
+
+.datepicker table {
+  font-weight: normal;
+  font-size: 12px;
+}
+
+.datepicker table tr td.active.active {
+  border-color: #4a90d9;
+  background-color: #4a90d9;
+}
+
+.datepicker th {
+  font-weight: normal;
+}
+
+.datepicker thead tr:first-child {
+  border-bottom: 1px solid #ddd;
+}
+
+.datepicker tr:hover {
+  background-color: inherit;
+}
+
+.datepicker td:hover {
+  background-color: #f2f2f2;
 }

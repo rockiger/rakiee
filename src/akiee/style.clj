@@ -11,7 +11,10 @@
 (def bc "#fff") ; white background color
 (def dark-grey "#54595a")
 (def medium-grey "#a1a1a1")
+(def hover-grey "#f2f2f2")
 (def light-blue "#4a90d9")
+(def selected-blue light-blue)
+(def hover-blue "#4281c3")
 
 ;; =================
 ;; Style:
@@ -76,11 +79,11 @@
      [:.todo [:td {:background-color "#d9edf7 !important" :color "#31708f"}]]
      [:.doing [:td {:background-color "#dff0d8 !important" :color "#3c763d"}]]
      [:.done [:td {:color "#777 !important" :text-decoration "line-through"}]]
-     [:.selected {:background-color "#729FCF" :color "white"}]
+     [:.selected :.selected>td>span.hover-button {:background-color "#729FCF" :color "white"}]
      [(keyword "tr:nth-child(2)") {:width (percent 100)}]
      [:tr {:background-color "white"}]
      [:tr:hover {:background-color "#f2f2f2"}]
-     [:tr.selected:hover {:background-color "#4281c3"}]
+     [:tr.selected:hover :.selected:hover>td>span.hover-button {:background-color "#4281c3"}]
 
      [:.table>thead>tr>th.kanban-column :.table>tbody>tr>th.kanban-column
       :.table>tfoot>tr>th.kanban-column :.table>thead>tr>td.kanban-column
@@ -168,6 +171,12 @@
       [[:table [:td [:.glyphicon-chevron-up:hover :.glyphicon-chevron-down:hover st]]]
       [:.hover-button:hover st]])
 
+     [:.selected>td>span.hover-button:hover
+      {:border (str "1px solid " medium-grey) :border-radius (px 3)
+       :background-image
+       "linear-gradient(to bottom, white 0%, #f7f7f7 40%, #ededed 100%)"
+       :color dark-grey}]
+
     [:btn-group>.btn:first-child :.btn-group>.btn:last-child {:width (px 100)}]
     [:.btn-group>.btn {:width (px 98) :height (px 32) :padding-top "7px !important"}]
 
@@ -184,6 +193,17 @@
      [:.form-control:focus {:border-color light-blue
                             :box-shadow "inset 0 3px rgba(0, 0, 0, 0.02)"}]
      [:#show-enter-task [:span:before {:content "\"+\"" :font-weight "bold"}]]
-     [:#editor-area {:font-family "'Source Code Pro', Consolas, 'Ubuntu Mono', 'Andale Mono WT', 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L', Monaco, 'Courier New', Courier, monospace"}]
+     [:#editor-area :.datepicker.dropdown-menu {:font-family "'Source Code Pro', Consolas, 'Ubuntu Mono', 'Andale Mono WT', 'Andale Mono', 'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono', 'Nimbus Mono L', Monaco, 'Courier New', Courier, monospace"}]
+
+     [:.datepicker
+      [:table {:font-size "12px" :font-weight "normal"}
+       [:tr [:td.active.active {:background-color selected-blue :border-color selected-blue}]]]
+      [:th {:font-weight "normal"}]
+      [:thead [:tr:first-child {:border-bottom "1px solid #ddd"}]]
+      [:tr:hover {:background-color "inherit"}]
+      [:td:hover {:background-color hover-grey}]]
+
+
 
      )
+
