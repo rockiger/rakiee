@@ -64,15 +64,21 @@
         [:span {:style span-style} (if (:scheduled node) (.toLocaleDateString (:scheduled node)) "Never")]
       [:span.fa.fa-calendar]]))
 
+(defn deadline [node]
+   (let [style (if (and (db/selected) (= (db/editable) "deadline")) {:display "inline-block"} {:display "none"})
+         span-style (if (and (db/selected) (= (db/editable) "deadline")) {:display "none"} {:display "inline"})]
+     [:div#sidebar-deadline {:on-click h/onclick-deadline}
+       [:span.details-left "Due:"]
+        [:input#sidebar-deadline-form.sidebar-input.form-control {:type "text" :value (input-date (:deadline node)) :data-provide "datepicker" :style style}]
+        [:span {:style span-style} (if (:deadline node) (.toLocaleDateString (:deadline node)) "Never")]
+      [:span.fa.fa-calendar]]))
+
 (defn sidebar []
   (let [node (db/sidebar-content)]
     [:div#details
      (headline node)
      (scheduled node)
-     ;;[:div
-     ;; [:span.details-left "Repeat:"] [:span "Never"] [:span.fa.fa-repeat]]
-     [:div
-      [:span.details-left "Due:"] [:span (if (:deadline node) (:deadline node) "Never")] [:span.fa.fa-calendar]]
+     (deadline node)
      [:div
       [:span.details-left "Tags:"] [:span (if (:tags node) (:tags node) "None")] [:span.fa.fa-tags]]
      (state node)

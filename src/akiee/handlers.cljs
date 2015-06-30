@@ -168,6 +168,12 @@
   [ev]
   (onclick-sidebar-element "scheduled" "sidebar-scheduled-form"))
 
+(defn onclick-deadline
+  "Event -> GlobalState
+  Consumes the onclick Event ev and changes the global state deadline"
+  [ev]
+  (onclick-sidebar-element "deadline" "sidebar-deadline-form"))
+
 (defn onblur-sidebar-input
   "Event -> GlobalState
   Consumes the onclick Event ev and changes the headline of a task"
@@ -247,9 +253,12 @@
   Handles the event when the date changed and changes the GlobalState accordingly"
   [ev]
   (let [date (.-date ev)]
-    (when (= (db/editable) "scheduled")
-      (db/set-editable! nil)
-      (db/change-scheduled date (db/sidebar-content)))))
+    (cond (= (db/editable) "scheduled") (do
+                                          (db/set-editable! nil)
+                                          (db/change-scheduled date (db/sidebar-content)))
+          (= (db/editable) "deadline") (do
+                                         (db/set-editable! nil)
+                                         (db/change-deadline date (db/sidebar-content))))))
 
 (defn handle-keyup
   "KeyEvent -> GlobalState
@@ -280,5 +289,10 @@
 
 (defn register-datepicker-events
   []
-  (.ready (js/$ js/document)
-          (fn [] (.on (.datepicker (js/$ "#sidebar-scheduled-form")) "hide" handle-change-date))))
+  (do
+    (.ready (js/$ js/document)
+            (fn [] (.on (.datepicker (js/$ "#sidebar-scheduled-form"))
+                        "hide" handle-change-date)))
+    (.ready (js/$ js/document)
+            (fn [] (.on (.datepicker (js/$ "#sidebar-deadline-form"))
+                        "hide" handle-change-date)))))

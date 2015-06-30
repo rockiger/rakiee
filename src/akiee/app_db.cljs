@@ -437,3 +437,10 @@
   ;; transform content to date
   (change-sidebar-element c n :scheduled))
 
+(defn change-deadline
+  "String Node -> GlobalState
+  consumes content String c and Node n;
+  changes the project in n and safes to app-state"
+  [c n]
+  ;; transform content to date
+  (change-sidebar-element c n :deadline))

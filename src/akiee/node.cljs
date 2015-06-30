@@ -177,6 +177,7 @@
        (cond (not-empty (:body n)) (str (:body n) "\n"))
        (cond (:rank n) (str "RANK: "(:rank n) "\n"))
        (cond (:scheduled n) (str "SCHEDULED: " (->timestamp (:scheduled n)) "\n"))
+       (cond (:deadline n) (str "DEADLINE: " (->timestamp (:deadline n)) "\n"))
        (lon->md (rest lon))))))
 (is (= (lon->md [(->node TODO "Ueberschrift" "Inbox" 1)]) "## TODO Ueberschrift\nRANK: 1\n"))
 
