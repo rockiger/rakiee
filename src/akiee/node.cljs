@@ -5,7 +5,7 @@
    [akiee.constants :refer [TODO DOING DONE ALL]]
    [cljs.test :refer-macros [is deftest]]
    [cljs.nodejs :as nj]
-   [clojure.string :as s :refer [trim]]
+   [clojure.string :as s :refer [trim join]]
    ))
 
 ;; Nodejs modules
@@ -77,8 +77,8 @@
      :headline (str (aget jn "headline"))
      :body (if (and (> (count (trim (aget jn "body"))) 0) (not= (aget jn "body") "\n"))
                  (trim (aget jn "body")) nil)
-     :tag nil
-     :tags {}
+     :tag (aget jn "tag")
+     :tags (js->clj (js-keys (aget jn "tags")))
      :todo (aget jn "todo")
      :priority nil
      :scheduled (aget jn "scheduled")
@@ -173,7 +173,9 @@
       (str
        (if (= (:level n) 1) "# " "## ")
        (cond (:todo n) (str (:todo n) " "))
-       (trim (:headline n)) "\n"
+       (trim (:headline n))
+       (cond (not-empty (:tags n)) (str " :" (join ":" (:tags n)) ":"))
+       "\n"
        (cond (not-empty (:body n)) (str (:body n) "\n"))
        (cond (:rank n) (str "RANK: "(:rank n) "\n"))
        (cond (:scheduled n) (str "SCHEDULED: " (->timestamp (:scheduled n)) "\n"))

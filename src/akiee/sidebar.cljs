@@ -80,7 +80,7 @@
      (scheduled node)
      (deadline node)
      [:div
-      [:span.details-left "Tags:"] [:span (if (:tags node) (:tags node) "None")] [:span.fa.fa-tags]]
+      [:span.details-left "Tags:"] [:span (if (not-empty (:tags node)) (s/join ", " (:tags node)) "None")] [:span.fa.fa-tags]] ; !! eingabe der tags und suche erweitern.
      (state node)
      (project node)
      (body node)]))
