@@ -102,7 +102,7 @@
    :headline hl
    :body ""
    :tag nil
-   :tags {}
+   :tags []
    :todo ts
    :priority nil
    :scheduled nil
@@ -116,7 +116,7 @@
 (is (node= (->node TODO "Test Headline" "Inbox" 10)
        {:key nil
         :level 2 :headline "Test Headline" :body ""  :tag nil
-        :tags {} :todo TODO :priority nil :scheduled nil
+        :tags [] :todo TODO :priority nil :scheduled nil
         :deadline nil :properties {} :drawer {} :rank 10
         :style nil :project "Inbox"}))
 
@@ -192,6 +192,18 @@
    (and (not (nil? n2)) (nil? n1)) false
    (< n2 n1) false
    :else true))
+
+(defn tags-string
+  "Node -> String
+  Consumes a Node n and produces the comma seperated String based on the n's tags"
+  [n]
+  (if (not-empty (:tags n))
+    (s/join ", " (:tags n))
+    ""))
+
+(is (= (tags-string {:headline "node 1" :tags []}) ""))
+(is (= (tags-string {:headline "node 2" :tags ["tag1" "tag2" "tag3"]})
+     "tag1, tag2, tag3"))
 
 (def n1 (:rank {:headline "Test-Node 1"  :rank 0}))
 (def n2 (:rank {:headline "Test-Node 2"  :rank 5}))

@@ -3,6 +3,7 @@
             [akiee.constants :as c :refer [TODO DOING DONE ALL]]
             [akiee.app-db :as db]
             [akiee.handlers :as h]
+            [akiee.node :as n]
             [clojure.string :as s]))
 
 (enable-console-print!)
@@ -73,14 +74,21 @@
         [:span {:style span-style} (if (:deadline node) (.toLocaleDateString (:deadline node)) "Never")]
       [:span.fa.fa-calendar]]))
 
+(defn tags [node]
+  [:div#sidebar-tags {:on-click h/onclick-tags} ;!!
+   [:span.details-left "Tags:"]
+   (if (and (db/selected) (= (db/editable) "tags"))
+     [:input#sidebar-tags-form.form-control {:type "text" :default-value (n/tags-string node) :on-blur h/onblur-sidebar-tags :on-submit h/onblur-sidebar-tags}]
+     [:span (if (n/tags-string node) (n/tags-string node) "None")])
+    [:span.fa.fa-tags]])
+
 (defn sidebar []
   (let [node (db/sidebar-content)]
     [:div#details
      (headline node)
      (scheduled node)
      (deadline node)
-     [:div
-      [:span.details-left "Tags:"] [:span (if (not-empty (:tags node)) (s/join ", " (:tags node)) "None")] [:span.fa.fa-tags]] ; !! eingabe der tags und suche erweitern.
+     (tags node)
      (state node)
      (project node)
      (body node)]))
@@ -91,3 +99,4 @@
             (set! (.-autoclose (.-defaults (.-datepicker (.-fn js/$)))) true)
             (set! (.-toggleActive (.-defaults (.-datepicker (.-fn js/$)))) true)
             (set! (.-todayHighlight (.-defaults (.-datepicker (.-fn js/$)))) true))))
+

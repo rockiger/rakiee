@@ -444,3 +444,11 @@
   [c n]
   ;; transform content to date
   (change-sidebar-element c n :deadline))
+
+(defn change-tags
+  "String Node -> GlobalState
+  consumes content commma seperated String c and Node n;
+  changes the project in n and safes to app-state"
+  [c n]
+  (let [tags (map trim (s/split c "," ))]
+    (change-sidebar-element tags n :tags)))

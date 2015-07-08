@@ -174,6 +174,12 @@
   [ev]
   (onclick-sidebar-element "deadline" "sidebar-deadline-form"))
 
+(defn onclick-tags
+  "Event -> GlobalState
+  Consumes the onclick Event ev and changes the global state tags"
+  [ev]
+  (onclick-sidebar-element "tags" "sidebar-tags-form"))
+
 (defn onblur-sidebar-input
   "Event -> GlobalState
   Consumes the onclick Event ev and changes the headline of a task"
@@ -224,6 +230,16 @@
       (when (not= content (:scheduled (db/sidebar-content)))
         (db/change-scheduled content (db/sidebar-content))))))
 
+(defn onblur-sidebar-tags
+  "Event -> GlobalState
+  Consumes the onclick Event ev and changes the project of a task"
+  [ev]
+  (let [content (.-value (.-currentTarget ev))]
+    (do
+      (db/set-editable! nil)
+      (when (not= content (no/tags-string (db/sidebar-content)))
+        (db/change-tags content (db/sidebar-content))))))
+
 (defn submit-sidebar-hdln
   "->
   creates an on-blur-event on the sidebar-headline"
@@ -247,6 +263,12 @@
   creates an on-blur-event on the sidebar-headline"
   []
   (.blur (get-element "sidebar-task-project")))
+
+(defn submit-sidebar-tags
+  "->
+  creates an on-blur-event on the sidebar-headline"
+  []
+  (.blur (get-element "sidebar-tags-form")))
 
 (defn handle-change-date
   "Event -> GlobalState
@@ -279,7 +301,7 @@
      (and (= (ky ev) 27) (db/search?)) (cancel-search)                        ;; ESC - search?
      (and (= (ky ev) 27) (db/editable)) (db/set-editable! nil)             ;; ESC - editable
      (and (= (ky ev) 13) (= (db/editable) "hdln")) (submit-sidebar-hdln)     ;; Enter - hdln
-     ;;(and (= (ky ev) 13) (= (db/editable) "body")) (submit-sidebar-body)     ;; Enter - hdln
+     (and (= (ky ev) 13) (= (db/editable) "tags")) (submit-sidebar-tags)     ;; Enter - tags
      )))
 
 (defn register-keyevents
