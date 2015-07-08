@@ -30,7 +30,7 @@
 ;; - headline
 ;; - body
 ;; - tag: default null
-;; - tags default {}
+;; - tags default []
 ;; - todo: task state, default null
 ;; - priority, default null
 ;; - scheduled, defa ult null
