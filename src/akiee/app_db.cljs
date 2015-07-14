@@ -105,6 +105,8 @@
                                   (if (or (re-find (re-pattern
                                                 (str "(?i)"(:ss @gs))) (:headline x))
                                           (re-find (re-pattern
+                                                (str "(?i)"(:ss @gs))) (no/tags-string x))
+                                          (re-find (re-pattern
                                                 (str "(?i)"(:ss @gs))) (:project x)))
                                     true
                                     false)
@@ -124,6 +126,8 @@
       filter-search (fn [x] (if (:ss @app-state)
                                   (if (or
                                        (re-find (re-pattern (:ss @app-state)) (:headline x))
+                                       (re-find (re-pattern
+                                                (str "(?i)"(:ss @app-state))) (no/tags-string x))
                                        (re-find (re-pattern (:ss @app-state)) (:project x)))
                                     true
                                     false)
