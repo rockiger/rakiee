@@ -22,6 +22,23 @@
    (= ts DOING) (true)
    (= ts DONE)  (true)))
 
+;; RepeatInfo is a map
+;; interp. as the intervall in which a task gets repeatted
+;; - rate: Integer how many units until the next repetition
+;; - unit: String with one or more of daily, weekdayly, weekly, monthly, yearly;
+
+(def R1 {:rate 1 :unit "daily"})
+
+#_
+(defn fn-for-repeat-info [r]
+  (let [rate (if (:rate r) (:rate r) 1)
+        unit (:unit r)]
+    (cond
+     (= unit "daily") (ddd)
+     (= unit "weekly") (ddd)
+     (= unit "monthly") (ddd)
+     ...
+     :else (ddd))))
 
 ;; Node is a Object/map
 ;; interp. as a Task with properties:
@@ -37,6 +54,7 @@
 ;; - deadline, default null
 ;; - drawer, default {}
 ;; - rank: unique Ranking in File, default null
+;; - rank: string with repeat informatien, default null
 ;; - style: the NodeStyle of a node TODO: has to be initially created in markdown-org-mode;
 ;;          defaul nil
 ;; - project: The name of the project corresponding project that is one level higher, has to
@@ -55,6 +73,7 @@
          :properties {}
          :drawer {}
          :rank nil
+         :repeat nil
          :style nil
          :project "Inbox"})
 
@@ -71,6 +90,7 @@
          :properties {}
          :drawer {}
          :rank nil
+         :repeat nil
          :style nil
          :project "nil"}))
 
@@ -87,6 +107,7 @@
          :properties {}
          :drawer {}
          :rank nil
+         :repeat nil
          :style nil
          :project "nil"})
 
@@ -103,6 +124,7 @@
          :properties {}
          :drawer {}
          :rank nil
+         :repeat nil
          :style nil
          :project "nil"})
 

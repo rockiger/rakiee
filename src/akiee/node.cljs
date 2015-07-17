@@ -47,6 +47,7 @@
    (= (:properties n1) (:properties n2))
    (= (:drawer n1)     (:drawer n2))
    (= (:rank n1)       (:rank n2))
+   (= (:repeat n1)     (:repeat n2))
    (= (:style n1)      (:style n2))))
 
 (is (= (node= dd/N1 dd/N1a) true))
@@ -65,6 +66,30 @@
 
 (is (= (array->vec [] (js* "[]")) []))
 (is (= (array->vec [] (js* "[1, 2, 3]")) [1 2 3]))
+
+(defn ->repeat
+  "String -> RepeatInfo
+  consumes a String s with repeat information, parses this String and produces a RepeatInfo"
+  [s]
+  (if-not s
+    nil
+    (letfn [(->rate [s] (if (js/parseInt s) (js/parseInt s) 1))
+            (->unit [s]
+            (cond
+             (.includes s "weekdaily") "weekdaily"
+             (.includes s "daily")   "daily"
+             (.includes s "weekly")  "weekly"
+             (.includes s "monthly") "monthly"
+             (.includes s "yearly")  "yearly"
+             :else ""))]
+      {:rate (->rate s) :unit (->unit s)})))
+
+(is (= (->repeat "1 daily") {:rate 1 :unit "daily"}))
+(is (= (->repeat "2 weekly") {:rate 2 :unit "weekly"}))
+(is (= (->repeat "12 monthly") {:rate 12 :unit "monthly"}))
+(is (= (->repeat "01 yearly") {:rate 1 :unit "yearly"}))
+(is (= (->repeat "1 weekdaily") {:rate 1 :unit "weekdaily"}))
+(is (= (->repeat "1 daily,weekdaily") {:rate 1 :unit "weekdaily"}))
 
 (defn jsnode->node
   "JsNode -> Node
@@ -86,6 +111,7 @@
      :properties {}
      :drawer {}
      :rank (if (not= rank nil) (int rank) nil)
+     :repeat (->repeat (aget jn "repeat"))
      :style nil}))
 
 ;;(is (no/node= (jsnode->node dd/jsN1) dd/N1))
@@ -110,6 +136,7 @@
    :properties {}
    :drawer {}
    :rank r
+   :repeat nil
    :style nil
    :project pro})
 
@@ -117,7 +144,7 @@
        {:key nil
         :level 2 :headline "Test Headline" :body ""  :tag nil
         :tags [] :todo TODO :priority nil :scheduled nil
-        :deadline nil :properties {} :drawer {} :rank 10
+        :deadline nil :properties {} :drawer {} :rank 10 :repeat nil
         :style nil :project "Inbox"}))
 
 (defn project
@@ -178,6 +205,7 @@
        "\n"
        (cond (not-empty (:body n)) (str (:body n) "\n"))
        (cond (:rank n) (str "RANK: "(:rank n) "\n"))
+       (cond (:repeat n) (str "REPEAT: " (:rate (:repeat n)) " " (:unit (:repeat n)) "\n"))
        (cond (:scheduled n) (str "SCHEDULED: " (->timestamp (:scheduled n)) "\n"))
        (cond (:deadline n) (str "DEADLINE: " (->timestamp (:deadline n)) "\n"))
        (lon->md (rest lon))))))
