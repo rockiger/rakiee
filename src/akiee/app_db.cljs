@@ -180,7 +180,7 @@
 (defn set-selected!
   "String -> GlobalState
   consumes a String ky and changes the :selected GlobalState accordingly;
-  retruns the new GlobalState"
+  returns the new GlobalState"
   [ky]
   (if (= (:selected @app-state) ky)
     (swap! app-state assoc :selected nil)
@@ -201,7 +201,7 @@
     (swap! app-state assoc :editor? false :ss "")
     (let [ea (dom/get-element "editor-area")]
       (do
-        (swap! app-state assoc :editor? true :search? false :entry? false :ss "")
+        (swap! app-state assoc :editor? true :search? false :entry? false :ss "" :selected nil)
         (set-changed! true)
         (set! (.-value ea) (no/lon->md (nodes)))
         (.focus ea)
