@@ -456,3 +456,10 @@
   [c n]
   (let [tags (map trim (s/split c "," ))]
     (change-sidebar-element tags n :tags)))
+
+(defn change-reps
+  "String Node -> GlobalState
+  consumes String c with repeat information Node n;
+  changes the project in n and safes to app-state"
+  [c n]
+  (change-sidebar-element (no/->repeat c) n :repeat))

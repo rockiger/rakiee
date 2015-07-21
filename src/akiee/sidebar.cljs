@@ -75,12 +75,20 @@
       [:span.fa.fa-calendar]]))
 
 (defn tags [node]
-  [:div#sidebar-tags {:on-click h/onclick-tags} ;!!
+  [:div#sidebar-tags {:on-click h/onclick-tags}
    [:span.details-left "Tags:"]
    (if (and (db/selected) (= (db/editable) "tags"))
      [:input#sidebar-tags-form.form-control {:type "text" :default-value (n/tags-string node) :on-blur h/onblur-sidebar-tags :on-submit h/onblur-sidebar-tags}]
      [:span (if (n/tags-string node) (n/tags-string node) "None")])
     [:span.fa.fa-tags]])
+
+(defn reps [node]
+  [:div#sidebar-reps {:on-click h/onclick-reps}
+   [:span.details-left "Repeat:"]
+   (if (and (db/selected) (= (db/editable) "reps"))
+     [:input#sidebar-reps-form.form-control {:type "text" :default-value (n/reps-string node) :on-blur h/onblur-sidebar-reps :on-submit h/onblur-sidebar-reps}]
+     [:span (n/reps-string node)])
+    [:span.fa.fa-repeat]])
 
 (defn sidebar []
   (let [node (db/sidebar-content)]
@@ -88,6 +96,7 @@
      (headline node)
      (scheduled node)
      (deadline node)
+     (reps node)
      (tags node)
      (state node)
      (project node)

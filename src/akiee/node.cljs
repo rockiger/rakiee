@@ -73,7 +73,7 @@
   [s]
   (if-not s
     nil
-    (letfn [(->rate [s] (if (js/parseInt s) (js/parseInt s) 1))
+    (letfn [(->rate [s] (if-not (js/isNaN (js/parseInt s)) (js/parseInt s) 1)) ;; wenn nicht NaN
             (->unit [s]
             (cond
              (.includes s "weekdaily") "weekdaily"
@@ -82,7 +82,9 @@
              (.includes s "monthly") "monthly"
              (.includes s "yearly")  "yearly"
              :else ""))]
-      {:rate (->rate s) :unit (->unit s)})))
+      (if (empty? (->unit s))
+        nil
+        {:rate (->rate s) :unit (->unit s)}))))
 
 (is (= (->repeat "1 daily") {:rate 1 :unit "daily"}))
 (is (= (->repeat "2 weekly") {:rate 2 :unit "weekly"}))
@@ -232,6 +234,19 @@
 (is (= (tags-string {:headline "node 1" :tags []}) ""))
 (is (= (tags-string {:headline "node 2" :tags ["tag1" "tag2" "tag3"]})
      "tag1, tag2, tag3"))
+
+(defn reps-string
+  "Node -> String
+  Consumes a Node n and produces the Repeat String based on the n's RepeatInfo"
+  [n]
+    (if (:unit (:repeat n))
+      (str (:rate (:repeat n)) " " (:unit (:repeat n)))
+      ""))
+
+;; (is (= (reps-string {:headline "node 1" :repeat nil})) "")
+;; (is (= (reps-string {:headline "node 2" :repeat {:rate 1 :unit "daily"}})) "daily")
+;; (is (= (reps-string {:headline "node 2" :repeat {:rate 2 :unit "daily"}})) "daily")
+;; (is (= (reps-string {:headline "node 2" :repeat {:rate 1 :unit ""}})) "")
 
 (def n1 (:rank {:headline "Test-Node 1"  :rank 0}))
 (def n2 (:rank {:headline "Test-Node 2"  :rank 5}))
