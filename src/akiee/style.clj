@@ -54,7 +54,7 @@
       [:textarea {:width "100%" :height "225px" :border-radius 0 :background-color "white" :font-size "inherit" :resize "none"}]]
      [:#sidebar-task-state :#sidebar-task-project {:width "auto" :display "inline-block"}]
 
-     [:span.fa {:margin-left "5px"}]
+     [:#task-sidebar [:span.fa {:margin-left "5px"}]]
      [:#list {:flex 1}]
      [:table :tbody :tr {:width (percent 100)}]
      [:#list [:table {:margin 0}]]

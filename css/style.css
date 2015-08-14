@@ -120,7 +120,7 @@ navbar-header {
   width: auto;
 }
 
-span.fa {
+#task-sidebar span.fa {
   margin-left: 5px;
 }
 
