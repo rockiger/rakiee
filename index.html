@@ -8,12 +8,15 @@
      <script type="text/javascript">
         var gnomeExternalCss='css/gnome.css';
         var ubuntuExternalCss='css/ubuntu.css';
+        var osxExternalCss = 'css/maverix.css';
         var cssUrl = '';
 
-        if (process.env.DESKTOP_SESSION === "gnome") {
+        if (false /*process.env.DESKTOP_SESSION === "gnome"*/) {
             cssUrl = gnomeExternalCss;
-        } else if (process.env.DESKTOP_SESSION === "ubuntu" || process.env.DESKTOP_SESSION === 'ubntu-2d') {
+        } else if (false /*process.env.DESKTOP_SESSION === "ubuntu" || process.env.DESKTOP_SESSION === 'ubuntu-2d'*/) {
             cssUrl = ubuntuExternalCss;
+        } else if (true) {
+            cssUrl = osxExternalCss;
         }
 
         if (cssUrl) {
