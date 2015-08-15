@@ -32,7 +32,7 @@
   produces the component for the button."
   [tx id t state tfn onfn]
   (let [active? (if (and (= (tfn) state) (not (db/editor?))) "active" "")]
-    [:button.btn.btn-default.navbar-btn.btn-state
+    [:button.btn.btn-default.navbar-btn.btn-state.toolbar-button
      {:type "button" :id id :title t :class active? :on-click onfn} tx]))
 
 
@@ -53,7 +53,7 @@
   [in id t tfn? onfn]
   (let [icon-name (str "fa-" in)
         active? (if (tfn?) "active" "")]
-  [:button.btn.btn-default.navbar-btn.btn-square {:id id :title t :class active? :on-click onfn}
+  [:button.btn.btn-default.navbar-btn.btn-square.toolbar-button {:id id :title t :class active? :on-click onfn}
    [:span.fa.fa-fw {:class icon-name}]]))
 
 (def editor-switch [switch-button "code" "show-editor" "Ctrl+E / Ctrl+Space" db/editor? db/switch-editor!])
@@ -112,7 +112,7 @@
                                          :name "headline"}]
     [enter-task-status ["TODO", "DOING", "DONE"]]
     [enter-task-project (db/projects)]
-    [:button.btn.btn-default {:type "submit"} "Create"]
+    [:button.btn.btn-default.btn-on-grey {:type "submit"} "Create"]
     [:button#cancel-enter-task.btn.btn-link
      {:type "button" :on-click h/cancel-enter-task} "Cancel"]]]))
 
@@ -124,7 +124,7 @@
                 {:class ""}
                 {:class "closed"})]
   [:div#search-form.slider show?
-    [:input#search-input.form-control {:type "text" :on-change h/handle-onchange-search}]]))
+    [:input#search-input.form-control.mvx-search {:type "text" :on-change h/handle-onchange-search}]]))
 
 (defn editor
   "-> Component
