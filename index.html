@@ -9,14 +9,17 @@
         var gnomeExternalCss='css/gnome.css';
         var ubuntuExternalCss='css/ubuntu.css';
         var osxExternalCss = 'css/maverix.css';
+        var winExternalCss = 'css/metro-bootstrap.css';
         var cssUrl = '';
 
         if (false /*process.env.DESKTOP_SESSION === "gnome"*/) {
             cssUrl = gnomeExternalCss;
         } else if (false /*process.env.DESKTOP_SESSION === "ubuntu" || process.env.DESKTOP_SESSION === 'ubuntu-2d'*/) {
             cssUrl = ubuntuExternalCss;
-        } else if (true) {
+        } else if (false) {
             cssUrl = osxExternalCss;
+        } else if (true) {
+            cssUrl = winExternalCss;
         }
 
         if (cssUrl) {
