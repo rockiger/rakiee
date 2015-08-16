@@ -12,13 +12,13 @@
         var winExternalCss = 'css/metro-bootstrap.css';
         var cssUrl = '';
 
-        if (false /*process.env.DESKTOP_SESSION === "gnome"*/) {
+        if (process.env.DESKTOP_SESSION === "gnome") {
             cssUrl = gnomeExternalCss;
-        } else if (false /*process.env.DESKTOP_SESSION === "ubuntu" || process.env.DESKTOP_SESSION === 'ubuntu-2d'*/) {
+        } else if (process.env.DESKTOP_SESSION === "ubuntu" || process.env.DESKTOP_SESSION === 'ubuntu-2d') {
             cssUrl = ubuntuExternalCss;
-        } else if (false) {
+        } else if (process.platform === 'darwin') {
             cssUrl = osxExternalCss;
-        } else if (true) {
+        } else if (process.platform === 'win32') {
             cssUrl = winExternalCss;
         }
 
