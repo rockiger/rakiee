@@ -1449,7 +1449,7 @@ th {
 .table > tfoot > tr > td {
   padding: 8px;
   line-height: 1.428571429;
-  vertical-align: top;
+  vertical-align: middle;
   border-top: 1px solid #dddddd;
 }
 .table > thead > tr > th {
@@ -4428,7 +4428,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   font-size: 75%;
   font-weight: bold;
   line-height: 1;
-  color: #ffffff;
+  color: #2e8bcc;
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
@@ -6559,4 +6559,73 @@ a.fa-links:focus {
     display: none;
   }
 }
-/*# sourceMappingURL=/dist/css/metro-bootstrap.css.map */
+
+.btn.active, .btn.active:hover, .btn:hover:active, select.form-control:hover:active {
+  border-radius: 0;
+  background-image: none;
+  font-size: inherit;
+  color: inherit;
+  box-shadow: none;
+}
+
+.btn, .btn:active, .btn:focus, select.form-control {
+  box-shadow: inherit;
+}
+
+.btn-group>.btn {
+  height: 35px;
+}
+
+.btn, .btn:active, .btn:focus, select.form-control {
+  line-height: 14px;
+  font-size: inherit;
+}
+
+.btn-default, .btn-default:focus, .btn-default:active, .btn-default:focus:active, select.form-control {
+  padding: 6px 12px;
+}
+
+#enter-task input, #enter-task select {
+  height: inherit;
+  margin-right: inherit;
+}
+
+#enter-task select.form-control {
+  background-color: #fff;
+}
+
+.btn, .btn:active, .btn:focus, select.form-control {
+  margin-left: 5px;
+}
+
+.btn, .btn:active, .btn:focus, select.form-control {
+  border-radius: inherit;
+  background-image: inherit;
+}
+
+.btn-default, .btn-default:focus, .btn-default:active, .btn-default:focus:active, select.form-control {
+  border-color: #adadad;
+}
+
+.selected, .selected>td>span.hover-button,tr.selected:hover, .selected:hover>td>span.hover-button {
+  background-color: #2e8bcc;
+}
+
+tr.selected .project-tag {
+  color: #729FCF;
+}
+
+#task-sidebar {
+  background-color: #f5f5f5;
+}
+
+tr:hover {
+  background-color: #eee;
+}
+
+#details div:hover, #details h4:hover {
+  background-color: #ccc;
+}
+#enter-task-div, #search-form {
+  background-color: #ecf0f1;
+}
