@@ -4,6 +4,7 @@
  * from talkslab based on twitter bootstrap.
  */
 /*! normalize.css v3.0.1 | MIT License | git.io/normalize */
+
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -6560,6 +6561,8 @@ a.fa-links:focus {
   }
 }
 
+
+/* Modified for Akiee */
 .btn.active, .btn.active:hover, .btn:hover:active, select.form-control:hover:active {
   border-radius: 0;
   background-image: none;
