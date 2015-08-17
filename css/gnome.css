@@ -124,8 +124,16 @@ html, #root, #app, #toolbar {
   background-color: #ededed;
 }
 
-#root {
-padding: 7px;
+body.blur .navbar-default, body.blur button {
+  background-image: none;
+}
+
+#root.unmaximized {
+  padding: 7px;
+}
+
+#root.maximized {
+  height: calc(100% - 18px);
 }
 
 #app {

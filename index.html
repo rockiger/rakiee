@@ -32,7 +32,7 @@
       <script type='text/javascript' id='lt_ws' src='http://localhost:58862/socket.io/lighttable/ws.js'></script>
   </head>
     <body>
-        <div id="root"></div>
+        <div id="root" class="unmaximized"></div>
         <script src="lib/jquery.js"></script>
         <script src="lib/bootstrap.js"></script>
         <script src="lib/bootstrap-datepicker.min.js"></script>
@@ -43,6 +43,27 @@
             var path = './out/akiee.js';
             var fs = require('fs');
             var gui = require('nw.gui');
+            var win = gui.Window.get();
+
+            win.on('maximize', function () {
+                $( "#root" ).toggleClass( "unmaximized maximized" )
+            });
+
+            win.on('unmaximize', function () {
+                $( "#root" ).toggleClass( "unmaximized maximzed" )
+            });
+
+            win.on('blur', function () {
+                $( "body" ).addClass( "blur");
+            });
+
+            win.on('focus', function () {
+               $( "body" ).removeClass( "blur" )
+            });
+
+            onload = function() {
+                win.show();
+            }
 
             /*function reload() {
                 gui.Window.reloadIgnoringCache();
