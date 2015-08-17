@@ -133,7 +133,7 @@ body.blur .navbar-default, body.blur button {
 }
 
 #root.maximized {
-  height: calc(100% - 18px);
+  height: calc(100% + 18px);
 }
 
 #app {

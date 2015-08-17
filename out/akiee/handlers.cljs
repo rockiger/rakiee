@@ -314,8 +314,9 @@
   "KeyEvent -> GlobalState
   Handles the keyevents that are created by js/document"
   [ev]
-  (let [ky  #(.-keyCode %)
-        ctrl? #(.-ctrlKey %)]
+  (let [mac? (if (= (.-platform js/process) "darwin") true false)
+        ky  #(.-keyCode %)
+        ctrl? (if mac? #(.-metaKey %) #(.-ctrlKey %))]
     (cond
      (and (= (ky ev) 32) (ctrl? ev)) (db/switch-editor!)                      ;; Ctrl + Space
      (and (or (= (ky ev) 49) (= (ky ev) 97)) (ctrl? ev)) (db/switch-todo!)    ;; Ctrl + 1

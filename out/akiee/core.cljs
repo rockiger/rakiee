@@ -16,6 +16,8 @@
 ;; =================
 ;; Constants: in akiee.constants
 
+(def modifier (if (= (.-platform js/process) "darwin") "Cmd" "Ctrl"))
+
 
 ;; =================
 ;; Data definitions:
@@ -36,13 +38,13 @@
      {:type "button" :id id :title t :class active? :on-click onfn} tx]))
 
 
-(def todo-button  [list-state-button "Todo" "show-todo" "Ctrl+1" TODO
+(def todo-button  [list-state-button "Todo" "show-todo" (str modifier "+1") TODO
                                      db/list-state db/switch-todo!])
-(def doing-button [list-state-button "Doing" "show-doing" "Ctrl+2 / Ctrl+Space" DOING
+(def doing-button [list-state-button "Doing" "show-doing" (str modifier "+2 / " modifier "+Space") DOING
                                      db/list-state db/switch-doing!])
-(def done-button  [list-state-button "Done" "show-done" "Ctrl+3" DONE
+(def done-button  [list-state-button "Done" "show-done" (str modifier "+3") DONE
                                      db/list-state db/switch-done!])
-(def board-button [list-state-button "Board" "show-all" "Ctrl+4" ALL
+(def board-button [list-state-button "Board" "show-all" (str modifier "+4") ALL
                                      db/list-state db/switch-all!])
 
 (defn switch-button
@@ -56,9 +58,9 @@
   [:button.btn.btn-default.navbar-btn.btn-square.toolbar-button {:id id :title t :class active? :on-click onfn}
    [:span.fa.fa-fw {:class icon-name}]]))
 
-(def editor-switch [switch-button "code" "show-editor" "Ctrl+E / Ctrl+Space" db/editor? db/switch-editor!])
-(def search-switch [switch-button "search" "show-searchbox" "Ctrl+F" db/search? db/switch-search!])
-(def entry-switch  [switch-button "plus" "show-enter-task" "Ctrl+Enter" db/entry? db/switch-entry!])
+(def editor-switch [switch-button "code" "show-editor" (str modifier "+E / " modifier "+Space") db/editor? db/switch-editor!])
+(def search-switch [switch-button "search" "show-searchbox" (str modifier "+F") db/search? db/switch-search!])
+(def entry-switch  [switch-button "plus" "show-enter-task" (str modifier "+Enter") db/entry? db/switch-entry!])
 (def entry-close  [:button.hover-button {:id "close-app" :title "Alt-F4" :on-click h/onclick-close} [:img {:src "./css/img/window-close.svg"}]])
 
 (defn toolbar
@@ -66,14 +68,14 @@
   The toolbar for changing the state of the Akiee"
   []
   [:nav#toolbar.navbar.navbar-default {:role "navigation"}
-   [:div.container-fluid
-    [:div.navbar-flex
+   [:div#toolbar-fluid.container-fluid
+    [:div#toolbar-inside.navbar-flex
      [:div#taskbuttons.btn-group
       todo-button
       doing-button
       done-button]
      board-button
-     [:div.spacer]
+     [:div#toolbar-spacer.spacer]
      editor-switch
      search-switch
      entry-switch
