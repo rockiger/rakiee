@@ -204,6 +204,13 @@ akiee.handlers.onclick_reps = (function onclick_reps(ev){
 return akiee.handlers.onclick_sidebar_element.call(null,"reps","sidebar-reps-form");
 });
 /**
+* Event -> Void
+* Consumes the onclick Event ev and closes the application
+*/
+akiee.handlers.onclick_close = (function onclick_close(ev){
+return akiee.handlers.WIN.close();
+});
+/**
 * Event -> GlobalState
 * Consumes the onclick Event ev and changes the headline of a task
 */
@@ -368,109 +375,109 @@ return null;
 * Handles the keyevents that are created by js/document
 */
 akiee.handlers.handle_keyup = (function handle_keyup(ev){
-var ky = (function (p1__6540_SHARP_){
-return p1__6540_SHARP_.keyCode;
+var ky = (function (p1__6723_SHARP_){
+return p1__6723_SHARP_.keyCode;
 });
 var ctrl_QMARK_ = ((function (ky){
-return (function (p1__6541_SHARP_){
-return p1__6541_SHARP_.ctrlKey;
+return (function (p1__6724_SHARP_){
+return p1__6724_SHARP_.ctrlKey;
 });})(ky))
 ;
-if(cljs.core.truth_((function (){var and__4708__auto__ = cljs.core._EQ_.call(null,ky.call(null,ev),(32));
-if(and__4708__auto__){
+if(cljs.core.truth_((function (){var and__3745__auto__ = cljs.core._EQ_.call(null,ky.call(null,ev),(32));
+if(and__3745__auto__){
 return ctrl_QMARK_.call(null,ev);
 } else {
-return and__4708__auto__;
+return and__3745__auto__;
 }
 })())){
 return akiee.app_db.switch_editor_BANG_.call(null);
 } else {
-if(cljs.core.truth_((function (){var and__4708__auto__ = (cljs.core._EQ_.call(null,ky.call(null,ev),(49))) || (cljs.core._EQ_.call(null,ky.call(null,ev),(97)));
-if(and__4708__auto__){
+if(cljs.core.truth_((function (){var and__3745__auto__ = (cljs.core._EQ_.call(null,ky.call(null,ev),(49))) || (cljs.core._EQ_.call(null,ky.call(null,ev),(97)));
+if(and__3745__auto__){
 return ctrl_QMARK_.call(null,ev);
 } else {
-return and__4708__auto__;
+return and__3745__auto__;
 }
 })())){
 return akiee.app_db.switch_todo_BANG_.call(null);
 } else {
-if(cljs.core.truth_((function (){var and__4708__auto__ = (cljs.core._EQ_.call(null,ky.call(null,ev),(50))) || (cljs.core._EQ_.call(null,ky.call(null,ev),(98)));
-if(and__4708__auto__){
+if(cljs.core.truth_((function (){var and__3745__auto__ = (cljs.core._EQ_.call(null,ky.call(null,ev),(50))) || (cljs.core._EQ_.call(null,ky.call(null,ev),(98)));
+if(and__3745__auto__){
 return ctrl_QMARK_.call(null,ev);
 } else {
-return and__4708__auto__;
+return and__3745__auto__;
 }
 })())){
 return akiee.app_db.switch_doing_BANG_.call(null);
 } else {
-if(cljs.core.truth_((function (){var and__4708__auto__ = (cljs.core._EQ_.call(null,ky.call(null,ev),(51))) || (cljs.core._EQ_.call(null,ky.call(null,ev),(99)));
-if(and__4708__auto__){
+if(cljs.core.truth_((function (){var and__3745__auto__ = (cljs.core._EQ_.call(null,ky.call(null,ev),(51))) || (cljs.core._EQ_.call(null,ky.call(null,ev),(99)));
+if(and__3745__auto__){
 return ctrl_QMARK_.call(null,ev);
 } else {
-return and__4708__auto__;
+return and__3745__auto__;
 }
 })())){
 return akiee.app_db.switch_done_BANG_.call(null);
 } else {
-if(cljs.core.truth_((function (){var and__4708__auto__ = (cljs.core._EQ_.call(null,ky.call(null,ev),(52))) || (cljs.core._EQ_.call(null,ky.call(null,ev),(100)));
-if(and__4708__auto__){
+if(cljs.core.truth_((function (){var and__3745__auto__ = (cljs.core._EQ_.call(null,ky.call(null,ev),(52))) || (cljs.core._EQ_.call(null,ky.call(null,ev),(100)));
+if(and__3745__auto__){
 return ctrl_QMARK_.call(null,ev);
 } else {
-return and__4708__auto__;
+return and__3745__auto__;
 }
 })())){
 return akiee.app_db.switch_all_BANG_.call(null);
 } else {
-if(cljs.core.truth_((function (){var and__4708__auto__ = (cljs.core._EQ_.call(null,ky.call(null,ev),(69))) || (cljs.core._EQ_.call(null,ky.call(null,ev),(101)));
-if(and__4708__auto__){
+if(cljs.core.truth_((function (){var and__3745__auto__ = (cljs.core._EQ_.call(null,ky.call(null,ev),(69))) || (cljs.core._EQ_.call(null,ky.call(null,ev),(101)));
+if(and__3745__auto__){
 return ctrl_QMARK_.call(null,ev);
 } else {
-return and__4708__auto__;
+return and__3745__auto__;
 }
 })())){
 return akiee.app_db.switch_editor_BANG_.call(null);
 } else {
-if(cljs.core.truth_((function (){var and__4708__auto__ = cljs.core._EQ_.call(null,ky.call(null,ev),(13));
-if(and__4708__auto__){
+if(cljs.core.truth_((function (){var and__3745__auto__ = cljs.core._EQ_.call(null,ky.call(null,ev),(13));
+if(and__3745__auto__){
 return ctrl_QMARK_.call(null,ev);
 } else {
-return and__4708__auto__;
+return and__3745__auto__;
 }
 })())){
 return akiee.app_db.switch_entry_BANG_.call(null);
 } else {
-if(cljs.core.truth_((function (){var and__4708__auto__ = cljs.core._EQ_.call(null,ky.call(null,ev),(70));
-if(and__4708__auto__){
+if(cljs.core.truth_((function (){var and__3745__auto__ = cljs.core._EQ_.call(null,ky.call(null,ev),(70));
+if(and__3745__auto__){
 return ctrl_QMARK_.call(null,ev);
 } else {
-return and__4708__auto__;
+return and__3745__auto__;
 }
 })())){
 return akiee.app_db.switch_search_BANG_.call(null);
 } else {
-if(cljs.core.truth_((function (){var and__4708__auto__ = cljs.core._EQ_.call(null,ky.call(null,ev),(27));
-if(and__4708__auto__){
+if(cljs.core.truth_((function (){var and__3745__auto__ = cljs.core._EQ_.call(null,ky.call(null,ev),(27));
+if(and__3745__auto__){
 return akiee.app_db.entry_QMARK_.call(null);
 } else {
-return and__4708__auto__;
+return and__3745__auto__;
 }
 })())){
 return akiee.handlers.cancel_enter_task.call(null);
 } else {
-if(cljs.core.truth_((function (){var and__4708__auto__ = cljs.core._EQ_.call(null,ky.call(null,ev),(27));
-if(and__4708__auto__){
+if(cljs.core.truth_((function (){var and__3745__auto__ = cljs.core._EQ_.call(null,ky.call(null,ev),(27));
+if(and__3745__auto__){
 return akiee.app_db.search_QMARK_.call(null);
 } else {
-return and__4708__auto__;
+return and__3745__auto__;
 }
 })())){
 return akiee.handlers.cancel_search.call(null);
 } else {
-if(cljs.core.truth_((function (){var and__4708__auto__ = cljs.core._EQ_.call(null,ky.call(null,ev),(27));
-if(and__4708__auto__){
+if(cljs.core.truth_((function (){var and__3745__auto__ = cljs.core._EQ_.call(null,ky.call(null,ev),(27));
+if(and__3745__auto__){
 return akiee.app_db.editable.call(null);
 } else {
-return and__4708__auto__;
+return and__3745__auto__;
 }
 })())){
 return akiee.app_db.set_editable_BANG_.call(null,null);

@@ -186,6 +186,12 @@
   [ev]
   (onclick-sidebar-element "reps" "sidebar-reps-form"))
 
+(defn onclick-close
+  "Event -> Void
+  Consumes the onclick Event ev and closes the application"
+  [ev]
+  (.close WIN))
+
 (defn onblur-sidebar-input
   "Event -> GlobalState
   Consumes the onclick Event ev and changes the headline of a task"

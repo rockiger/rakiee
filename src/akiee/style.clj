@@ -203,6 +203,8 @@
       [:tr:hover {:background-color "inherit"}]
       [:td:hover {:background-color hover-grey}]]
 
+     [:#close {:display "none"}]
+
 
 
      )

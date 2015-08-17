@@ -59,6 +59,7 @@
 (def editor-switch [switch-button "code" "show-editor" "Ctrl+E / Ctrl+Space" db/editor? db/switch-editor!])
 (def search-switch [switch-button "search" "show-searchbox" "Ctrl+F" db/search? db/switch-search!])
 (def entry-switch  [switch-button "plus" "show-enter-task" "Ctrl+Enter" db/entry? db/switch-entry!])
+(def entry-close  [:button.hover-button {:id "close-app" :title "Alt-F4" :on-click h/onclick-close} [:img {:src "./css/img/window-close.svg"}]])
 
 (defn toolbar
   "-> Component
@@ -75,7 +76,8 @@
      [:div.spacer]
      editor-switch
      search-switch
-     entry-switch]]])
+     entry-switch
+     [:div#close entry-close]]]])
 
 
 (defn select
@@ -104,7 +106,7 @@
   The entry form for entering tasks"
   []
   (let [show? (if (db/entry?)
-                {:class ""}
+                {:class "open"}
                 {:class "closed"})]
   [:div#enter-task-div.container-fluid.slider show?
    [:form#enter-task {:on-submit h/handle-enter-task}
@@ -121,7 +123,7 @@
   The entry form for searching tasks"
   []
   (let [show? (if (db/search?)
-                {:class ""}
+                {:class "open"}
                 {:class "closed"})]
   [:div#search-form.slider show?
     [:input#search-input.form-control.mvx-search {:type "text" :on-change h/handle-onchange-search}]]))

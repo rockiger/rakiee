@@ -6,14 +6,15 @@
     "keywords": [ "task management", "node-webkit", "linux", "windows", "mac", "markdown", "agile", "personal kanban" ],
     "window": {
         "title": "Akiee",
-        "toolbar": true,
+        "toolbar": false,
         "icon": "logo.png",
         "position": "center",
         "width": 1000,
         "height": 600,
         "resizable": true,
         "show": true,
-        "frame": true
+        "frame": false,
+        "transparent": false
     },
     "maintainers":[
         {
