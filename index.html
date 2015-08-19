@@ -12,7 +12,7 @@
         var winExternalCss = 'css/metro-bootstrap.css';
         var cssUrl = '';
 
-        if (process.env.DESKTOP_SESSION === "gnome") {
+        if (process.platform === 'linux' /*process.env.DESKTOP_SESSION === "gnome"*/) {
             cssUrl = gnomeExternalCss;
             var gui = require('nw.gui');
             var win = gui.Window.get();
@@ -29,7 +29,7 @@
             document.write('<link rel="stylesheet" type="text/css" href="'+ cssUrl +'">');
         }
     </script>
-      <script type='text/javascript' id='lt_ws' src='http://localhost:58862/socket.io/lighttable/ws.js'></script>
+      <script type='text/javascript' id='lt_ws' src='http://localhost:60977/socket.io/lighttable/ws.js'></script>
   </head>
     <body>
         <div id="root" class="unmaximized"></div>
